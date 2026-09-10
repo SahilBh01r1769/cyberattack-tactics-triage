@@ -1,0 +1,84 @@
+{
+  "strategy": "grouped_source",
+  "group_column": "source_id",
+  "test_selection_seed": 60,
+  "validation_selection_seed": 1089,
+  "candidate_attempts": 64,
+  "test_balance_score": 0.003028746859571006,
+  "validation_balance_score": 0.0033076658909866608,
+  "counts": {
+    "train": 11076,
+    "validation": 2559,
+    "test": 3409
+  },
+  "unique_sources": {
+    "train": 683,
+    "validation": 158,
+    "test": 211
+  },
+  "label_counts": {
+    "train": {
+      "collection": 884,
+      "command-and-control": 1490,
+      "credential-access": 563,
+      "defense-impairment": 400,
+      "discovery": 2160,
+      "execution": 1510,
+      "exfiltration": 280,
+      "impact": 251,
+      "initial-access": 429,
+      "lateral-movement": 238,
+      "persistence": 991,
+      "privilege-escalation": 976,
+      "reconnaissance": 112,
+      "resource-development": 385,
+      "stealth": 2276
+    },
+    "validation": {
+      "collection": 191,
+      "command-and-control": 368,
+      "credential-access": 129,
+      "defense-impairment": 86,
+      "discovery": 508,
+      "execution": 353,
+      "exfiltration": 46,
+      "impact": 49,
+      "initial-access": 98,
+      "lateral-movement": 60,
+      "persistence": 219,
+      "privilege-escalation": 201,
+      "reconnaissance": 34,
+      "resource-development": 101,
+      "stealth": 524
+    },
+    "test": {
+      "collection": 243,
+      "command-and-control": 472,
+      "credential-access": 191,
+      "defense-impairment": 146,
+      "discovery": 676,
+      "execution": 477,
+      "exfiltration": 74,
+      "impact": 87,
+      "initial-access": 120,
+      "lateral-movement": 76,
+      "persistence": 296,
+      "privilege-escalation": 304,
+      "reconnaissance": 29,
+      "resource-development": 90,
+      "stealth": 709
+    }
+  },
+  "exact_text_overlap": {
+    "train_validation": 0,
+    "train_test": 0,
+    "validation_test": 0
+  },
+  "source_overlap": {
+    "train_validation": 0,
+    "train_test": 0,
+    "validation_test": 0
+  },
+  "random_split_source_overlap": 869,
+  "technique_overlap_train_test": 421
+}
