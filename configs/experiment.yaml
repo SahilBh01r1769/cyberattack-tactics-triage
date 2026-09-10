@@ -1,0 +1,42 @@
+seed: 42
+
+dataset:
+  stix_url: https://raw.githubusercontent.com/mitre-attack/attack-stix-data/master/enterprise-attack/enterprise-attack.json
+  raw_path: data/raw/enterprise-attack.json
+  processed_path: data/processed/attack_tactic_dataset.csv
+  split_path: data/processed/splits.csv
+  statistics_path: artifacts/metrics/dataset_statistics.json
+  min_text_chars: 30
+  near_duplicate_threshold: 0.92
+
+split:
+  test_size: 0.20
+  validation_size: 0.15
+  strategy: grouped_source
+
+tfidf:
+  max_features: 50000
+  ngram_range: [1, 2]
+  min_df: 2
+  sublinear_tf: true
+
+logistic_regression:
+  C: 2.0
+  class_weight: balanced
+  max_iter: 2000
+
+svm:
+  C: 1.0
+  class_weight: balanced
+
+confidence:
+  default_threshold: 0.70
+  thresholds: [0.40, 0.50, 0.60, 0.70, 0.80, 0.90]
+
+transformer:
+  model_name: distilbert-base-uncased
+  max_length: 128
+  batch_size: 16
+  learning_rate: 0.00003
+  epochs: 3
+
