@@ -5,6 +5,8 @@ __pycache__/
 .venv/
 .env
 data/raw/
+data/processed/*.csv
+!data/processed/.gitkeep
 artifacts/models/*
 !artifacts/models/.gitkeep
 artifacts/transformer_checkpoints/
