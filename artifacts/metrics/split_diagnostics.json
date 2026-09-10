@@ -4,12 +4,12 @@
   "test_selection_seed": 60,
   "validation_selection_seed": 1089,
   "candidate_attempts": 64,
-  "test_balance_score": 0.003028746859571006,
-  "validation_balance_score": 0.0033076658909866608,
+  "test_balance_score": 0.003015826206625382,
+  "validation_balance_score": 0.0038297175639176698,
   "counts": {
-    "train": 11076,
-    "validation": 2559,
-    "test": 3409
+    "train": 11013,
+    "validation": 2551,
+    "test": 3391
   },
   "unique_sources": {
     "train": 683,
@@ -18,26 +18,26 @@
   },
   "label_counts": {
     "train": {
-      "collection": 884,
-      "command-and-control": 1490,
-      "credential-access": 563,
-      "defense-impairment": 400,
-      "discovery": 2160,
-      "execution": 1510,
+      "collection": 877,
+      "command-and-control": 1463,
+      "credential-access": 557,
+      "defense-impairment": 399,
+      "discovery": 2155,
+      "execution": 1496,
       "exfiltration": 280,
       "impact": 251,
       "initial-access": 429,
-      "lateral-movement": 238,
-      "persistence": 991,
-      "privilege-escalation": 976,
+      "lateral-movement": 237,
+      "persistence": 989,
+      "privilege-escalation": 974,
       "reconnaissance": 112,
-      "resource-development": 385,
-      "stealth": 2276
+      "resource-development": 384,
+      "stealth": 2272
     },
     "validation": {
-      "collection": 191,
-      "command-and-control": 368,
-      "credential-access": 129,
+      "collection": 189,
+      "command-and-control": 363,
+      "credential-access": 128,
       "defense-impairment": 86,
       "discovery": 508,
       "execution": 353,
@@ -49,24 +49,24 @@
       "privilege-escalation": 201,
       "reconnaissance": 34,
       "resource-development": 101,
-      "stealth": 524
+      "stealth": 523
     },
     "test": {
-      "collection": 243,
-      "command-and-control": 472,
-      "credential-access": 191,
-      "defense-impairment": 146,
-      "discovery": 676,
+      "collection": 242,
+      "command-and-control": 464,
+      "credential-access": 189,
+      "defense-impairment": 144,
+      "discovery": 674,
       "execution": 477,
       "exfiltration": 74,
       "impact": 87,
       "initial-access": 120,
       "lateral-movement": 76,
-      "persistence": 296,
-      "privilege-escalation": 304,
+      "persistence": 295,
+      "privilege-escalation": 303,
       "reconnaissance": 29,
       "resource-development": 90,
-      "stealth": 709
+      "stealth": 707
     }
   },
   "exact_text_overlap": {
@@ -79,6 +79,6 @@
     "train_test": 0,
     "validation_test": 0
   },
-  "random_split_source_overlap": 869,
+  "random_split_source_overlap": 882,
   "technique_overlap_train_test": 421
 }

@@ -3,7 +3,7 @@ from pathlib import Path
 
 import pandas as pd
 
-from src.data.build_dataset import extract_records, remove_duplicate_text
+from src.data.build_dataset import extract_records, normalize_text, remove_duplicate_text
 
 
 FIXTURE = Path(__file__).parent / "fixtures" / "attack_bundle.json"
@@ -27,3 +27,9 @@ def test_duplicate_text_removal_is_case_insensitive() -> None:
 
     assert removed == 1
     assert deduplicated["text"].tolist() == ["Same procedure text", "Different text"]
+
+
+def test_normalization_keeps_link_text_and_removes_citation_markup() -> None:
+    text = "[PowerShell](https://attack.mitre.org/software/S0194) ran commands.(Citation: Example Report 2024)"
+
+    assert normalize_text(text) == "PowerShell ran commands."

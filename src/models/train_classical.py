@@ -68,7 +68,9 @@ def build_pipeline(experiment: dict[str, Any], config: dict[str, Any]) -> Pipeli
         )
     else:
         estimator = LinearSVC(C=experiment["C"], class_weight=experiment["class_weight"], random_state=config["seed"])
-    return Pipeline([("features", features), ("classifier", OneVsRestClassifier(estimator, n_jobs=-1))])
+    # Fifteen compact linear fits are quick enough sequentially and avoid large
+    # sparse matrices being copied into worker processes on memory-limited hosts.
+    return Pipeline([("features", features), ("classifier", OneVsRestClassifier(estimator, n_jobs=1))])
 
 
 def _save_runtime_versions() -> None:

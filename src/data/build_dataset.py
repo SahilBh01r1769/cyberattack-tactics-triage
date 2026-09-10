@@ -21,6 +21,8 @@ from src.config import load_config, project_path
 
 LOGGER = logging.getLogger(__name__)
 TAG_PATTERN = re.compile(r"<[^>]+>")
+MARKDOWN_LINK_PATTERN = re.compile(r"\[([^]]+)]\([^)]+\)")
+CITATION_PATTERN = re.compile(r"\s*\(Citation:\s*[^)]+\)")
 SPACE_PATTERN = re.compile(r"\s+")
 
 
@@ -28,6 +30,8 @@ def normalize_text(value: str) -> str:
     """Remove markup artifacts while retaining the wording of a procedure example."""
     value = html.unescape(value)
     value = TAG_PATTERN.sub(" ", value)
+    value = MARKDOWN_LINK_PATTERN.sub(r"\1", value)
+    value = CITATION_PATTERN.sub("", value)
     return SPACE_PATTERN.sub(" ", value).strip()
 
 

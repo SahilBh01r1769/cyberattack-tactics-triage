@@ -1,38 +1,38 @@
 {
-  "usable_samples": 17044,
+  "usable_samples": 16955,
   "techniques": 611,
   "tactics": 15,
   "label_distribution": {
-    "collection": 1318,
-    "command-and-control": 2330,
-    "credential-access": 883,
-    "defense-impairment": 632,
-    "discovery": 3344,
-    "execution": 2340,
+    "collection": 1308,
+    "command-and-control": 2290,
+    "credential-access": 874,
+    "defense-impairment": 629,
+    "discovery": 3337,
+    "execution": 2326,
     "exfiltration": 400,
     "impact": 387,
     "initial-access": 647,
-    "lateral-movement": 374,
-    "persistence": 1506,
-    "privilege-escalation": 1481,
+    "lateral-movement": 373,
+    "persistence": 1503,
+    "privilege-escalation": 1478,
     "reconnaissance": 175,
-    "resource-development": 576,
-    "stealth": 3509
+    "resource-development": 575,
+    "stealth": 3502
   },
-  "multilabel_samples": 2276,
-  "multilabel_fraction": 0.1335367284674959,
+  "multilabel_samples": 2267,
+  "multilabel_fraction": 0.13370687112946034,
   "text_length_words": {
-    "min": 5,
-    "median": 18.0,
-    "mean": 20.330145505749822,
-    "p95": 38.0,
-    "max": 156
+    "min": 4,
+    "median": 13.0,
+    "mean": 14.441580654674137,
+    "p95": 29.0,
+    "max": 80
   },
-  "exact_duplicates_removed": 92,
+  "exact_duplicates_removed": 104,
   "near_duplicates": {
     "threshold": 0.92,
-    "pair_count": 62,
-    "affected_samples": 106
+    "pair_count": 39,
+    "affected_samples": 61
   },
   "top_sources": {
     "Kimsuky": 130,
@@ -46,16 +46,16 @@
     "Magic Hound": 77,
     "Cobalt Strike": 73,
     "InvisiMole": 73,
-    "Empire": 73,
-    "OilRig": 72,
+    "Empire": 72,
+    "QakBot": 71,
     "SolarWinds Compromise": 71,
-    "QakBot": 71
+    "OilRig": 71
   },
   "source_type_distribution": {
-    "malware": 10453,
-    "intrusion-set": 4589,
+    "malware": 10384,
+    "intrusion-set": 4571,
     "campaign": 1143,
-    "tool": 859
+    "tool": 857
   },
   "source_stix_sha256": "dc1639caa5501d720e280cf1cbd8fbe009884a0c9b3e6e9ed9d0c25166c3d8f4"
 }

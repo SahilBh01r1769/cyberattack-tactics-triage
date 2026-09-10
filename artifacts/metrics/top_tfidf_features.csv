@@ -1,301 +1,301 @@
 tactic,feature,weight,rank
-collection,word__data,4.834301630177103,1
-collection,word__files from,3.9017789564035725,2
-collection,word__data from,3.8861007211786514,3
-collection,word__capture,3.45252825707827,4
-collection,word__from,3.4095481335122817,5
-collection,word__compress,3.2860974651531767,6
-collection,word__keylogging,3.2188262740003197,7
-collection,word__keystrokes,3.0402504238746824,8
-collection,char__log,2.7111190390986106,9
-collection,word__screenshots,2.7072807704274644,10
-collection,word__accessed,2.659833878675509,11
-collection,word__files,2.656870047251815,12
-collection,word__upload files,2.6040338461390506,13
-collection,word__collected,2.5542201543194096,14
-collection,char__ scre,2.5396189855335547,15
-collection,word__keylogger,2.538621601685389,16
-collection,char__ cap,2.5339665323628067,17
-collection,word__exfiltration citation,2.5173454592909525,18
-collection,char__scree,2.4908230530164364,19
-collection,char__keyl,2.4835984997278002,20
-command-and-control,word__c2,8.938341067186174,1
-command-and-control,word__for c2,4.232162880538065,2
-command-and-control,word__download,4.173895802258351,3
-command-and-control,word__http,4.16363846136544,4
-command-and-control,char__ c2,4.146468728000563,5
-command-and-control,word__proxy,3.9136674981082766,6
-command-and-control,word__can download,3.6505405166022324,7
-command-and-control,char__c2 ,3.3164490864552763,8
-command-and-control,word__traffic,3.2846911049382586,9
-command-and-control,word__to compromised,3.2660487754766727,10
-command-and-control,char__ c2 ,3.250205906617176,11
-command-and-control,word__c2 citation,3.200280740719447,12
-command-and-control,word__has downloaded,3.1385776404777337,13
-command-and-control,word__additional,3.0252018013468907,14
-command-and-control,word__tcp,2.8821823992316435,15
-command-and-control,char__ http,2.852400874680384,16
-command-and-control,char__ htt,2.852400874680384,17
-command-and-control,word__onto,2.808044492500585,18
-command-and-control,char__ ht,2.7741888757182958,19
-command-and-control,word__downloaded,2.682174440037698,20
-credential-access,char__ ke,4.711276418959486,1
-credential-access,char__key,4.391495466084366,2
-credential-access,char__ key,4.166098143396731,3
-credential-access,word__keystrokes,3.9201843196492776,4
-credential-access,word__keylogging,3.6329161216179195,5
-credential-access,word__passwords,3.6236809824126333,6
-credential-access,word__credentials from,3.5902155114258933,7
-credential-access,word__cookies,3.275194314605952,8
-credential-access,char__oke,3.022851853846509,9
-credential-access,word__credentials,2.9552212066141297,10
-credential-access,char__eylog,2.813256535432179,11
-credential-access,char__eyl,2.813256535432179,12
-credential-access,char__eylo,2.813256535432179,13
-credential-access,char__ylogg,2.813256535432179,14
-credential-access,char__keylo,2.813256535432179,15
-credential-access,char__ keyl,2.813256535432179,16
-credential-access,char__keyl,2.813256535432179,17
-credential-access,char__ylog,2.7899993595001593,18
-credential-access,word__keylogger,2.660589418476614,19
-credential-access,word__credential,2.65971283121496,20
-defense-impairment,word__registry,4.9402948429501645,1
-defense-impairment,word__signed,4.407526879415066,2
-defense-impairment,word__logs,3.824817293734841,3
-defense-impairment,word__disable,3.430464474271291,4
-defense-impairment,word__modify,3.286896992218418,5
-defense-impairment,word__firewall,3.0079275301628314,6
-defense-impairment,word__logging,2.8464219725875646,7
-defense-impairment,char__sig,2.8317910754151407,8
-defense-impairment,char__sign,2.822194754686488,9
-defense-impairment,char__ disa,2.7751920196040754,10
-defense-impairment,char__ sign,2.7681113181634096,11
-defense-impairment,word__security,2.756491567094929,12
-defense-impairment,char__ sig,2.749764220284116,13
-defense-impairment,char__disa,2.7264079967522528,14
-defense-impairment,char__disab,2.6980852659739956,15
-defense-impairment,char__isab,2.6980852659739956,16
-defense-impairment,char__isabl,2.6980852659739956,17
-defense-impairment,char__log,2.6911028600826667,18
-defense-impairment,char__sabl,2.6864893277149084,19
-defense-impairment,char__ log,2.654359026270712,20
-discovery,word__enumerate,3.969174542532122,1
-discovery,word__identify,3.713258935144066,2
-discovery,word__list,3.4738125370587185,3
-discovery,word__time,3.238600432163557,4
-discovery,word__net,3.058740164771131,5
-discovery,word__the,2.9200480368007224,6
-discovery,word__discover,2.9100328549562797,7
-discovery,word__to discover,2.8687404628455777,8
-discovery,word__search,2.818535135940452,9
-discovery,word__to check,2.806926946192101,10
-discovery,char__ lis,2.753004174193939,11
-discovery,char__ list,2.753004174193939,12
-discovery,char__enum,2.6741106002543376,13
-discovery,char__erate,2.6336517045932175,14
-discovery,char__enu,2.632240810670529,15
-discovery,char__umera,2.5965584731877454,16
-discovery,char__merat,2.5965584731877454,17
-discovery,char__enume,2.5956407794973404,18
-discovery,char__ enum,2.5718855429951,19
-discovery,char__ enu,2.5718855429951,20
-execution,word__wmi,4.719117715854794,1
-execution,word__api,4.04324800687945,2
-execution,word__cmd,3.9907678548842815,3
-execution,word__wmi to,3.5154624015772242,4
-execution,word__shell,3.497933939675673,5
-execution,char__wmi,3.2200901068682533,6
-execution,word__vbs,3.134145796156382,7
-execution,word__used powershell,3.057659393562963,8
-execution,word__can use,3.008547683219376,9
-execution,word__python,2.995489978440517,10
-execution,word__cmd exe,2.9611078744808577,11
-execution,word__command line,2.9168835647707385,12
-execution,word__side,2.7453940246076867,13
-execution,word__line,2.736079668915112,14
-execution,word__wmic,2.722207017377994,15
-execution,word__load,2.668059570092429,16
-execution,word__use,2.6478140640336365,17
-execution,char__ wmi,2.641262714178629,18
-execution,word__javascript,2.6305697694157444,19
-execution,char__ wm,2.624074376929686,20
-exfiltration,word__data,4.643640687642676,1
-exfiltration,word__c2,4.273621943301707,2
-exfiltration,word__exfiltrate,3.79495678085427,3
-exfiltration,word__has exfiltrated,3.6698290403660687,4
-exfiltration,char__trate,3.63497291555299,5
-exfiltration,word__exfiltrated,3.4069104412211333,6
-exfiltration,char__iltra,3.0871837678553353,7
-exfiltration,char__iltr,3.0871837678553353,8
-exfiltration,char__ltrat,3.085099122085042,9
-exfiltration,char__ltra,3.074206472112338,10
-exfiltration,char__ltr,3.074206472112338,11
-exfiltration,char__xfi,3.0396149330024267,12
-exfiltration,char__exfi,3.0396149330024267,13
-exfiltration,char__ exfi,3.0396149330024267,14
-exfiltration,char__ exf,3.037575587186475,15
-exfiltration,char__exf,3.037575587186475,16
-exfiltration,char__xfilt,2.9509129122765376,17
-exfiltration,char__filtr,2.9509129122765376,18
-exfiltration,char__ilt,2.9301739440452774,19
-exfiltration,char__xfil,2.9095285898198426,20
-impact,word__ransom,3.8641983072995365,1
-impact,word__cryptocurrency,3.3316116189934846,2
-impact,word__stop,3.253695541690376,3
-impact,word__shutdown,2.768909867760599,4
-impact,word__denial of,2.590363859577786,5
-impact,word__denial,2.590363859577786,6
-impact,word__of service,2.369990190693864,7
-impact,word__to stop,2.3443928964354015,8
-impact,char__wip,2.3067682228165767,9
-impact,word__encrypt,2.2882141399368865,10
-impact,word__wipe,2.239213459118761,11
-impact,char__cry,2.2214023066146353,12
-impact,word__services,2.162958819107436,13
-impact,char__ypt,2.145575723199364,14
-impact,char__crypt,2.145575723199364,15
-impact,char__cryp,2.145575723199364,16
-impact,char__rypt,2.145575723199364,17
-impact,char__ryp,2.139450729293455,18
-impact,word__shadow,2.1388701938894337,19
-impact,word__overwrite,2.124302626013243,20
-initial-access,word__credentials to,3.7963025305591653,1
-initial-access,word__access,3.6871948709123745,2
-initial-access,word__valid,3.5357463535098494,3
-initial-access,word__spread,3.222855486781692,4
-initial-access,word__credentials,3.2033937681246387,5
-initial-access,word__emails,3.141249857705785,6
-initial-access,word__deliver,3.0411637198848247,7
-initial-access,word__to deliver,2.975302099753067,8
-initial-access,word__watering,2.87028087623899,9
-initial-access,word__distributed,2.786375386859681,10
-initial-access,word__has sent,2.7165356882030034,11
-initial-access,word__initial,2.682175010357471,12
-initial-access,word__usb,2.668323846976834,13
-initial-access,word__been delivered,2.5254892491196412,14
-initial-access,word__sent,2.4800652158634104,15
-initial-access,word__initial access,2.476045202421137,16
-initial-access,word__used compromised,2.4545361610648926,17
-initial-access,word__access to,2.445794414681567,18
-initial-access,char__ls ,2.423597693896519,19
-initial-access,word__emails with,2.4231615469545997,20
-lateral-movement,word__smb,5.1394668973691715,1
-lateral-movement,word__rdp,5.0723564724026104,2
-lateral-movement,word__ssh,3.6338497238085017,3
-lateral-movement,word__hash,3.541602974072646,4
-lateral-movement,word__copy,3.079337110859652,5
-lateral-movement,char__smb,3.0638852833645127,6
-lateral-movement,word__winrm,3.055093211034626,7
-lateral-movement,char__ smb,2.988229616828718,8
-lateral-movement,word__laterally,2.945740031305063,9
-lateral-movement,word__pass the,2.912427365748413,10
-lateral-movement,word__the hash,2.8734566388066756,11
-lateral-movement,word__to copy,2.864300361774549,12
-lateral-movement,word__vnc,2.80733961591628,13
-lateral-movement,word__spread,2.7736365496824984,14
-lateral-movement,word__remote,2.7651181365554236,15
-lateral-movement,word__pass,2.640645574560411,16
-lateral-movement,word__share,2.5703821340747854,17
-lateral-movement,word__usb,2.458860596602799,18
-lateral-movement,word__network share,2.436083140729816,19
-lateral-movement,char__ sm,2.4291316547442574,20
-persistence,word__persistence,4.356248496296046,1
-persistence,word__registry,4.324510842090268,2
-persistence,word__credentials to,3.2897011844274022,3
-persistence,word__bits,3.06641777585278,4
-persistence,word__startup,2.997044997488549,5
-persistence,char__ist,2.9671444898836357,6
-persistence,word__web,2.9168107726613277,7
-persistence,char__sist,2.8973873238074526,8
-persistence,char__rsist,2.824303539792844,9
-persistence,char__ersis,2.824303539792844,10
-persistence,char__rsis,2.824303539792844,11
-persistence,char__persi,2.8103485296715247,12
-persistence,word__added,2.681600256603647,13
-persistence,char__sis,2.6708027650301194,14
-persistence,char__ pers,2.6492180451958736,15
-persistence,word__web shells,2.5897337242523792,16
-persistence,word__used compromised,2.4933822771337057,17
-persistence,word__shells,2.4139391519952382,18
-persistence,word__modify,2.4015589737703804,19
-persistence,char__ per,2.3910230371265064,20
-privilege-escalation,word__uac,4.495956592599608,1
-privilege-escalation,word__persistence,3.76930953836738,2
-privilege-escalation,word__used compromised,3.6829144407612335,3
-privilege-escalation,word__credentials to,3.6541992299305686,4
-privilege-escalation,word__into,3.4544448922436697,5
-privilege-escalation,word__inject,3.0781251861861385,6
-privilege-escalation,word__startup,3.0681350254029773,7
-privilege-escalation,word__valid,3.0285034326521085,8
-privilege-escalation,char__injec,3.0194974200476783,9
-privilege-escalation,char__nje,3.0194974200476783,10
-privilege-escalation,char__nject,3.0194974200476783,11
-privilege-escalation,char__inje,3.0194974200476783,12
-privilege-escalation,char__njec,3.0194974200476783,13
-privilege-escalation,char__ inj,2.928856684531057,14
-privilege-escalation,char__ inje,2.928856684531057,15
-privilege-escalation,word__run,2.921952323028104,16
-privilege-escalation,char__inj,2.9162359376171585,17
-privilege-escalation,word__process,2.7980144969885345,18
-privilege-escalation,char__ject,2.730776005930279,19
-privilege-escalation,char__jec,2.730776005930279,20
-reconnaissance,word__scanned,2.823170544012624,1
-reconnaissance,word__has scanned,2.551897208323523,2
-reconnaissance,word__credentials citation,2.3071511082412983,3
-reconnaissance,char__arge,2.223751726733854,4
-reconnaissance,word__target,2.128298872224488,5
-reconnaissance,char__arg,2.1276964321625877,6
-reconnaissance,char__rge,2.1003602868194626,7
-reconnaissance,word__phishing,2.0637626063709305,8
-reconnaissance,word__vulnerable,2.0620826174272913,9
-reconnaissance,word__on their,1.990946838996985,10
-reconnaissance,char__ targ,1.9262588094184214,11
-reconnaissance,word__their,1.9257253859802825,12
-reconnaissance,char__arget,1.923988754967354,13
-reconnaissance,char__targe,1.923988754967354,14
-reconnaissance,char__targ,1.9224035308955754,15
-reconnaissance,char__rget,1.9223244044655934,16
-reconnaissance,char__ tar,1.8940669976454692,17
-reconnaissance,word__to credential,1.7641732810573418,18
-reconnaissance,char__ scan,1.7006702338775137,19
-reconnaissance,word__harvesting,1.6983900623118409,20
-resource-development,word__domains,4.290792548377442,1
-resource-development,word__to host,4.072022413638304,2
-resource-development,word__has compromised,3.5078743997843183,3
-resource-development,word__created,3.343700182421591,4
-resource-development,word__obtained,3.2781632631485906,5
-resource-development,word__for,2.911120223030584,6
-resource-development,word__and used,2.9107419524449347,7
-resource-development,word__tools,2.748832394094336,8
-resource-development,word__has obtained,2.653731779412157,9
-resource-development,word__acquired,2.622300531199117,10
-resource-development,word__servers,2.498433710738859,11
-resource-development,word__has created,2.396485827001658,12
-resource-development,word__registered,2.3717267919467964,13
-resource-development,word__obtained and,2.344663629175145,14
-resource-development,word__operations citation,2.3280988121817954,15
-resource-development,word__developed,2.250726021945511,16
-resource-development,word__operations,2.248681124538133,17
-resource-development,word__registered domains,2.2390466780920804,18
-resource-development,word__has hosted,2.2307042189430994,19
-resource-development,word__org groups,2.208158291123617,20
-stealth,word__credentials to,3.4259341135407326,1
-stealth,char__ de,3.23371967156029,2
-stealth,word__delete,3.1453427336782642,3
-stealth,word__remove,3.1345216038271615,4
-stealth,word__hidden,3.0435839407400302,5
-stealth,word__delete files,3.0287305498597132,6
-stealth,word__used compromised,2.9781817622494264,7
-stealth,char__delet,2.7789002126346722,8
-stealth,word__rundll32,2.7528147275127197,9
-stealth,char__dele,2.733217136986059,10
-stealth,word__exe,2.6970613396940655,11
-stealth,word__hide,2.678358923108869,12
-stealth,char__elet,2.6719548575567114,13
-stealth,word__dll,2.666277602059097,14
-stealth,char__dll,2.6452591237098457,15
-stealth,char__ dele,2.585960810887257,16
-stealth,char__ hi,2.5673528777598684,17
-stealth,char__ del,2.5136437055157916,18
-stealth,char__del,2.5064086063493916,19
-stealth,word__strings,2.466921802872081,20
+collection,word__data,3.8224985033590686,1
+collection,word__data from,3.3261617571043245,2
+collection,word__files from,3.297913712958268,3
+collection,word__compress,3.04404762031353,4
+collection,word__keylogging,2.9526086547613253,5
+collection,word__keystrokes,2.912168431921979,6
+collection,word__from,2.7700529181775257,7
+collection,word__upload files,2.641710094767617,8
+collection,word__capture,2.6090789390894855,9
+collection,word__accessed,2.5810511766011155,10
+collection,word__audio,2.458451927161278,11
+collection,char__log,2.4569201791892112,12
+collection,word__keylogger,2.3285212187488504,13
+collection,word__screenshots,2.317662747285221,14
+collection,word__webcam,2.293901831632064,15
+collection,word__to exfiltration,2.1846937486039995,16
+collection,char__eylog,2.146192327134854,17
+collection,char__eyl,2.146192327134854,18
+collection,char__eylo,2.146192327134854,19
+collection,char__ keyl,2.146192327134854,20
+command-and-control,word__c2,7.860828554398758,1
+command-and-control,word__proxy,3.6050543810226596,2
+command-and-control,char__ c2,3.556638139351831,3
+command-and-control,word__for c2,3.541597778630059,4
+command-and-control,word__download,3.2284518584431323,5
+command-and-control,word__to compromised,3.0773424268389884,6
+command-and-control,word__can download,3.016889676139864,7
+command-and-control,word__traffic,2.988338739357377,8
+command-and-control,word__http,2.785369020443722,9
+command-and-control,word__has downloaded,2.7563880176858087,10
+command-and-control,word__onto,2.6897845416691513,11
+command-and-control,word__tcp,2.612271246519792,12
+command-and-control,char__ c2 ,2.4873230543514078,13
+command-and-control,char__c2 ,2.4844403964865354,14
+command-and-control,word__tor,2.4437495074253595,15
+command-and-control,word__port,2.416957541128266,16
+command-and-control,word__additional,2.3591441265846678,17
+command-and-control,word__data with,2.2884601072426274,18
+command-and-control,word__downloaded,2.280845848800855,19
+command-and-control,char__ prox,2.2369737850796576,20
+credential-access,char__key,3.739474157692116,1
+credential-access,char__ ke,3.6890171107025527,2
+credential-access,char__ key,3.526834545005477,3
+credential-access,word__keystrokes,3.3852765498916546,4
+credential-access,word__credentials from,3.3601196937777944,5
+credential-access,word__passwords,3.24514362541257,6
+credential-access,word__keylogging,3.219095006872087,7
+credential-access,word__cookies,2.7713213436393587,8
+credential-access,char__oke,2.574360488710445,9
+credential-access,word__tokens,2.508538118259593,10
+credential-access,word__credentials,2.4947608176141554,11
+credential-access,word__authentication,2.4880980030727713,12
+credential-access,word__credential,2.4659258970226996,13
+credential-access,char__log,2.3820158083990246,14
+credential-access,word__dump,2.3782175638124703,15
+credential-access,char__passw,2.3699999022071214,16
+credential-access,word__keylogger,2.350200115534898,17
+credential-access,char__pass,2.346465371553095,18
+credential-access,char__ass,2.3219690025267257,19
+credential-access,word__password,2.3082532876669286,20
+defense-impairment,word__signed,4.226547196321988,1
+defense-impairment,word__registry,3.9566357488424617,2
+defense-impairment,word__logs,3.702047336238925,3
+defense-impairment,word__modify,2.7918917730835204,4
+defense-impairment,word__logging,2.7278237329951938,5
+defense-impairment,word__add,2.606858306875138,6
+defense-impairment,word__disable,2.585714864229641,7
+defense-impairment,word__firewall,2.4787159046071228,8
+defense-impairment,char__ sign,2.3938540652783757,9
+defense-impairment,char__mod,2.390031260714602,10
+defense-impairment,char__sign,2.373939848782029,11
+defense-impairment,word__disabled,2.3726052835095452,12
+defense-impairment,word__group policy,2.3714306767910864,13
+defense-impairment,char__ sig,2.3622281334441637,14
+defense-impairment,char__sig,2.3446488579174884,15
+defense-impairment,char__ disa,2.318156957871604,16
+defense-impairment,word__chmod,2.3102765236715306,17
+defense-impairment,char__disa,2.2747920850054375,18
+defense-impairment,char__ log,2.2714531019750828,19
+defense-impairment,char__log,2.264155094254554,20
+discovery,word__enumerate,3.4176509292639263,1
+discovery,word__identify,3.2548668836805907,2
+discovery,word__check,2.9849307812594,3
+discovery,word__time,2.9296523857672563,4
+discovery,word__discover,2.826305707848982,5
+discovery,word__list,2.813966346518482,6
+discovery,word__to discover,2.793866755130868,7
+discovery,word__net,2.7649796737329266,8
+discovery,char__list,2.61317796493751,9
+discovery,char__ chec,2.4986581859201333,10
+discovery,char__ che,2.476940558302413,11
+discovery,char__eck,2.389316356577646,12
+discovery,word__for files,2.3722328176576712,13
+discovery,char__ lis,2.3694457025710958,14
+discovery,char__ list,2.3694457025710958,15
+discovery,char__check,2.3546203475053504,16
+discovery,char__hec,2.3546203475053504,17
+discovery,char__chec,2.3546203475053504,18
+discovery,char__heck,2.3546203475053504,19
+discovery,char__scan,2.33060641474027,20
+execution,word__wmi,4.068515240963146,1
+execution,word__api,3.5624972239079864,2
+execution,word__shell,3.5520534465528635,3
+execution,word__cmd,3.4959184610943463,4
+execution,word__wmi to,3.3370705223368633,5
+execution,char__wmi,2.932384446877279,6
+execution,word__command line,2.8317424208178976,7
+execution,word__python,2.639152541200041,8
+execution,word__side,2.633085456775146,9
+execution,word__vbs,2.624233850070426,10
+execution,word__cmd exe,2.6165992858716,11
+execution,word__wmic,2.5452108581779354,12
+execution,word__line,2.523469264854412,13
+execution,word__can use,2.5187004513772413,14
+execution,word__apis,2.511718183283731,15
+execution,char__ wmi,2.4912902898543203,16
+execution,char__ wm,2.4735964513284765,17
+execution,word__used powershell,2.4690558431054455,18
+execution,word__users to,2.363293052082956,19
+execution,word__load,2.355028236534563,20
+exfiltration,word__data,3.6919154112219315,1
+exfiltration,word__c2,3.4926907756840206,2
+exfiltration,word__exfiltrate,2.902517589405237,3
+exfiltration,char__trate,2.8480300455447787,4
+exfiltration,word__can send,2.586742377057803,5
+exfiltration,word__has exfiltrated,2.4706512224106887,6
+exfiltration,word__via,2.4421291400397607,7
+exfiltration,char__iltra,2.391635411520113,8
+exfiltration,char__iltr,2.391635411520113,9
+exfiltration,char__ltrat,2.389672688254659,10
+exfiltration,char__ltr,2.382389920073085,11
+exfiltration,char__ltra,2.382389920073085,12
+exfiltration,char__trat,2.3682970752679675,13
+exfiltration,char__exfi,2.3632090604810307,14
+exfiltration,char__ exfi,2.3632090604810307,15
+exfiltration,char__xfi,2.3632090604810307,16
+exfiltration,char__exf,2.3612792558559965,17
+exfiltration,char__ exf,2.3612792558559965,18
+exfiltration,word__to the,2.3118631893277657,19
+exfiltration,char__ilt,2.2869631722468977,20
+impact,word__stop,3.4108356765783943,1
+impact,word__ransom,3.3074329911291027,2
+impact,word__cryptocurrency,3.0545885591499906,3
+impact,word__denial,2.6905643782144484,4
+impact,word__denial of,2.6905643782144484,5
+impact,word__wipe,2.569036595847262,6
+impact,char__wip,2.5360534935391668,7
+impact,word__of service,2.498255197175856,8
+impact,char__ wip,2.2900258041161696,9
+impact,word__and,2.2633784234940637,10
+impact,word__overwrite,2.220640388653638,11
+impact,word__to stop,2.182439233213924,12
+impact,word__shutdown,2.1713416191595334,13
+impact,word__encrypt,2.1411149202791475,14
+impact,word__of,2.124417202557131,15
+impact,word__off,2.0850125833108097,16
+impact,word__mbr,2.06968141629897,17
+impact,char__ stop,2.0590883249993617,18
+impact,word__ransomware,2.03276179910262,19
+impact,word__shadow,2.0308280284039695,20
+initial-access,word__credentials to,3.6117613355176563,1
+initial-access,word__valid,3.248989198239973,2
+initial-access,word__access,3.2202724346220144,3
+initial-access,word__credentials,2.9999513368864164,4
+initial-access,word__spread,2.798658189212888,5
+initial-access,word__deliver,2.7588411351372994,6
+initial-access,word__to deliver,2.712045429622819,7
+initial-access,word__been delivered,2.651370548626491,8
+initial-access,word__credentials for,2.530303724994614,9
+initial-access,word__usb,2.504640504005989,10
+initial-access,word__watering,2.49450766047964,11
+initial-access,word__has sent,2.490604879338313,12
+initial-access,word__distributed,2.3707278972521517,13
+initial-access,char__ls ,2.3392871286884156,14
+initial-access,word__used compromised,2.2866246312414096,15
+initial-access,word__access to,2.2865625777706238,16
+initial-access,word__emails,2.2205740736095163,17
+initial-access,word__emails with,2.2012460303405894,18
+initial-access,word__sent,2.1578157120078525,19
+initial-access,word__downloads,2.0287544407849407,20
+lateral-movement,word__smb,4.934826401423671,1
+lateral-movement,word__rdp,4.125417313703024,2
+lateral-movement,word__hash,3.869819134970867,3
+lateral-movement,word__ssh,3.346731354124896,4
+lateral-movement,char__smb,2.9599794195821856,5
+lateral-movement,char__ smb,2.8031338461796196,6
+lateral-movement,word__winrm,2.7470975021487356,7
+lateral-movement,word__pass the,2.7386227878393465,8
+lateral-movement,word__vnc,2.722377584290702,9
+lateral-movement,word__copy,2.6976260316484124,10
+lateral-movement,word__the hash,2.6891546022794235,11
+lateral-movement,word__to copy,2.6189200574238662,12
+lateral-movement,word__share,2.594642658268953,13
+lateral-movement,word__network share,2.5827657337381846,14
+lateral-movement,word__laterally,2.4464136071254208,15
+lateral-movement,word__pass,2.4343219309073327,16
+lateral-movement,word__tokens to,2.4174805757929967,17
+lateral-movement,word__spread,2.393914904320853,18
+lateral-movement,word__usb,2.3078548172876525,19
+lateral-movement,char__ sm,2.256594055501097,20
+persistence,word__persistence,3.8086592523021303,1
+persistence,word__registry,3.5350463843772446,2
+persistence,word__credentials to,3.0909717489760062,3
+persistence,word__startup,2.9319207838009884,4
+persistence,word__bits,2.9009355462010005,5
+persistence,char__ist,2.662022774114079,6
+persistence,char__sist,2.5083522687410236,7
+persistence,word__web shells,2.4817244630641158,8
+persistence,word__added,2.4791715307634687,9
+persistence,char__rsis,2.436403287790416,10
+persistence,char__rsist,2.436403287790416,11
+persistence,char__ersis,2.436403287790416,12
+persistence,word__shells,2.4341682040273795,13
+persistence,char__persi,2.4294434354982397,14
+persistence,word__web shell,2.3282013742730676,15
+persistence,char__sis,2.3246967675322705,16
+persistence,word__web,2.313640660193753,17
+persistence,char__pers,2.282144109783556,18
+persistence,char__ pers,2.2577305643986953,19
+persistence,word__an,2.181037625087761,20
+privilege-escalation,word__uac,4.110193386915942,1
+privilege-escalation,word__credentials to,3.4382602556783137,2
+privilege-escalation,word__used compromised,3.368265946192771,3
+privilege-escalation,word__persistence,2.9339869260102867,4
+privilege-escalation,word__startup,2.8270798128746413,5
+privilege-escalation,word__into,2.717327616138337,6
+privilege-escalation,word__token,2.5985653558767368,7
+privilege-escalation,word__valid,2.5945091257016957,8
+privilege-escalation,char__inje,2.551553937358125,9
+privilege-escalation,char__injec,2.551553937358125,10
+privilege-escalation,char__njec,2.551553937358125,11
+privilege-escalation,char__nject,2.551553937358125,12
+privilege-escalation,char__nje,2.551553937358125,13
+privilege-escalation,char__ject,2.4512496650758298,14
+privilege-escalation,char__jec,2.4512496650758298,15
+privilege-escalation,char__ inje,2.438730359999723,16
+privilege-escalation,char__ inj,2.438730359999723,17
+privilege-escalation,char__inj,2.4210532182334443,18
+privilege-escalation,word__run,2.408942432970218,19
+privilege-escalation,word__inject,2.4070992166323784,20
+reconnaissance,word__phishing,2.5007347086390914,1
+reconnaissance,word__scanned,2.4638707482344167,2
+reconnaissance,word__has scanned,2.1935151212155692,3
+reconnaissance,word__target,2.1914738573225625,4
+reconnaissance,char__arge,2.1192967166107426,5
+reconnaissance,char__rge,2.1009454109246035,6
+reconnaissance,char__arg,2.0810809839944993,7
+reconnaissance,word__their,2.0519381527165477,8
+reconnaissance,word__llms,1.9558792626810677,9
+reconnaissance,word__llms to,1.9558792626810677,10
+reconnaissance,word__addresses,1.814859321867077,11
+reconnaissance,char__enti,1.8129414932676238,12
+reconnaissance,word__addresses for,1.8067360912764667,13
+reconnaissance,char__ sca,1.8038352090855332,14
+reconnaissance,word__compromise,1.803047276931949,15
+reconnaissance,char__ targ,1.7790583759028424,16
+reconnaissance,word__servers,1.7785787486315816,17
+reconnaissance,char__targe,1.776663053013551,18
+reconnaissance,char__arget,1.776663053013551,19
+reconnaissance,char__rget,1.7752588331180783,20
+resource-development,word__to host,4.211395022154914,1
+resource-development,word__domains,4.020679273195915,2
+resource-development,word__has compromised,3.5579704160448724,3
+resource-development,word__obtained,3.2054454100480405,4
+resource-development,word__created,3.0356740206035506,5
+resource-development,word__for,2.6849271453024337,6
+resource-development,word__tools,2.6129805787697484,7
+resource-development,word__acquired,2.4893798304164694,8
+resource-development,word__operations,2.3987898088670954,9
+resource-development,word__has obtained,2.360824250420405,10
+resource-development,word__registered,2.3607731642645566,11
+resource-development,word__registered domains,2.350088010420175,12
+resource-development,word__custom malware,2.342487557781391,13
+resource-development,word__and used,2.334757106408541,14
+resource-development,word__has hosted,2.3286977396489426,15
+resource-development,word__servers,2.159735572620367,16
+resource-development,word__developed,2.1443011898122966,17
+resource-development,word__email accounts,2.134522234727068,18
+resource-development,word__hosted,2.11293111659544,19
+resource-development,word__obtained and,2.075860962075951,20
+stealth,word__credentials to,3.4846144823892513,1
+stealth,char__ de,3.3712735541948424,2
+stealth,word__hidden,2.941612730642739,3
+stealth,word__used compromised,2.8879424795471356,4
+stealth,char__ dec,2.7582508014880527,5
+stealth,word__remove,2.752015360493382,6
+stealth,word__exe,2.602351236704176,7
+stealth,char__dec,2.582942565987388,8
+stealth,word__delete files,2.5156049534023985,9
+stealth,word__delete,2.5127157490054803,10
+stealth,word__rundll32,2.50689390572906,11
+stealth,word__hide,2.4822239710578837,12
+stealth,word__dll,2.4223883784282765,13
+stealth,word__credentials for,2.414266260141035,14
+stealth,char__dll,2.4092752474945813,15
+stealth,char__ hi,2.3101439024975994,16
+stealth,word__compromised credentials,2.2898498315831626,17
+stealth,char__delet,2.2726401743497866,18
+stealth,char__dele,2.226947790727774,19
+stealth,char__del,2.2261903387752557,20
