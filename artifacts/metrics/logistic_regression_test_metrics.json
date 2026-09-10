@@ -1,0 +1,28 @@
+{
+  "selected_experiment": "lr_word_char_c2",
+  "micro_f1": 0.7820615490218511,
+  "macro_f1": 0.7180338983315717,
+  "weighted_f1": 0.7848866589036981,
+  "samples_f1": 0.7875113495090028,
+  "micro_precision": 0.7194274889496948,
+  "micro_recall": 0.8566416040100251,
+  "hamming_loss": 0.03725432678204752,
+  "subset_accuracy": 0.6309768260486947,
+  "per_label_f1": {
+    "collection": 0.7272727272727273,
+    "command-and-control": 0.8436578171091446,
+    "credential-access": 0.7917737789203085,
+    "defense-impairment": 0.6504559270516718,
+    "discovery": 0.8599857853589197,
+    "execution": 0.7901701323251418,
+    "exfiltration": 0.6701570680628273,
+    "impact": 0.6060606060606061,
+    "initial-access": 0.6556291390728477,
+    "lateral-movement": 0.6285714285714286,
+    "persistence": 0.7673716012084593,
+    "privilege-escalation": 0.8076923076923077,
+    "reconnaissance": 0.5245901639344263,
+    "resource-development": 0.6306306306306306,
+    "stealth": 0.8164893617021277
+  }
+}
