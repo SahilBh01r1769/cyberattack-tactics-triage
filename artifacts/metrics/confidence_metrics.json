@@ -1,0 +1,55 @@
+{
+  "method": "per-label Platt scaling on validation partition",
+  "raw_probability_calibration": {
+    "macro_brier_score": 0.029773633616950713,
+    "macro_expected_calibration_error": 0.047789457040080925
+  },
+  "platt_calibration": {
+    "macro_brier_score": 0.023184152264023587,
+    "macro_expected_calibration_error": 0.008056342848137872
+  },
+  "label_thresholds": {
+    "collection": 0.5,
+    "command-and-control": 0.30000000000000004,
+    "credential-access": 0.30000000000000004,
+    "defense-impairment": 0.30000000000000004,
+    "discovery": 0.525,
+    "execution": 0.325,
+    "exfiltration": 0.325,
+    "impact": 0.45000000000000007,
+    "initial-access": 0.25,
+    "lateral-movement": 0.4,
+    "persistence": 0.35,
+    "privilege-escalation": 0.375,
+    "reconnaissance": 0.325,
+    "resource-development": 0.325,
+    "stealth": 0.42500000000000004
+  },
+  "thresholded_test_metrics": {
+    "micro_f1": 0.7970303259091481,
+    "macro_f1": 0.7358657326335415,
+    "weighted_f1": 0.7969869826634013,
+    "samples_f1": 0.769283688834877,
+    "micro_precision": 0.8003538033864038,
+    "micro_recall": 0.793734335839599,
+    "hamming_loss": 0.03154395228317199,
+    "subset_accuracy": 0.6726312701672045,
+    "per_label_f1": {
+      "collection": 0.7668845315904139,
+      "command-and-control": 0.8538860103626943,
+      "credential-access": 0.7891891891891892,
+      "defense-impairment": 0.6598639455782312,
+      "discovery": 0.8601503759398497,
+      "execution": 0.8136645962732919,
+      "exfiltration": 0.7341772151898734,
+      "impact": 0.6274509803921569,
+      "initial-access": 0.7209302325581395,
+      "lateral-movement": 0.6515151515151515,
+      "persistence": 0.779896013864818,
+      "privilege-escalation": 0.8065040650406504,
+      "reconnaissance": 0.48484848484848486,
+      "resource-development": 0.6733668341708543,
+      "stealth": 0.8156583629893238
+    }
+  }
+}
