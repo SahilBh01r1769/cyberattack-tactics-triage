@@ -54,6 +54,11 @@ def extract_records(bundle: dict[str, Any], min_text_chars: int = 30) -> list[di
         for obj in objects
         if "id" in obj and not obj.get("revoked", False) and not obj.get("x_mitre_deprecated", False)
     }
+    valid_tactics = {
+        obj.get("x_mitre_shortname")
+        for obj in active.values()
+        if obj.get("type") == "x-mitre-tactic" and obj.get("x_mitre_shortname")
+    }
     records: list[dict[str, Any]] = []
 
     for relationship in objects:
@@ -69,7 +74,8 @@ def extract_records(bundle: dict[str, Any], min_text_chars: int = 30) -> list[di
             {
                 phase.get("phase_name", "").strip()
                 for phase in technique.get("kill_chain_phases", [])
-                if phase.get("kill_chain_name") == "mitre-attack" and phase.get("phase_name")
+                if phase.get("kill_chain_name") == "mitre-attack"
+                and phase.get("phase_name") in valid_tactics
             }
         )
         if len(text) < min_text_chars or not tactics:
@@ -201,4 +207,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

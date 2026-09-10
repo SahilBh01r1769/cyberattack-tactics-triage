@@ -1,4 +1,5 @@
 import numpy as np
+import joblib
 
 from src.inference.predict import TacticPredictor
 
@@ -36,3 +37,21 @@ def test_inference_rejects_empty_text() -> None:
         assert "cannot be empty" in str(exc)
     else:
         raise AssertionError("Expected ValueError")
+
+
+def test_saved_artifact_loads(tmp_path) -> None:
+    path = tmp_path / "model.joblib"
+    joblib.dump(
+        {
+            "pipeline": FakePipeline(),
+            "calibration_coefficients": np.ones(2),
+            "calibration_intercepts": np.zeros(2),
+            "labels": ["execution", "collection"],
+            "label_thresholds": np.array([0.5, 0.5]),
+            "config": {"confidence": {"default_threshold": 0.7}},
+        },
+        path,
+    )
+
+    predictor = TacticPredictor.from_artifact(path)
+    assert predictor.predict("PowerShell command")["decision"] == "auto_route"

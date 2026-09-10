@@ -16,6 +16,7 @@ def test_parser_extracts_procedure_with_provenance() -> None:
     assert len(records) == 2
     assert records[0]["technique_id"] == "T1059.001"
     assert records[0]["tactics"] == "defense-evasion|execution"
+    assert "invented-tactic" not in records[0]["tactics"]
     assert records[0]["source_id"] == "G0001"
     assert "<b>" not in records[0]["text"]
 
