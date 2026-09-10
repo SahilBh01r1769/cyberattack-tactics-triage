@@ -18,7 +18,7 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = ["pytest>=8.0"]
-transformer = ["datasets>=2.18", "torch>=2.1", "transformers>=4.39", "accelerate>=0.28"]
+transformer = ["datasets>=2.18", "torch>=2.1", "transformers>=4.46,<5", "accelerate>=0.28"]
 
 [tool.setuptools.packages.find]
 where = ["."]
@@ -27,4 +27,3 @@ include = ["src*"]
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 addopts = "-q"
-

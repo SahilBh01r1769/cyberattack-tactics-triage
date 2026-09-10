@@ -1,0 +1,13 @@
+{
+  "status": "not_run",
+  "model_name": "distilbert-base-uncased",
+  "attempted_mode": "128-example smoke run",
+  "reason": "The current runtime has no GPU and the Hugging Face model download timed out. The run was stopped after the first retry so it would not delay the completed classical pipeline.",
+  "next_command": "python -m src.models.train_transformer",
+  "completed_checks": [
+    "transformer dependencies install",
+    "shared grouped-split loading",
+    "multi-hot label construction",
+    "transformer data-path unit test"
+  ]
+}
