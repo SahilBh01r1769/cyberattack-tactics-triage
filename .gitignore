@@ -1,0 +1,10 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.venv/
+.env
+data/raw/
+artifacts/models/*
+!artifacts/models/.gitkeep
+artifacts/transformer_checkpoints/
