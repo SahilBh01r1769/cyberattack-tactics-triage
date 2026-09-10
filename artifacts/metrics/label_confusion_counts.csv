@@ -1,0 +1,16 @@
+tactic,true_negative,false_positive,false_negative,true_positive
+collection,3096,70,56,187
+command-and-control,2854,83,47,425
+credential-access,3191,27,42,149
+defense-impairment,3214,49,42,104
+discovery,2638,95,73,603
+execution,2818,114,74,403
+exfiltration,3302,33,11,63
+impact,3297,25,27,60
+initial-access,3248,41,25,95
+lateral-movement,3306,27,24,52
+persistence,3032,81,51,245
+privilege-escalation,3029,76,43,261
+reconnaissance,3376,4,18,11
+resource-development,3288,31,29,61
+stealth,2545,155,109,600
