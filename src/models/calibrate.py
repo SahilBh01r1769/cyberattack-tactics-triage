@@ -170,7 +170,13 @@ def calibrate(config_path: str = "configs/experiment.yaml") -> dict:
     _save_figures(tradeoff, reliability)
 
     joblib.dump(
-        {**artifact, "calibrator": calibrator, "label_thresholds": label_thresholds, "labels": labels},
+        {
+            **artifact,
+            "calibration_coefficients": np.asarray([model.coef_[0, 0] for model in calibrator.models]),
+            "calibration_intercepts": np.asarray([model.intercept_[0] for model in calibrator.models]),
+            "label_thresholds": label_thresholds,
+            "labels": labels,
+        },
         project_path("artifacts/models/confidence_logistic_regression.joblib"),
     )
     return metrics
@@ -186,4 +192,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-
