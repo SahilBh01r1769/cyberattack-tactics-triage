@@ -80,5 +80,67 @@
     "validation_test": 0
   },
   "random_split_source_overlap": 882,
-  "technique_overlap_train_test": 421
+  "technique_overlap_train_test": 421,
+  "cross_split_near_duplicates": {
+    "threshold": 0.92,
+    "pair_count": 8,
+    "examples": [
+      {
+        "left_relationship_id": "relationship--037f8492-bbc1-481e-bbbe-d23f2f7d2870",
+        "left_split": "test",
+        "right_relationship_id": "relationship--7b2c432a-d474-4172-ad7b-06b84dc813ae",
+        "right_split": "train",
+        "cosine_similarity": 1.0
+      },
+      {
+        "left_relationship_id": "relationship--7ac62413-be9a-40ef-996d-017c04f04d5b",
+        "left_split": "test",
+        "right_relationship_id": "relationship--42781435-078d-4aad-add9-d70fb5f13bfe",
+        "right_split": "train",
+        "cosine_similarity": 0.964165704871858
+      },
+      {
+        "left_relationship_id": "relationship--973de5df-473f-4791-877d-9c8e7b5527e4",
+        "left_split": "train",
+        "right_relationship_id": "relationship--eb251021-d2a1-46bd-bf9e-e6066d03f298",
+        "right_split": "validation",
+        "cosine_similarity": 0.9596307697439416
+      },
+      {
+        "left_relationship_id": "relationship--d7af8f20-9581-4b41-a591-118842f8ba6e",
+        "left_split": "train",
+        "right_relationship_id": "relationship--8769bb08-b5e3-4264-95ac-6164bdbd54f3",
+        "right_split": "validation",
+        "cosine_similarity": 0.9460016840612794
+      },
+      {
+        "left_relationship_id": "relationship--3952c58b-f181-4051-a4e0-ad351e625ba4",
+        "left_split": "train",
+        "right_relationship_id": "relationship--caaf6cc0-1d43-483a-a0c7-938610d98f48",
+        "right_split": "test",
+        "cosine_similarity": 0.9436348697457488
+      },
+      {
+        "left_relationship_id": "relationship--3fa8155d-11ca-47de-902e-47e809d0ed64",
+        "left_split": "test",
+        "right_relationship_id": "relationship--f9fc4a7b-e8ba-4e50-b97f-9afabcfc73a8",
+        "right_split": "validation",
+        "cosine_similarity": 0.9411278664874342
+      },
+      {
+        "left_relationship_id": "relationship--0537c342-77af-4626-bbe3-9360798a30d5",
+        "left_split": "test",
+        "right_relationship_id": "relationship--13f5f3ac-e16b-4b7a-8b6d-6eaf129231e7",
+        "right_split": "train",
+        "cosine_similarity": 0.9391263858337613
+      },
+      {
+        "left_relationship_id": "relationship--61e9d783-571b-49d4-a30b-8fde8a13d4c0",
+        "left_split": "train",
+        "right_relationship_id": "relationship--f082a4e1-b454-4528-9470-a2799215b235",
+        "right_split": "test",
+        "cosine_similarity": 0.9291158008013433
+      }
+    ]
+  }
 }

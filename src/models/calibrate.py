@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 from dataclasses import dataclass
 
@@ -169,6 +170,7 @@ def calibrate(config_path: str = "configs/experiment.yaml") -> dict:
     reliability.to_csv(metrics_dir / "reliability_bins.csv", index=False)
     _save_figures(tradeoff, reliability)
 
+    confidence_model_path = project_path("artifacts/models/confidence_logistic_regression.joblib")
     joblib.dump(
         {
             **artifact,
@@ -177,8 +179,12 @@ def calibrate(config_path: str = "configs/experiment.yaml") -> dict:
             "label_thresholds": label_thresholds,
             "labels": labels,
         },
-        project_path("artifacts/models/confidence_logistic_regression.joblib"),
+        confidence_model_path,
     )
+    hashes_path = metrics_dir / "model_artifact_hashes.json"
+    hashes = json.loads(hashes_path.read_text(encoding="utf-8")) if hashes_path.exists() else {}
+    hashes[confidence_model_path.name] = hashlib.sha256(confidence_model_path.read_bytes()).hexdigest()
+    hashes_path.write_text(json.dumps(hashes, indent=2), encoding="utf-8")
     return metrics
 
 

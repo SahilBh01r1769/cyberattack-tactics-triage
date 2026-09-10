@@ -8,6 +8,8 @@ from dataclasses import dataclass
 import numpy as np
 import pandas as pd
 from sklearn.model_selection import GroupShuffleSplit, train_test_split
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.neighbors import NearestNeighbors
 from sklearn.preprocessing import MultiLabelBinarizer
 
 from src.config import load_config, project_path
@@ -91,7 +93,31 @@ def _label_counts(frame: pd.DataFrame) -> dict[str, int]:
     return dict(sorted(Counter(label for labels in parse_labels(frame["tactics"]) for label in labels).items()))
 
 
-def split_diagnostics(frame: pd.DataFrame, assignments: pd.Series, metadata: dict, seed: int) -> dict:
+def cross_split_near_duplicates(frame: pd.DataFrame, assignments: pd.Series, threshold: float) -> dict:
+    matrix = TfidfVectorizer(ngram_range=(1, 2), min_df=1, max_features=75000).fit_transform(frame["text"])
+    distances, indices = NearestNeighbors(n_neighbors=4, metric="cosine").fit(matrix).kneighbors(matrix)
+    pairs = {}
+    for row in range(len(frame)):
+        for neighbor_position in range(1, indices.shape[1]):
+            neighbor = int(indices[row, neighbor_position])
+            similarity = 1.0 - float(distances[row, neighbor_position])
+            pair = tuple(sorted((row, neighbor)))
+            if similarity >= threshold and assignments.iloc[row] != assignments.iloc[neighbor]:
+                pairs[pair] = max(similarity, pairs.get(pair, 0.0))
+    examples = [
+        {
+            "left_relationship_id": frame.iloc[left]["relationship_id"],
+            "left_split": assignments.iloc[left],
+            "right_relationship_id": frame.iloc[right]["relationship_id"],
+            "right_split": assignments.iloc[right],
+            "cosine_similarity": similarity,
+        }
+        for (left, right), similarity in sorted(pairs.items(), key=lambda item: item[1], reverse=True)[:10]
+    ]
+    return {"threshold": threshold, "pair_count": len(pairs), "examples": examples}
+
+
+def split_diagnostics(frame: pd.DataFrame, assignments: pd.Series, metadata: dict, seed: int, near_duplicate_threshold: float) -> dict:
     partitions = {name: frame.loc[assignments == name] for name in ("train", "validation", "test")}
     train_random, test_random = train_test_split(frame, test_size=0.20, random_state=seed)
     exact_overlap = {
@@ -113,6 +139,7 @@ def split_diagnostics(frame: pd.DataFrame, assignments: pd.Series, metadata: dic
         "source_overlap": source_overlap,
         "random_split_source_overlap": len(set(train_random.source_id) & set(test_random.source_id)),
         "technique_overlap_train_test": len(set(partitions["train"].technique_id) & set(partitions["test"].technique_id)),
+        "cross_split_near_duplicates": cross_split_near_duplicates(frame, assignments, near_duplicate_threshold),
     }
 
 
@@ -132,7 +159,13 @@ def build_splits(config_path: str = "configs/experiment.yaml") -> pd.DataFrame:
     output_path.parent.mkdir(parents=True, exist_ok=True)
     split_frame.to_csv(output_path, index=False)
 
-    diagnostics = split_diagnostics(frame, assignments, metadata, config["seed"])
+    diagnostics = split_diagnostics(
+        frame,
+        assignments,
+        metadata,
+        config["seed"],
+        config["dataset"]["near_duplicate_threshold"],
+    )
     diagnostics_path = project_path("artifacts/metrics/split_diagnostics.json")
     diagnostics_path.write_text(json.dumps(diagnostics, indent=2), encoding="utf-8")
     return split_frame
@@ -148,4 +181,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-
