@@ -1,55 +1,55 @@
 {
   "method": "per-label Platt scaling on validation partition",
   "raw_probability_calibration": {
-    "macro_brier_score": 0.0265163512279684,
-    "macro_expected_calibration_error": 0.041550292581915914
+    "macro_brier_score": 0.026576232239017717,
+    "macro_expected_calibration_error": 0.04156996571375808
   },
   "platt_calibration": {
-    "macro_brier_score": 0.021253470497901883,
-    "macro_expected_calibration_error": 0.007686891779303368
+    "macro_brier_score": 0.021270493786292248,
+    "macro_expected_calibration_error": 0.0076118028931183605
   },
   "label_thresholds": {
-    "collection": 0.475,
+    "collection": 0.42500000000000004,
     "command-and-control": 0.275,
     "credential-access": 0.275,
-    "defense-impairment": 0.30000000000000004,
+    "defense-impairment": 0.275,
     "discovery": 0.55,
     "execution": 0.275,
-    "exfiltration": 0.325,
+    "exfiltration": 0.275,
     "impact": 0.15000000000000002,
     "initial-access": 0.25,
     "lateral-movement": 0.4,
-    "persistence": 0.35,
-    "privilege-escalation": 0.42500000000000004,
-    "reconnaissance": 0.275,
-    "resource-development": 0.5,
-    "stealth": 0.4
+    "persistence": 0.30000000000000004,
+    "privilege-escalation": 0.45000000000000007,
+    "reconnaissance": 0.17500000000000002,
+    "resource-development": 0.475,
+    "stealth": 0.35
   },
   "thresholded_test_metrics": {
-    "micro_f1": 0.8115577889447236,
-    "macro_f1": 0.7542391644876839,
-    "weighted_f1": 0.812193572382646,
-    "samples_f1": 0.7900478858603306,
-    "micro_precision": 0.809726748558536,
-    "micro_recall": 0.8133971291866029,
-    "hamming_loss": 0.029489826010026542,
-    "subset_accuracy": 0.6956649955765261,
+    "micro_f1": 0.8113559955173701,
+    "macro_f1": 0.7561457415836929,
+    "weighted_f1": 0.8124903690365423,
+    "samples_f1": 0.7935859628428192,
+    "micro_precision": 0.8024630541871921,
+    "micro_recall": 0.8204482498111307,
+    "hamming_loss": 0.029784724270126805,
+    "subset_accuracy": 0.694485402536125,
     "per_label_f1": {
-      "collection": 0.7855626326963907,
+      "collection": 0.7766179540709812,
       "command-and-control": 0.8711395101171459,
-      "credential-access": 0.8113695090439277,
-      "defense-impairment": 0.7023411371237458,
-      "discovery": 0.8721017202692596,
-      "execution": 0.8149646107178968,
-      "exfiltration": 0.7402597402597403,
-      "impact": 0.6598984771573604,
-      "initial-access": 0.744,
-      "lateral-movement": 0.706766917293233,
-      "persistence": 0.7986348122866894,
-      "privilege-escalation": 0.805414551607445,
-      "reconnaissance": 0.48484848484848486,
-      "resource-development": 0.6823529411764706,
-      "stealth": 0.8339324227174695
+      "credential-access": 0.8134715025906736,
+      "defense-impairment": 0.693069306930693,
+      "discovery": 0.874251497005988,
+      "execution": 0.8153380423814329,
+      "exfiltration": 0.7453416149068323,
+      "impact": 0.6565656565656566,
+      "initial-access": 0.7410358565737052,
+      "lateral-movement": 0.6911764705882353,
+      "persistence": 0.7973199329983249,
+      "privilege-escalation": 0.8068376068376069,
+      "reconnaissance": 0.5263157894736842,
+      "resource-development": 0.6976744186046512,
+      "stealth": 0.8360309641097818
     }
   }
 }

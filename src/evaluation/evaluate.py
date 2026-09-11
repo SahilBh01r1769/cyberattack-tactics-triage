@@ -19,9 +19,11 @@ def _read_metrics(filename: str) -> dict:
     return json.loads(project_path(f"artifacts/metrics/{filename}").read_text(encoding="utf-8"))
 
 
-def transformer_comparison_row(metrics: dict) -> dict | None:
+def transformer_comparison_row(metrics: dict, expected_split_sizes: dict[str, int] | None = None) -> dict | None:
     """Return a comparison row only for a completed full-data run."""
     if metrics.get("smoke_limit") is not None:
+        return None
+    if expected_split_sizes is not None and metrics.get("split_sizes") != expected_split_sizes:
         return None
     test_metrics = metrics.get("validation_tuned_test_metrics")
     if not test_metrics:
@@ -46,7 +48,10 @@ def build_model_comparison(config: dict, partitions: dict, targets: dict, binari
     ]
     transformer_path = project_path("artifacts/metrics/transformer_metrics.json")
     if transformer_path.exists():
-        transformer_row = transformer_comparison_row(json.loads(transformer_path.read_text(encoding="utf-8")))
+        split_sizes = {name: len(partition) for name, partition in partitions.items()}
+        transformer_row = transformer_comparison_row(
+            json.loads(transformer_path.read_text(encoding="utf-8")), split_sizes
+        )
         if transformer_row:
             rows.append(transformer_row)
     columns = ["model", "macro_f1", "micro_f1", "weighted_f1", "samples_f1", "hamming_loss", "subset_accuracy"]

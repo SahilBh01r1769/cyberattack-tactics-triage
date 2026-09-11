@@ -29,3 +29,14 @@ def test_full_transformer_result_can_be_added_to_comparison() -> None:
     )
 
     assert row == {"model": "DistilBERT (distilbert-base-uncased)", "macro_f1": 0.77}
+
+
+def test_stale_transformer_split_is_not_added_to_comparison() -> None:
+    metrics = {
+        "model_name": "distilbert-base-uncased",
+        "smoke_limit": None,
+        "split_sizes": {"train": 100, "validation": 20, "test": 30},
+        "validation_tuned_test_metrics": {"macro_f1": 0.77},
+    }
+
+    assert transformer_comparison_row(metrics, {"train": 99, "validation": 20, "test": 30}) is None
