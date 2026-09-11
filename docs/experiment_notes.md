@@ -39,8 +39,14 @@ Routing confidence is the highest calibrated probability among predicted tactics
 - Context words can conflict with the technique-derived label. One `Malicious File` example describes spearphishing delivery, so the model predicted `initial-access` while its linked technique contributes `execution`.
 - Multitactic techniques are sometimes only partially recovered. A `Modify Registry` example linked to `defense-impairment|persistence` was assigned only `defense-impairment`; a `Time Based Checks` example linked to `discovery|stealth` was assigned only `stealth`.
 - Descriptions can genuinely suggest additional behavior. A `Cloud Accounts` record received `credential-access` in addition to its four reference labels because it explicitly says the actor gained access to an administrator account.
-- Sparse `reconnaissance` remains the weakest SVM label (test F1 0.50). Its test estimate is based on only 29 positives and should be treated cautiously.
+- Sparse `reconnaissance` remains the weakest SVM label (test F1 0.553). Its test estimate is based on only 29 positives and should be treated cautiously.
 
 ## Transformer status
 
-The DistilBERT path uses multi-hot labels, positive-class weights, early stopping, best-checkpoint loading and the shared grouped partitions. A 128-example smoke run was attempted, but the model download timed out and the machine had no GPU. The attempt was stopped rather than spending the run on infrastructure retries. Full training and comparison remain open.
+The completed DistilBERT run used multi-hot labels, positive-class weights, best-checkpoint loading and the shared grouped partitions. It trained for three epochs on a Tesla T4 in 106 seconds. Validation loss decreased at every epoch (0.482, 0.367, 0.349), while fixed-threshold validation macro F1 increased (0.568, 0.650, 0.705), so early stopping did not activate.
+
+Positive weighting made the default 0.5 threshold recall-heavy: test recall was 0.902, but precision was 0.656 and macro F1 was 0.695. Per-label thresholds selected on validation data produced 0.824 precision, 0.819 recall and 0.779 macro F1 on test. The large threshold effect is part of the result and is not hidden.
+
+DistilBERT narrowly exceeded Linear SVM in macro F1 (0.779 vs 0.772), samples F1 (0.819 vs 0.807) and exact label-set accuracy (0.753 vs 0.720). SVM remained slightly stronger in micro F1 (0.826 vs 0.822) and Hamming loss (0.02737 vs 0.02770). The transformer improved most on `resource-development` (+0.094 F1), `impact` (+0.079) and `exfiltration` (+0.060), but lost most on `persistence` (-0.058).
+
+The transformer made at least one label error on 836 of 3,391 test examples and emitted no tactic on 122. It performed better on single-label records than multilabel records (samples F1 0.826 vs 0.775), showing that complete recovery of tactics attached to multi-tactic techniques remains a weakness. Frequent residual confusions include `stealth` versus `defense-impairment` or `persistence`.
