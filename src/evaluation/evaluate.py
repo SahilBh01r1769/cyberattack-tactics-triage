@@ -19,6 +19,16 @@ def _read_metrics(filename: str) -> dict:
     return json.loads(project_path(f"artifacts/metrics/{filename}").read_text(encoding="utf-8"))
 
 
+def transformer_comparison_row(metrics: dict) -> dict | None:
+    """Return a comparison row only for a completed full-data run."""
+    if metrics.get("smoke_limit") is not None:
+        return None
+    test_metrics = metrics.get("validation_tuned_test_metrics")
+    if not test_metrics:
+        return None
+    return {"model": f"DistilBERT ({metrics['model_name']})", **test_metrics}
+
+
 def build_model_comparison(config: dict, partitions: dict, targets: dict, binarizer: MultiLabelBinarizer) -> pd.DataFrame:
     most_common = Counter(partitions["train"]["tactics"]).most_common(1)[0][0]
     baseline_row = binarizer.transform([most_common.split("|")])[0]
@@ -34,6 +44,11 @@ def build_model_comparison(config: dict, partitions: dict, targets: dict, binari
         {"model": "Calibrated TF-IDF + LR", **calibrated},
         {"model": "TF-IDF + Linear SVM", **svm},
     ]
+    transformer_path = project_path("artifacts/metrics/transformer_metrics.json")
+    if transformer_path.exists():
+        transformer_row = transformer_comparison_row(json.loads(transformer_path.read_text(encoding="utf-8")))
+        if transformer_row:
+            rows.append(transformer_row)
     columns = ["model", "macro_f1", "micro_f1", "weighted_f1", "samples_f1", "hamming_loss", "subset_accuracy"]
     return pd.DataFrame(rows)[columns]
 
@@ -125,4 +140,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-
