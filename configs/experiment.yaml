@@ -33,6 +33,9 @@ svm:
 confidence:
   default_threshold: 0.70
   thresholds: [0.40, 0.50, 0.60, 0.70, 0.80, 0.90]
+  threshold_selection_size: 0.50
+  split_seed_offset: 3000
+  split_candidate_attempts: 128
 
 technique_holdout:
   test_size: 0.20

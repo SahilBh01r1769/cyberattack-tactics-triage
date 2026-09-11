@@ -13,6 +13,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import brier_score_loss, f1_score
 
 from src.config import load_config, project_path
+from src.data.split import select_grouped_holdout
 from src.evaluation.metrics import multilabel_metrics
 from src.models.train_classical import load_partitions
 
@@ -147,15 +148,41 @@ def calibrate(config_path: str = "configs/experiment.yaml") -> dict:
     validation_scores = pipeline.decision_function(partitions["validation"]["text"])
     test_scores = pipeline.decision_function(partitions["test"]["text"])
     raw_test_probabilities = pipeline.predict_proba(partitions["test"]["text"])
-    calibrator = PerLabelPlattCalibrator.fit(validation_scores, targets["validation"], config["seed"])
+    confidence_config = config["confidence"]
+    calibration_split = select_grouped_holdout(
+        partitions["validation"],
+        targets["validation"],
+        confidence_config["threshold_selection_size"],
+        config["seed"] + confidence_config["split_seed_offset"],
+        attempts=confidence_config["split_candidate_attempts"],
+    )
+    calibration_indices = calibration_split.train_indices
+    threshold_indices = calibration_split.holdout_indices
+    calibrator = PerLabelPlattCalibrator.fit(
+        validation_scores[calibration_indices],
+        targets["validation"][calibration_indices],
+        config["seed"],
+    )
     validation_probabilities = calibrator.predict_proba(validation_scores)
     test_probabilities = calibrator.predict_proba(test_scores)
-    label_thresholds = choose_label_thresholds(targets["validation"], validation_probabilities)
+    label_thresholds = choose_label_thresholds(
+        targets["validation"][threshold_indices],
+        validation_probabilities[threshold_indices],
+    )
     test_predictions = (test_probabilities >= label_thresholds).astype(int)
 
     model_metrics = multilabel_metrics(targets["test"], test_predictions, labels)
     metrics = {
-        "method": "per-label Platt scaling on validation partition",
+        "method": "per-label Platt scaling and threshold selection on disjoint source-grouped validation subsets",
+        "validation_subsets": {
+            "calibration_examples": len(calibration_indices),
+            "threshold_selection_examples": len(threshold_indices),
+            "selection_seed": calibration_split.seed,
+            "source_overlap": len(
+                set(partitions["validation"].iloc[calibration_indices]["source_id"])
+                & set(partitions["validation"].iloc[threshold_indices]["source_id"])
+            ),
+        },
         "raw_probability_calibration": calibration_metrics(targets["test"], raw_test_probabilities),
         "platt_calibration": calibration_metrics(targets["test"], test_probabilities),
         "label_thresholds": dict(zip(labels, label_thresholds.tolist())),

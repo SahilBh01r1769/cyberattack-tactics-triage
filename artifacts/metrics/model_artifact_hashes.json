@@ -1,5 +1,5 @@
 {
-  "confidence_logistic_regression.joblib": "f05d315b9c04642706b7a13ccc590dd608d6740052524a05342d0ee94c031a1a",
+  "confidence_logistic_regression.joblib": "e7804813d3c5dee62ed207deaf21a35fc167054c6bbba1527dc9b50152c30ebc",
   "linear_svm.joblib": "cafa5796957203575570ae4f3c90ac9d2e628277e44035fa5b6ff7efab23589c",
   "logistic_regression.joblib": "ae5c9f64c49cbdb2f4f4cacdaad9ab59503765320dfca43e1742de7606944461",
   "triage_lr.joblib": "7f1fee66fcbdf30fd90728943376dd2819f48f22e6966959dde5284ff282cae4"
