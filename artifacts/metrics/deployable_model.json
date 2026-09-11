@@ -1,0 +1,7 @@
+{
+  "path": "artifacts/models/triage_lr.joblib",
+  "sha256": "7f1fee66fcbdf30fd90728943376dd2819f48f22e6966959dde5284ff282cae4",
+  "size_bytes": 4390660,
+  "source_path": "artifacts/models/confidence_logistic_regression.joblib",
+  "parity_examples": 3
+}

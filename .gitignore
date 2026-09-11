@@ -9,5 +9,6 @@ data/processed/*.csv
 !data/processed/.gitkeep
 artifacts/models/*
 !artifacts/models/.gitkeep
+!artifacts/models/triage_lr.joblib
 artifacts/transformer_checkpoints/
 artifacts/transformer_evidence.zip
