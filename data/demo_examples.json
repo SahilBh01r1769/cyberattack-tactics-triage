@@ -1,0 +1,29 @@
+[
+  {
+    "name": "PowerShell execution",
+    "text": "APT39 has used PowerShell to execute malicious code.",
+    "technique_id": "T1059.001",
+    "technique_name": "PowerShell",
+    "tactics": ["execution"],
+    "source_name": "APT39",
+    "source_id": "G0087"
+  },
+  {
+    "name": "Multi-tactic scheduled task",
+    "text": "During Operation Wocao, threat actors used scheduled tasks to execute malicious PowerShell code on remote systems.",
+    "technique_id": "T1053.005",
+    "technique_name": "Scheduled Task",
+    "tactics": ["execution", "persistence", "privilege-escalation"],
+    "source_name": "Operation Wocao",
+    "source_id": "C0014"
+  },
+  {
+    "name": "Ambiguous tool transfer",
+    "text": "WellMess can write files to a compromised host.",
+    "technique_id": "T1105",
+    "technique_name": "Ingress Tool Transfer",
+    "tactics": ["command-and-control"],
+    "source_name": "WellMess",
+    "source_id": "S0514"
+  }
+]
