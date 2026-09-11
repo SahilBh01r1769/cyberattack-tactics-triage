@@ -201,16 +201,28 @@ def model_evidence() -> None:
         hide_index=True,
     )
     st.caption(
-        "DistilBERT leads macro, samples, and exact-match F1; calibrated Logistic Regression powers live triage "
-        "because it supports measured confidence-aware abstention and transparent local explanations."
+        "Linear SVM is the strongest model on the cleaned grouped-source split. Calibrated Logistic Regression "
+        "powers live triage because it supports measured abstention and transparent local explanations."
     )
+
+    stress = json.loads(Path("artifacts/metrics/technique_holdout_metrics.json").read_text())
+    with st.expander("Unseen-technique stress test"):
+        left, middle, right = st.columns(3)
+        left.metric("Held-out techniques", stress["holdout_techniques"])
+        middle.metric("Technique overlap", stress["technique_overlap"])
+        right.metric("Macro F1", f"{stress['metrics']['macro_f1']:.3f}")
+        st.caption(
+            "This deliberately harder test holds out entire ATT&CK techniques. Its lower score shows that "
+            "generalization to unseen behaviors remains a material limitation."
+        )
 
     left, right = st.columns(2)
     with left:
         st.image("artifacts/figures/model_comparison.png", caption="Model progression")
     with right:
         st.image("artifacts/figures/confidence_coverage.png", caption="Confidence vs. automated coverage")
-    with st.expander("Transformer diagnostics"):
+    with st.expander("Prior transformer run"):
+        st.warning("These diagnostics predate the eight-example near-duplicate cleanup and are awaiting a clean-split rerun.")
         left, right = st.columns(2)
         left.image("artifacts/figures/transformer_training_history.png", caption="DistilBERT training history")
         right.image("artifacts/figures/transformer_per_label_comparison.png", caption="Per-label comparison")
@@ -264,12 +276,12 @@ with st.sidebar:
         step=0.05,
         help="Higher values send more uncertain cases to analyst review.",
     )
-    st.caption("At 0.70, held-out coverage was 77.6% with 88.4% micro F1 on accepted cases.")
+    st.caption("At 0.70, held-out coverage was 78.0% with 87.8% micro F1 on accepted cases.")
     st.divider()
     st.markdown("**Live model**  ")
     st.caption("Calibrated TF-IDF + Logistic Regression")
-    st.markdown("**Best offline model**  ")
-    st.caption("DistilBERT · 0.779 macro F1")
+    st.markdown("**Best verified model**  ")
+    st.caption("Linear SVM · 0.773 macro F1")
     if predictor is None:
         st.warning("Inference artifact missing")
         st.code("python -m src.models.train_classical\npython -m src.models.calibrate", language="bash")
