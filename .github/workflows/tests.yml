@@ -15,6 +15,6 @@ jobs:
           python-version: "3.11"
           cache: pip
       - name: Install project and test dependencies
-        run: python -m pip install -e . pytest
+        run: python -m pip install -e '.[app]' pytest
       - name: Run tests
         run: python -m pytest
