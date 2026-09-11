@@ -19,6 +19,7 @@ dependencies = [
 [project.optional-dependencies]
 dev = ["pytest>=8.0"]
 transformer = ["datasets>=2.18", "torch>=2.1", "transformers>=4.46,<5", "accelerate>=0.28"]
+app = ["streamlit>=1.36"]
 
 [tool.setuptools.packages.find]
 where = ["."]

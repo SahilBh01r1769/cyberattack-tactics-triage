@@ -66,6 +66,13 @@ python -m src.inference.predict --text "The adversary executed a PowerShell comm
 
 The default 0.70 routing threshold is configurable with `--threshold`. Add `--json` for structured output.
 
+A minimal local demo uses the same saved calibrated model:
+
+```bash
+python -m pip install -r requirements-app.txt
+streamlit run app.py
+```
+
 ## Transformer path
 
 `src/models/train_transformer.py` fine-tunes `distilbert-base-uncased` with class-weighted binary cross-entropy, early stopping and the same grouped partitions:
@@ -73,6 +80,8 @@ The default 0.70 routing threshold is configurable with `--threshold`. Add `--js
 ```bash
 python -m src.models.train_transformer
 ```
+
+For a GPU run, open [`notebooks/02_train_transformer_colab.ipynb`](notebooks/02_train_transformer_colab.ipynb) in Colab and run it top to bottom. It downloads a small evidence ZIP and can preserve the checkpoint in Google Drive.
 
 The transformer was not trained in the current run: the available machine had no GPU and its Hugging Face model download timed out. `--smoke-limit 128` provides a bounded flow check. No transformer result is included in the comparison table.
 
