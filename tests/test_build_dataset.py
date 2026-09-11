@@ -3,7 +3,7 @@ from pathlib import Path
 
 import pandas as pd
 
-from src.data.build_dataset import extract_records, normalize_text, remove_duplicate_text
+from src.data.build_dataset import extract_records, extract_tactic_catalog, normalize_text, remove_duplicate_text
 
 
 FIXTURE = Path(__file__).parent / "fixtures" / "attack_bundle.json"
@@ -33,3 +33,11 @@ def test_normalization_keeps_link_text_and_removes_citation_markup() -> None:
     text = "[PowerShell](https://attack.mitre.org/software/S0194) ran commands.(Citation: Example Report 2024)"
 
     assert normalize_text(text) == "PowerShell ran commands."
+
+
+def test_tactic_catalog_uses_stix_metadata() -> None:
+    bundle = json.loads(FIXTURE.read_text(encoding="utf-8"))
+    catalog = extract_tactic_catalog(bundle)
+
+    assert [tactic["slug"] for tactic in catalog] == ["execution", "defense-evasion"]
+    assert catalog[0]["name"] == "Execution"

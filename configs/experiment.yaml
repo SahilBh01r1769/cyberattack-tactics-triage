@@ -6,6 +6,7 @@ dataset:
   processed_path: data/processed/attack_tactic_dataset.csv
   split_path: data/processed/splits.csv
   statistics_path: artifacts/metrics/dataset_statistics.json
+  tactic_catalog_path: data/tactic_catalog.json
   min_text_chars: 30
   near_duplicate_threshold: 0.92
 
@@ -39,4 +40,3 @@ transformer:
   batch_size: 16
   learning_rate: 0.00003
   epochs: 3
-

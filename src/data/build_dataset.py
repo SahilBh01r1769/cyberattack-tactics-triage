@@ -24,6 +24,23 @@ TAG_PATTERN = re.compile(r"<[^>]+>")
 MARKDOWN_LINK_PATTERN = re.compile(r"\[([^]]+)]\([^)]+\)")
 CITATION_PATTERN = re.compile(r"\s*\(Citation:\s*[^)]+\)")
 SPACE_PATTERN = re.compile(r"\s+")
+TACTIC_ORDER = [
+    "reconnaissance",
+    "resource-development",
+    "initial-access",
+    "execution",
+    "persistence",
+    "privilege-escalation",
+    "defense-impairment",
+    "stealth",
+    "credential-access",
+    "discovery",
+    "lateral-movement",
+    "collection",
+    "command-and-control",
+    "exfiltration",
+    "impact",
+]
 
 
 def normalize_text(value: str) -> str:
@@ -39,6 +56,31 @@ def _external_id(obj: dict[str, Any]) -> str:
     references = obj.get("external_references", [])
     attack_ref = next((ref for ref in references if ref.get("source_name") == "mitre-attack"), None)
     return (attack_ref or {}).get("external_id", "")
+
+
+def extract_tactic_catalog(bundle: dict[str, Any]) -> list[dict[str, str]]:
+    """Build display metadata directly from active ATT&CK tactic objects."""
+    order = {slug: index for index, slug in enumerate(TACTIC_ORDER)}
+    catalog = []
+    for obj in bundle.get("objects", []):
+        if obj.get("type") != "x-mitre-tactic" or obj.get("revoked") or obj.get("x_mitre_deprecated"):
+            continue
+        slug = obj.get("x_mitre_shortname", "")
+        attack_ref = next(
+            (ref for ref in obj.get("external_references", []) if ref.get("source_name") == "mitre-attack"),
+            {},
+        )
+        description = normalize_text(obj.get("description", ""))
+        catalog.append(
+            {
+                "slug": slug,
+                "name": obj.get("name", slug.replace("-", " ").title()),
+                "external_id": attack_ref.get("external_id", ""),
+                "url": attack_ref.get("url", ""),
+                "description": description.split(". ", 1)[0].rstrip(".") + "." if description else "",
+            }
+        )
+    return sorted(catalog, key=lambda item: (order.get(item["slug"], len(order)), item["name"]))
 
 
 def _citation_sources(relationship: dict[str, Any]) -> str:
@@ -179,6 +221,7 @@ def build_dataset(config_path: str = "configs/experiment.yaml", force_download: 
 
     raw_bytes = raw_path.read_bytes()
     bundle = json.loads(raw_bytes)
+    catalog = extract_tactic_catalog(bundle)
     frame = pd.DataFrame(extract_records(bundle, dataset_config["min_text_chars"]))
     frame, duplicates_removed = remove_duplicate_text(frame)
     frame = frame.sort_values(["technique_id", "source_id", "relationship_id"]).reset_index(drop=True)
@@ -186,6 +229,10 @@ def build_dataset(config_path: str = "configs/experiment.yaml", force_download: 
     output_path = project_path(dataset_config["processed_path"])
     output_path.parent.mkdir(parents=True, exist_ok=True)
     frame.to_csv(output_path, index=False)
+
+    catalog_path = project_path(dataset_config["tactic_catalog_path"])
+    catalog_path.parent.mkdir(parents=True, exist_ok=True)
+    catalog_path.write_text(json.dumps(catalog, indent=2), encoding="utf-8")
 
     stats = dataset_statistics(
         frame,
