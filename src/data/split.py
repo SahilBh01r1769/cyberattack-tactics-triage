@@ -94,16 +94,7 @@ def _label_counts(frame: pd.DataFrame) -> dict[str, int]:
 
 
 def cross_split_near_duplicates(frame: pd.DataFrame, assignments: pd.Series, threshold: float) -> dict:
-    matrix = TfidfVectorizer(ngram_range=(1, 2), min_df=1, max_features=75000).fit_transform(frame["text"])
-    distances, indices = NearestNeighbors(n_neighbors=4, metric="cosine").fit(matrix).kneighbors(matrix)
-    pairs = {}
-    for row in range(len(frame)):
-        for neighbor_position in range(1, indices.shape[1]):
-            neighbor = int(indices[row, neighbor_position])
-            similarity = 1.0 - float(distances[row, neighbor_position])
-            pair = tuple(sorted((row, neighbor)))
-            if similarity >= threshold and assignments.iloc[row] != assignments.iloc[neighbor]:
-                pairs[pair] = max(similarity, pairs.get(pair, 0.0))
+    pairs = _cross_split_near_duplicate_pairs(frame, assignments, threshold)
     examples = [
         {
             "left_relationship_id": frame.iloc[left]["relationship_id"],
@@ -117,8 +108,67 @@ def cross_split_near_duplicates(frame: pd.DataFrame, assignments: pd.Series, thr
     return {"threshold": threshold, "pair_count": len(pairs), "examples": examples}
 
 
+def _cross_split_near_duplicate_pairs(
+    frame: pd.DataFrame, assignments: pd.Series, threshold: float
+) -> dict[tuple[int, int], float]:
+    matrix = TfidfVectorizer(ngram_range=(1, 2), min_df=1, max_features=75000).fit_transform(frame["text"])
+    neighbor_count = min(4, len(frame))
+    distances, indices = NearestNeighbors(n_neighbors=neighbor_count, metric="cosine").fit(matrix).kneighbors(matrix)
+    pairs = {}
+    for row in range(len(frame)):
+        for neighbor_position in range(1, indices.shape[1]):
+            neighbor = int(indices[row, neighbor_position])
+            similarity = 1.0 - float(distances[row, neighbor_position])
+            pair = tuple(sorted((row, neighbor)))
+            if similarity >= threshold and assignments.iloc[row] != assignments.iloc[neighbor]:
+                pairs[pair] = max(similarity, pairs.get(pair, 0.0))
+    return pairs
+
+
+def exclude_cross_split_near_duplicates(
+    frame: pd.DataFrame, assignments: pd.Series, threshold: float
+) -> tuple[pd.Series, list[str]]:
+    """Exclude the lower-priority side of cross-split near-duplicate pairs.
+
+    Test examples are retained over validation examples, and validation examples
+    are retained over training examples. This keeps the evaluation partitions
+    fixed while removing information that could make them easier.
+    """
+    priority = {"train": 0, "validation": 1, "test": 2}
+    cleaned = assignments.copy()
+    excluded_ids: list[str] = []
+
+    while True:
+        active_indices = np.flatnonzero(cleaned.ne("excluded_near_duplicate").to_numpy())
+        active_frame = frame.iloc[active_indices].reset_index(drop=True)
+        active_assignments = cleaned.iloc[active_indices].reset_index(drop=True)
+        pairs = _cross_split_near_duplicate_pairs(active_frame, active_assignments, threshold)
+        if not pairs:
+            break
+
+        local_to_exclude = set()
+        for left, right in pairs:
+            left_split = active_assignments.iloc[left]
+            right_split = active_assignments.iloc[right]
+            if priority[left_split] < priority[right_split]:
+                local_to_exclude.add(left)
+            elif priority[right_split] < priority[left_split]:
+                local_to_exclude.add(right)
+        if not local_to_exclude:
+            raise RuntimeError("Could not resolve cross-split near-duplicate pairs")
+
+        original_indices = active_indices[sorted(local_to_exclude)]
+        excluded_ids.extend(frame.iloc[original_indices]["relationship_id"].tolist())
+        cleaned.iloc[original_indices] = "excluded_near_duplicate"
+
+    return cleaned, excluded_ids
+
+
 def split_diagnostics(frame: pd.DataFrame, assignments: pd.Series, metadata: dict, seed: int, near_duplicate_threshold: float) -> dict:
     partitions = {name: frame.loc[assignments == name] for name in ("train", "validation", "test")}
+    included = assignments.isin(("train", "validation", "test"))
+    included_frame = frame.loc[included].reset_index(drop=True)
+    included_assignments = assignments.loc[included].reset_index(drop=True)
     train_random, test_random = train_test_split(frame, test_size=0.20, random_state=seed)
     exact_overlap = {
         "train_validation": len(set(partitions["train"].text) & set(partitions["validation"].text)),
@@ -133,13 +183,16 @@ def split_diagnostics(frame: pd.DataFrame, assignments: pd.Series, metadata: dic
     return {
         **metadata,
         "counts": {name: len(partition) for name, partition in partitions.items()},
+        "excluded_near_duplicates": int(assignments.eq("excluded_near_duplicate").sum()),
         "unique_sources": {name: partition["source_id"].nunique() for name, partition in partitions.items()},
         "label_counts": {name: _label_counts(partition) for name, partition in partitions.items()},
         "exact_text_overlap": exact_overlap,
         "source_overlap": source_overlap,
         "random_split_source_overlap": len(set(train_random.source_id) & set(test_random.source_id)),
         "technique_overlap_train_test": len(set(partitions["train"].technique_id) & set(partitions["test"].technique_id)),
-        "cross_split_near_duplicates": cross_split_near_duplicates(frame, assignments, near_duplicate_threshold),
+        "cross_split_near_duplicates": cross_split_near_duplicates(
+            included_frame, included_assignments, near_duplicate_threshold
+        ),
     }
 
 
@@ -153,6 +206,12 @@ def build_splits(config_path: str = "configs/experiment.yaml") -> pd.DataFrame:
         split_config["test_size"],
         split_config["validation_size"],
     )
+    assignments, excluded_ids = exclude_cross_split_near_duplicates(
+        frame,
+        assignments,
+        config["dataset"]["near_duplicate_threshold"],
+    )
+    metadata["excluded_relationship_ids"] = sorted(excluded_ids)
     split_frame = frame[["relationship_id"]].copy()
     split_frame["split"] = assignments
     output_path = project_path(config["dataset"]["split_path"])

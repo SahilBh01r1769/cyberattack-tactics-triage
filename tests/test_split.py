@@ -1,6 +1,6 @@
 import pandas as pd
 
-from src.data.split import make_grouped_splits
+from src.data.split import exclude_cross_split_near_duplicates, make_grouped_splits
 
 
 def _fixture_frame() -> pd.DataFrame:
@@ -34,3 +34,22 @@ def test_grouped_split_is_deterministic() -> None:
     second, _ = make_grouped_splits(frame, 42, 0.20, 0.15)
 
     assert first.tolist() == second.tolist()
+
+
+def test_near_duplicate_purge_keeps_more_conservative_partition() -> None:
+    frame = pd.DataFrame(
+        {
+            "relationship_id": ["train-copy", "test-copy", "unrelated"],
+            "text": [
+                "The actor executed a PowerShell payload on the compromised host",
+                "The actor executed a PowerShell payload on the compromised host today",
+                "Credentials were obtained from browser password stores",
+            ],
+        }
+    )
+    assignments = pd.Series(["train", "test", "validation"])
+
+    cleaned, excluded = exclude_cross_split_near_duplicates(frame, assignments, threshold=0.75)
+
+    assert cleaned.tolist() == ["excluded_near_duplicate", "test", "validation"]
+    assert excluded == ["train-copy"]
