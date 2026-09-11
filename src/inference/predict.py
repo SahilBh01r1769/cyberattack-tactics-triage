@@ -25,7 +25,7 @@ class TacticPredictor:
     @classmethod
     def from_artifact(
         cls,
-        artifact_path: str | Path = "artifacts/models/confidence_logistic_regression.joblib",
+        artifact_path: str | Path = "artifacts/models/triage_lr.joblib",
         routing_threshold: float | None = None,
     ) -> "TacticPredictor":
         artifact = joblib.load(project_path(artifact_path))
@@ -114,7 +114,7 @@ class TacticPredictor:
 def main() -> None:
     parser = argparse.ArgumentParser(description="Predict ATT&CK tactics for a short CTI description")
     parser.add_argument("--text", required=True, help="Threat or incident description")
-    parser.add_argument("--model", default="artifacts/models/confidence_logistic_regression.joblib")
+    parser.add_argument("--model", default="artifacts/models/triage_lr.joblib")
     parser.add_argument("--threshold", type=float, default=None, help="Override analyst-routing confidence threshold")
     parser.add_argument("--json", action="store_true", help="Print machine-readable JSON")
     args = parser.parse_args()
