@@ -1,9 +1,11 @@
 from __future__ import annotations
 
 import argparse
+import importlib.metadata
 import json
 import logging
 import random
+import zipfile
 from pathlib import Path
 
 import numpy as np
@@ -11,9 +13,43 @@ import pandas as pd
 
 from src.config import load_config, project_path
 from src.evaluation.metrics import multilabel_metrics
+from src.models.calibrate import choose_label_thresholds
 
 
 LOGGER = logging.getLogger(__name__)
+
+
+def _sigmoid(values: np.ndarray) -> np.ndarray:
+    return 1.0 / (1.0 + np.exp(-np.clip(values, -30, 30)))
+
+
+def _prediction_frame(
+    frame: pd.DataFrame,
+    targets: np.ndarray,
+    predictions: np.ndarray,
+    probabilities: np.ndarray,
+    labels: list[str],
+) -> pd.DataFrame:
+    rows = []
+    for index in range(len(frame)):
+        rows.append(
+            {
+                "text": frame.iloc[index]["text"],
+                "true_labels": "|".join(labels[column] for column in np.flatnonzero(targets[index])),
+                "predicted_labels": "|".join(labels[column] for column in np.flatnonzero(predictions[index])),
+                "top_confidence": float(probabilities[index].max()),
+                "exact_match": bool(np.array_equal(targets[index], predictions[index])),
+            }
+        )
+    return pd.DataFrame(rows)
+
+
+def _package_evidence(paths: list[Path]) -> Path:
+    archive_path = project_path("artifacts/transformer_evidence.zip")
+    with zipfile.ZipFile(archive_path, "w", compression=zipfile.ZIP_DEFLATED) as archive:
+        for path in paths:
+            archive.write(path, arcname=path.name)
+    return archive_path
 
 
 def _require_transformer_dependencies():
@@ -103,7 +139,7 @@ def train(config_path: str = "configs/experiment.yaml", smoke_limit: int | None 
 
     def compute_metrics(prediction_output):
         logits, target_values = prediction_output
-        probabilities = 1.0 / (1.0 + np.exp(-logits))
+        probabilities = _sigmoid(logits)
         predictions = (probabilities >= 0.5).astype(int)
         metrics = multilabel_metrics(target_values.astype(int), predictions, labels)
         return {key: value for key, value in metrics.items() if key != "per_label_f1"}
@@ -127,6 +163,7 @@ def train(config_path: str = "configs/experiment.yaml", smoke_limit: int | None 
         data_seed=seed,
         report_to=[],
         fp16=torch.cuda.is_available(),
+        logging_steps=max(1, len(datasets["train"]) // (transformer_config["batch_size"] * 10)),
     )
     trainer = WeightedTrainer(
         model=model,
@@ -138,23 +175,55 @@ def train(config_path: str = "configs/experiment.yaml", smoke_limit: int | None 
         callbacks=[EarlyStoppingCallback(early_stopping_patience=1)],
     )
     train_result = trainer.train()
+    validation_result = trainer.predict(datasets["validation"])
     test_result = trainer.predict(datasets["test"])
-    test_metrics = compute_metrics((test_result.predictions, test_result.label_ids))
+    validation_probabilities = _sigmoid(validation_result.predictions)
+    test_probabilities = _sigmoid(test_result.predictions)
+    label_thresholds = choose_label_thresholds(validation_result.label_ids.astype(int), validation_probabilities)
+    fixed_predictions = (test_probabilities >= 0.5).astype(int)
+    tuned_predictions = (test_probabilities >= label_thresholds).astype(int)
+    fixed_test_metrics = multilabel_metrics(test_result.label_ids.astype(int), fixed_predictions, labels)
+    tuned_test_metrics = multilabel_metrics(test_result.label_ids.astype(int), tuned_predictions, labels)
 
     metrics = {
         "model_name": model_name,
-        "device": "cuda" if torch.cuda.is_available() else "cpu",
+        "device": torch.cuda.get_device_name(0) if torch.cuda.is_available() else "cpu",
         "smoke_limit": smoke_limit,
         "split_sizes": {name: len(dataset) for name, dataset in datasets.items()},
         "training_metrics": train_result.metrics,
-        "test_metrics": test_metrics,
+        "label_thresholds_selected_on_validation": dict(zip(labels, label_thresholds.tolist())),
+        "fixed_0_5_test_metrics": fixed_test_metrics,
+        "validation_tuned_test_metrics": tuned_test_metrics,
         "log_history": trainer.state.log_history,
     }
     metrics_path = project_path("artifacts/metrics/transformer_metrics.json")
     metrics_path.write_text(json.dumps(metrics, indent=2), encoding="utf-8")
+    predictions_path = project_path("artifacts/metrics/transformer_test_predictions.csv")
+    _prediction_frame(
+        partitions["test"],
+        test_result.label_ids.astype(int),
+        tuned_predictions,
+        test_probabilities,
+        labels,
+    ).to_csv(predictions_path, index=False)
+    versions_path = project_path("artifacts/metrics/transformer_package_versions.json")
+    versions = {
+        name: importlib.metadata.version(name)
+        for name in ("torch", "transformers", "datasets", "accelerate", "numpy", "pandas")
+    }
+    versions_path.write_text(json.dumps(versions, indent=2), encoding="utf-8")
+    status_path = project_path("artifacts/metrics/transformer_run_status.json")
+    status_path.write_text(
+        json.dumps({"status": "completed", "model_name": model_name, "device": metrics["device"], "smoke_limit": smoke_limit}, indent=2),
+        encoding="utf-8",
+    )
     (output_dir / "labels.json").write_text(json.dumps(labels, indent=2), encoding="utf-8")
     trainer.save_model(output_dir / "best_model")
     tokenizer.save_pretrained(output_dir / "best_model")
+    evidence_path = _package_evidence(
+        [metrics_path, predictions_path, versions_path, status_path, project_path("configs/experiment.yaml")]
+    )
+    metrics["evidence_archive"] = str(evidence_path)
     return metrics
 
 

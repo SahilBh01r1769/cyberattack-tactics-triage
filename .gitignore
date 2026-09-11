@@ -10,3 +10,4 @@ data/processed/*.csv
 artifacts/models/*
 !artifacts/models/.gitkeep
 artifacts/transformer_checkpoints/
+artifacts/transformer_evidence.zip
