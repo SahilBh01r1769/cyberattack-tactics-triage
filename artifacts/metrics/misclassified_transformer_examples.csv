@@ -1,0 +1,837 @@
+text,true_labels,predicted_labels,top_confidence,exact_match
+TrickBot has the ability to capture RDP credentials by capturing the CredEnumerateA API,collection|credential-access,credential-access,0.9941800832748412,False
+MirrorFace has used a tool named MRSAStealer as a password filter to collect credentials on password changes.,credential-access|defense-impairment|persistence,credential-access,0.9937345385551452,False
+"To move laterally on a victim network, FIN6 has used credentials stolen from various systems on which it gathered usernames and password hashes.",initial-access|persistence|privilege-escalation|stealth,credential-access,0.99285089969635,False
+Empire can enumerate Security Support Providers (SSPs) as well as utilize PowerSploit's Install-SSP and Invoke-Mimikatz to install malicious SSPs and log authentication events.,persistence|privilege-escalation,discovery,0.9927951693534852,False
+Pupy can sniff plaintext network credentials and use NBNS Spoofing to poison name services.,collection|credential-access,credential-access,0.9924227595329284,False
+Keydnap prompts the users for credentials.,collection|credential-access,credential-access,0.9922444224357604,False
+Sykipot contains keylogging functionality to steal passwords.,collection|credential-access,credential-access,0.9922143816947936,False
+Empire can use Inveigh to conduct name service poisoning for credential theft and associated relay attacks.,collection|credential-access,credential-access,0.991906762123108,False
+"StrelaStealer enumerates the registry key `HKCU\SOFTWARE\Microsoft\Office\16.0\Outlook\Profiles\Outlook\9375CFF0413111d3B88A00104B2A6676\` to identify the values for ""IMAP User,"" ""IMAP Server,"" and ""IMAP Password"" associated with the Outlook email application.",credential-access,discovery,0.991906762123108,False
+AADInternals can directly download cloud user data such as OneDrive files.,exfiltration,command-and-control,0.9916841983795166,False
+Pupy has a module that checks a number of indicators on the system to determine if its running on a virtual machine.,discovery|stealth,discovery,0.99161958694458,False
+Cuckoo Stealer can capture files from a targeted user's keychain directory.,credential-access,collection,0.9914886951446532,False
+Emotet has been observed to hook network APIs to monitor network traffic.,credential-access|discovery,discovery,0.9911182522773744,False
+P8RAT can check the compromised host for processes associated with VMware or VirtualBox environments.,discovery|stealth,discovery,0.9911182522773744,False
+Latrodectus has routed C2 traffic using Keyhole VNC.,lateral-movement,command-and-control,0.9908034801483154,False
+Penquin can sniff network traffic to look for packets matching specific conditions.,credential-access|discovery,discovery,0.9906237721443176,False
+Koadic can download files off the target system to send back to the server.,collection,command-and-control,0.9905142784118652,False
+"NPPSPY captures credentials by recording them through an alternative network listener registered to the mpnotify.exe process, allowing for cleartext recording of logon information.",credential-access,collection,0.9901782274246216,False
+"Penquin will connect to C2 only after sniffing a ""magic packet"" value in TCP or UDP packets matching specific conditions.",command-and-control|persistence|stealth,command-and-control,0.9900636076927184,False
+"Emotet has maintained persistence through a scheduled task, e.g. though a .dll file in the Registry.",execution|persistence|privilege-escalation,persistence|privilege-escalation,0.9897116422653198,False
+"Dridex can perform browser attacks via web injects to steal information such as credentials, certificates, and cookies.",collection,credential-access,0.9895108342170716,False
+DarkTortilla can detect profilers by verifying the `COR_ENABLE_PROFILING` environment variable is present and active.,execution|stealth,discovery,0.9891815781593324,False
+StrelaStealer payloads have used control flow obfuscation techniques such as excessively long code blocks of mathematical instructions to defeat sandboxing and related analysis methods.,discovery|stealth,stealth,0.9890553951263428,False
+Qilin has pushed a scheduled task via a Group Policy Object for payload execution.,defense-impairment|privilege-escalation,persistence|privilege-escalation,0.988711953163147,False
+FIN6 has used Metasploit’s PsExec NTDSGRAB module to obtain a copy of the victim's Active Directory database.,discovery,credential-access,0.9885804057121276,False
+Downdelph bypasses UAC to escalate privileges by using a custom “RedirectEXE” shim database.,privilege-escalation,persistence|privilege-escalation,0.9885804057121276,False
+"DarkTortilla can search a compromised system's running processes and services to detect Hyper-V, QEMU, Virtual PC, Virtual Box, and VMware, as well as Sandboxie.",discovery|stealth,discovery,0.9884918928146362,False
+"Empire can automatically gather the username, domain name, machine name, and other information from a compromised system.",collection,discovery,0.9884918928146362,False
+MirrorFace has used RDP to exfiltrate files of interest.,lateral-movement,exfiltration,0.9883578419685364,False
+"During Operation Dream Job, Lazarus Group used tools that conducted a variety of system checks to detect sandboxes or VMware services.",discovery|stealth,discovery,0.9880849719047546,False
+"An older version of CHOPSTICK has a module that monitors all mounted volumes for files with the extensions .doc, .docx, .pgp, .gpg, .m2f, or .m2o.",discovery,collection,0.9879926443099976,False
+"UBoatRAT checks for virtualization software such as VMWare, VirtualBox, or QEmu on the compromised machine.",discovery|stealth,discovery,0.9879462122917176,False
+Stuxnet encrypts exfiltrated data via C2 with static 31-byte long XOR keys.,collection,exfiltration,0.9878996014595032,False
+LazyWiper can enumerate the hostname of the system to determine if it is a domain controller and exclude it from being wiped if so.,stealth,discovery,0.9878528118133544,False
+Troll Stealer collects all data in victim `.ssh` folders by creating a compressed copy that is subsequently exfiltrated to command and control infrastructure. Troll Stealer also collects key information associated with the Government Public Key Infrastructure (GPKI) service for South Korean government information systems.,credential-access,collection,0.9878528118133544,False
+APT33 has used SniffPass to collect credentials by sniffing network traffic.,credential-access|discovery,credential-access,0.9878528118133544,False
+OopsIE performs several anti-VM and sandbox checks on the victim's machine. One technique the group has used was to perform a WMI query SELECT * FROM MSAcpi_ThermalZoneTemperature to check the temperature to see if it’s running in a virtual environment.,discovery|stealth,discovery,0.9877586960792542,False
+TA551 has used spoofed company emails that were acquired from email clients on previously infected hosts to target other individuals.,reconnaissance,initial-access,0.987616240978241,False
+FIN13 has replaced legitimate KeePass binaries with trojanized versions to collect passwords from numerous applications.,credential-access|defense-impairment|persistence,credential-access,0.987616240978241,False
+Some SeaDuke samples have a module to use pass the ticket with Kerberos for authentication.,lateral-movement,credential-access,0.9875683188438416,False
+"One variant of BlackEnergy locates existing driver services that have been disabled and drops its driver component into one of those service's paths, replacing the legitimate executable. The malware then sets the hijacked service to start automatically to establish persistence.",execution|stealth,persistence|privilege-escalation,0.9875203371047974,False
+Impacket modules like ntlmrelayx and smbrelayx can be used in conjunction with Network Sniffing and Name Resolution Poisoning and SMB Relay to gather NetNTLM credentials for Brute Force or relay attacks that can gain code execution.,collection|credential-access,credential-access,0.987472116947174,False
+PureCrypter can maintain persistence with scheduled tasks.,execution|persistence|privilege-escalation,persistence|privilege-escalation,0.987472116947174,False
+OilBooster can use an actor-controlled OneDrive account for C2 communication and exfiltration.,exfiltration,command-and-control,0.987375020980835,False
+Doki was executed through an open Docker daemon API port.,initial-access|persistence,execution,0.987326204776764,False
+China Chopper's server component can spider authentication portals.,discovery,credential-access,0.987277328968048,False
+"Emotet can brute force a local admin password, then use it to facilitate lateral movement.",initial-access|persistence|privilege-escalation|stealth,credential-access,0.987277328968048,False
+"During the 2025 Poland Wiper Attacks, the adversaries utilized the Linux `dd` command to overwrite portions of the disks with random data.",execution,impact,0.987129271030426,False
+njRAT can be configured to spread via removable drives.,initial-access|lateral-movement,lateral-movement,0.9870296716690063,False
+UBoatRAT takes advantage of the /SetNotifyCmdLine option in BITSAdmin to ensure it stays running on a system to maintain persistence.,execution|persistence|stealth,persistence|privilege-escalation,0.9869794845581056,False
+"KillDisk has attempted to get the access token of a process by calling OpenProcessToken . If KillDisk gets the access token, then it attempt to modify the token privileges with AdjustTokenPrivileges .",privilege-escalation|stealth,persistence|privilege-escalation,0.986828088760376,False
+"Indrik Spider has collected credentials from infected systems, including domain accounts.",initial-access|persistence|privilege-escalation|stealth,credential-access,0.9867772459983826,False
+Daggerfly has used strategic website compromise to deliver a malicious link requiring user interaction.,execution,initial-access,0.9866748452186584,False
+AshTag can set persistence using scheduled tasks.,execution|persistence|privilege-escalation,persistence|privilege-escalation,0.9864678382873536,False
+EXOTIC LILY has relied on victims to open malicious links in e-mails for execution.,initial-access,execution,0.9862577319145204,False
+Spica has created a scheduled task named `CalendarChecker` for persistence on compromised hosts.,stealth,execution|persistence|privilege-escalation,0.9862046241760254,False
+"Latrodectus can determine if it is running in a virtualized environment by checking the OS version, checking the number of running processes, ensuring a 64-bit application is running on a 64-bit host, and checking if the host has a valid MAC address.",discovery|stealth,discovery,0.9860442876815796,False
+Qilin can embed a copy of PsExec within its payload and place it in the %Temp% directory under a randomly generated filename.,lateral-movement,stealth,0.9858275651931764,False
+"Dridex can maintain persistence via the creation of scheduled tasks within system directories such as `windows\system32\`, `windows\syswow64,` `winnt\system32`, and `winnt\syswow64`.",execution|persistence|privilege-escalation,persistence|privilege-escalation,0.9858275651931764,False
+Stuxnet can propagate via removable media using an autorun.inf file or the CVE-2010-2568 LNK vulnerability.,initial-access|lateral-movement,lateral-movement,0.9858275651931764,False
+FIN13 has utilized custom malware to maintain persistence in a compromised environment.,resource-development,persistence|privilege-escalation,0.9857181310653688,False
+Brute Ratel C4 has injected Latrodectus into the Explorer.exe process on comrpomised hosts.,privilege-escalation|stealth,persistence|privilege-escalation|stealth,0.9857181310653688,False
+RGDoor establishes persistence on webservers as an IIS module.,persistence,persistence|privilege-escalation,0.9856629967689514,False
+Elise encrypts exfiltrated data with RC4.,command-and-control,exfiltration,0.9856629967689514,False
+Industroyer has used a Trojanized version of the Windows Notepad application for an additional backdoor persistence mechanism.,persistence,persistence|privilege-escalation,0.9856076240539552,False
+Crutch has established persistence with a scheduled task impersonating the Outlook item finder.,stealth,persistence|privilege-escalation,0.9855521321296692,False
+"During the 2025 Poland Wiper Attacks, the adversaries attempted to reuse password hash values to gain access to other systems.",lateral-movement,credential-access,0.9855521321296692,False
+LockBit 3.0 can attempt a CMSTP UAC bypass if it does not have administrative privileges.,stealth,persistence|privilege-escalation,0.98544043302536,False
+GrimAgent has the ability to set persistence using the Task Scheduler.,execution|persistence|privilege-escalation,persistence|privilege-escalation,0.98544043302536,False
+PlugX has copied itself to infected removable drives for propagation to other victim devices.,initial-access|lateral-movement,lateral-movement,0.9853842854499816,False
+"Empire contains some modules that leverage API hooking to carry out tasks, such as netripper.",collection|credential-access,execution,0.9853842854499816,False
+Daggerfly has used PowerShell and BITSAdmin to retrieve follow-on payloads from external locations for execution on victim machines.,command-and-control,execution,0.985042929649353,False
+Blue Mockingbird has used JuicyPotato to abuse the SeImpersonate token privilege to escalate from web application pool accounts to NT Authority\SYSTEM.,privilege-escalation|stealth,persistence|privilege-escalation|stealth,0.9849852323532104,False
+Pupy can execute Lazagne as well as Mimikatz using PowerShell.,credential-access,execution,0.9849852323532104,False
+Indrik Spider has created local system accounts and has added the accounts to privileged groups.,persistence,persistence|privilege-escalation,0.9849274158477784,False
+PureCrypter can set multiple Registry Run keys to establish persistence.,persistence|privilege-escalation,defense-impairment|persistence|privilege-escalation,0.9849274158477784,False
+Kazuar has used compromised WordPress blogs as C2 servers.,command-and-control,resource-development,0.9848109483718872,False
+REvil can modify the Registry to save encryption parameters and system information.,defense-impairment|persistence,defense-impairment,0.984752357006073,False
+ANDROMEDA has been spread via infected USB keys.,initial-access|lateral-movement,initial-access,0.9845753908157348,False
+"LockBit 3.0 can change the Registry values for Group Policy refresh time, to disable SmartScreen, and to disable Windows Defender.",defense-impairment|persistence,defense-impairment,0.9845160245895386,False
+"Crutch can persist via DLL search order hijacking on Google Chrome, Mozilla Firefox, or Microsoft OneDrive.",execution|stealth,persistence|privilege-escalation|stealth,0.9843964576721193,False
+"Pupy can bypass Windows UAC through either DLL hijacking, eventvwr, or appPaths.",privilege-escalation,persistence|privilege-escalation,0.9843964576721193,False
+PAKLOG has used `GetForegroundWindow` to access the foreground window. PAKLOG has also captured text from the foreground windows.,discovery,collection,0.9843964576721193,False
+Gazer can establish persistence by creating a scheduled task.,execution|persistence|privilege-escalation,persistence|privilege-escalation,0.9842759370803832,False
+Kazuar obtains a list of running processes through WMI querying.,execution,discovery,0.9842154383659364,False
+"During the 2025 Poland Wiper Attacks, threat actors leveraged the FortiGate VPN interface that was exposed to the internet to gain access to the victim environment.",initial-access|persistence,initial-access,0.9842154383659364,False
+Kazuar can install itself as a new service.,persistence|privilege-escalation,persistence|privilege-escalation|stealth,0.9840936064720154,False
+Daggerfly created a local account on victim machines to maintain access.,persistence,persistence|privilege-escalation,0.9840323328971864,False
+FIN13 has gained access to compromised environments via remote access services such as the corporate virtual private network (VPN).,initial-access|persistence,initial-access,0.983970820903778,False
+AADInternals can create new Azure AD users.,persistence,persistence|privilege-escalation,0.983847200870514,False
+BlackByte Ransomware modifies the victim Registry to prevent system recovery.,defense-impairment|persistence,defense-impairment,0.9837850332260132,False
+StoneDrill can wipe the master boot record of an infected computer.,impact,defense-impairment|impact,0.9837225079536438,False
+"HermeticWiper has the ability to modify Registry keys to disable crash dumps, colors for compressed files, and pop-up information about folders and desktop items.",defense-impairment|persistence,defense-impairment,0.9836598634719848,False
+The AshTag loader and AshenOrchestrator components can collect reconnaissance data from victim machines.,discovery,collection,0.9835969805717468,False
+"For C0015, security researchers assessed the threat actors likely used a phishing campaign to distribute a weaponized attachment to victims.",initial-access,reconnaissance,0.9835969805717468,False
+"Stuxnet checks for specific operating systems on 32-bit machines, Registry keys, and dates for vulnerabilities, and will exit execution if the values are not met.",stealth,discovery,0.9834704995155334,False
+HermeticWiper has the ability to stop the Volume Shadow Copy service.,impact,defense-impairment|impact,0.9833430051803588,False
+Empire includes various modules to attempt to bypass UAC for escalation of privileges.,privilege-escalation,persistence|privilege-escalation,0.9832144975662231,False
+LockBit 3.0 can use a compromised local account for lateral movement.,initial-access|persistence|privilege-escalation|stealth,lateral-movement,0.9832144975662231,False
+TONESHELL has leveraged `GetForegroundWindow` to detect virtualization or sandboxes by calling the API twice and comparing each window handle.,discovery|stealth,discovery,0.9832144975662231,False
+APT29 can create new users through Azure AD.,persistence,persistence|privilege-escalation,0.9832144975662231,False
+APT-C-36 has used VPNs in their operational infrastructure.,initial-access|persistence,resource-development,0.9829546809196472,False
+TrickBot used COM to setup scheduled task for persistence.,execution,execution|persistence|privilege-escalation,0.9828232526779176,False
+Elise exfiltrates data using cookie values that are Base64-encoded.,command-and-control,exfiltration,0.9828232526779176,False
+Vasport copies itself to disk and creates an associated run key Registry entry to establish.,persistence|privilege-escalation,defense-impairment|persistence|privilege-escalation,0.982557475566864,False
+"LAPSUS$ has recruited target organization employees or contractors who provide credentials and approve an associated MFA prompt, or install remote management software onto a corporate workstation, allowing LAPSUS$ to take control of an authenticated system.",execution,initial-access|persistence,0.982557475566864,False
+APT38 has used web shells for persistence or to ensure redundant access.,persistence,execution|persistence|privilege-escalation,0.9824904799461364,False
+LockBit 2.0 can modify Group Policy to disable Windows Defender and to automatically infect devices in Windows domains.,defense-impairment|privilege-escalation,defense-impairment,0.9824904799461364,False
+"Embargo has modified and deleted Registry keys to add services, and to disable Security Solutions such as Windows Defender.",defense-impairment|persistence,defense-impairment,0.9824230670928956,False
+Akira uses compromised VPN accounts for initial access to victim networks.,initial-access|persistence,initial-access|persistence|privilege-escalation|stealth,0.9824230670928956,False
+REvil can use vssadmin to delete volume shadow copies and bcdedit to disable recovery features.,impact,defense-impairment|impact,0.9824230670928956,False
+Kapeka will clear registry values used for persistent configuration storage when uninstalled.,stealth,defense-impairment,0.9824230670928956,False
+"For C0015, the threat actors used DLL files that had invalid certificates.",defense-impairment,stealth,0.982355535030365,False
+Empire can use New-GPOImmediateTask to modify a GPO that will install and execute a malicious Scheduled Task/Job.,defense-impairment|privilege-escalation,persistence|privilege-escalation,0.982355535030365,False
+WellMess can send files from the victim machine to C2.,collection,exfiltration,0.9822195768356324,False
+BackConfig has compromised victims via links to URLs hosting malicious content.,execution,initial-access,0.9820826053619384,False
+Grandoreiro can bypass UAC by registering as the default handler for .MSC files.,privilege-escalation,persistence|privilege-escalation|stealth,0.9820826053619384,False
+LockBit 2.0 can create Registry keys to bypass UAC and for persistence.,defense-impairment|persistence,defense-impairment|persistence|privilege-escalation,0.9820137619972228,False
+Pacu can create snapshots of EBS volumes and RDS instances.,defense-impairment,collection,0.9820137619972228,False
+AADInternals can gather information about a tenant’s domains using public Microsoft APIs.,reconnaissance,discovery,0.981979250907898,False
+APT29 has used compromised identities to access networks via VPNs and Citrix.,initial-access|persistence,initial-access|stealth,0.9819099307060242,False
+Industroyer’s data wiper module writes zeros into the registry keys in SYSTEM\CurrentControlSet\Services to render a system inoperable.,impact,defense-impairment|persistence,0.9818752408027648,False
+TrickBot uses web injects and browser redirection to trick the user into providing their login credentials on a fake or modified web page.,collection,credential-access,0.9818405508995056,False
+LockBit 3.0 can bypass UAC to execute code with elevated privileges through an elevated Component Object Model (COM) interface.,privilege-escalation,persistence|privilege-escalation,0.9818405508995056,False
+NETWIRE can use crontabs to establish persistence.,execution|persistence|privilege-escalation,persistence|privilege-escalation,0.9818405508995056,False
+MgBot includes a module capable of stealing content from the Tencent QQ database storing user QQ message history on infected devices.,collection,collection|credential-access,0.9818405508995056,False
+"During Operation AkaiRyū, MirrorFace exported Chrome web data including contact information, keywords, autofill data, and stored credit card information.",discovery,collection,0.9814534187316896,False
+"During Operation Spalax, the threat actors used droppers that would run anti-analysis checks before executing malware on a compromised host.",discovery|stealth,discovery,0.9814178347587584,False
+SMOKEDHAM has modified the Registry to hide created user accounts from the Windows logon screen.,stealth,defense-impairment|persistence,0.9812029004096984,False
+The NETWIRE client has been signed by fake and invalid digital certificates.,stealth,defense-impairment,0.9811668992042542,False
+APT29 has used repeated MFA requests to gain access to victim accounts.,credential-access,initial-access|persistence|privilege-escalation,0.9810583591461182,False
+TrickBot has used an email with an Excel sheet containing a malicious macro to deploy the malware,initial-access,execution,0.9810219407081604,False
+SslMM contains a feature to manipulate process privileges and tokens.,privilege-escalation|stealth,execution|persistence|privilege-escalation,0.9809855818748474,False
+Embargo has obtained persistence of the loader MDeployer by creating a scheduled task named “Perf_sys.”,execution|persistence|privilege-escalation,persistence|privilege-escalation,0.9809125065803528,False
+Peppy has the ability to automatically exfiltrate files and keylogs.,exfiltration,collection,0.9809125065803528,False
+Koadic has 2 methods for elevating integrity. It can bypass UAC through `eventvwr.exe` and `sdclt.exe`.,privilege-escalation,persistence|privilege-escalation|stealth,0.9806919097900392,False
+Axiom has targeted victims with remote administration tools including RDP.,lateral-movement,initial-access,0.9806548357009888,False
+Stuxnet used xp_cmdshell to store and execute SQL code.,persistence,execution,0.9805060625076294,False
+SUNSPOT modified its security token to grants itself debugging privileges by adding SeDebugPrivilege .,privilege-escalation|stealth,persistence|privilege-escalation|stealth,0.980356216430664,False
+"APT29 has edited the `Microsoft.IdentityServer.Servicehost.exe.config` file to load a malicious DLL into the AD FS process, thereby enabling persistent access to any service federated with AD FS for a user with a specified User Principal Name.",credential-access|defense-impairment|persistence,privilege-escalation|stealth,0.980356216430664,False
+KillDisk attempts to reboot the machine by terminating specific processes.,impact,defense-impairment|impact,0.9803186058998108,False
+"During Operation Dream Job, Lazarus Group conducted internal spearphishing from within a compromised organization.",lateral-movement,initial-access,0.980205237865448,False
+"During APT28 Nearest Neighbor Campaign, APT28 established wireless connections to secure, enterprise Wi-Fi networks belonging to a target organization for initial access into the environment.",initial-access,resource-development,0.9801673293113708,False
+BADNEWS is sometimes signed with an invalid Authenticode certificate in an apparent effort to make it look more legitimate.,stealth,defense-impairment,0.9801293015480042,False
+Qilin has been delivered to victims through spearphishing emails with malicious attachments.,execution,initial-access,0.9800149202346802,False
+LockBit 2.0 can bypass UAC through creating the Registry key `HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Microsoft\Windows NT\CurrentVersion\ICM\Calibration`.,privilege-escalation,persistence|privilege-escalation,0.9797453284263612,False
+Industroyer’s data wiper module clears registry keys and overwrites both ICS configuration and Windows files.,impact,defense-impairment,0.9797453284263612,False
+DarkTortilla can detect debuggers by using functions such as `DebuggerIsAttached` and `DebuggerIsLogging`. DarkTortilla can also detect profilers by verifying the `COR_ENABLE_PROFILING` environment variable is present and active.,discovery|stealth,discovery,0.9796287417411804,False
+Lokibot has utilized multiple techniques to bypass UAC.,privilege-escalation,persistence|privilege-escalation|stealth,0.9795897603034972,False
+FIN6 has used kill.bat script to disable security tools.,execution,defense-impairment,0.9795114994049072,False
+"During the 2025 Poland Wiper Attacks, the adversaries deleted Windows Volume Shadow Copies using `vssadmin delete shadows`.",impact,defense-impairment|impact,0.9792352318763732,False
+Embargo has terminated active processes and services based on a hardcoded list using the `CloseServiceHandle()` function. Embargo has also leveraged MS4Killer to terminate processes contained in an embedded list of security software process names that were XOR-encrypted.,impact,defense-impairment|impact,0.9790757894515992,False
+"LAPSUS$ has targeted various collaboration tools like Slack, Teams, JIRA, Confluence, and others to hunt for exposed credentials to support privilege escalation and lateral movement.",credential-access,reconnaissance,0.9788748621940612,False
+DarkTortilla can use `cmd.exe` to add registry keys for persistence.,execution,persistence|privilege-escalation,0.9788748621940612,False
+Hikit installs a self-generated certificate to the local trust store as a root CA and Trusted Publisher.,defense-impairment,persistence|privilege-escalation,0.9788343906402588,False
+TONESHELL has injected its malicious payload into a running process through Windows utility Microsoft Application Virtualization Injector `MAVInject.exe`.,stealth,privilege-escalation|stealth,0.9787938594818116,False
+Impacket can be used to sniff network traffic via an interface or raw socket.,credential-access|discovery,discovery,0.9787533283233644,False
+Higaisa’s JavaScript file used a legitimate Microsoft Office 2007 package to side-load the OINFO12.OCX dynamic link library.,execution|stealth,execution,0.9787126779556274,False
+CrackMapExec can create a registry key using wdigest.,defense-impairment|persistence,defense-impairment|persistence|privilege-escalation,0.9787126779556274,False
+Dtrack has used process hollowing shellcode to target a predefined list of processes from %SYSTEM32% .,privilege-escalation|stealth,stealth,0.9785903096199036,False
+SideCopy has delivered trojanized executables via spearphishing emails that contacts actor-controlled servers to download malicious payloads.,command-and-control,initial-access,0.9785903096199036,False
+TONESHELL has generated unique GUIDs to identify victim devices. TONESHELL has leveraged environmental keying in payload delivery using the victim computer name and other configuration values. TONESHELL has also tracked IDs associated with reverse shell subprocesses to manage interactions and terminations from C2.,stealth,discovery,0.978549301624298,False
+Cuckoo Stealer can achieve persistence by creating launch agents to repeatedly execute malicious payloads.,persistence|privilege-escalation,execution|persistence|privilege-escalation,0.9783433079719543,False
+Kazuar adds a sub-key under several Registry run keys.,persistence|privilege-escalation,defense-impairment|persistence|privilege-escalation,0.9781354665756226,False
+Embargo has modified the Windows Registry to start a custom service named irnagentd in Safe Mode.,persistence|privilege-escalation,defense-impairment|persistence,0.9780936241149902,False
+LAPSUS$ has accessed internet-facing identity providers such as Azure Active Directory and Okta to target specific organizations.,initial-access,reconnaissance,0.9780517220497132,False
+Embargo has utilized a BAT script to disable security solutions.,execution,defense-impairment,0.9778834581375122,False
+TONESHELL has leveraged custom exception handlers to hide code flow and stop execution of a debugger.,discovery|stealth,stealth,0.9777987599372864,False
+ShimRat has the capability to upload collected files to a C2.,collection,exfiltration,0.9776712656021118,False
+APT29 has exploited CVE-2021-36934 to escalate privileges on a compromised host.,privilege-escalation,persistence|privilege-escalation,0.9776712656021118,False
+REvil has the capability to stop services and kill processes.,impact,defense-impairment|impact,0.977628529071808,False
+FIN13 has logged the keystrokes of victims to escalate privileges.,collection|credential-access,credential-access,0.977500021457672,False
+"Tomiris has used `SCHTASKS /CREATE /SC DAILY /TN StartDVL /TR ""[path to self]"" /ST 10:00` to establish persistence.",execution|persistence|privilege-escalation,persistence|privilege-escalation,0.9774571061134338,False
+SMOKEDHAM has been delivered via malicious links in phishing emails.,reconnaissance,initial-access,0.9773707389831544,False
+Kazuar uploads files from a specified directory to the C2 server.,collection,exfiltration,0.9771973490715028,False
+Qilin can use symbolic links to redirect file paths for remote and local objects and can use `chmod +x` to make its payload binary executable.,defense-impairment,stealth,0.977153778076172,False
+"TrickBot module ""Trickboot"" can write or erase the UEFI/BIOS firmware of a compromised device.",impact,defense-impairment|impact,0.977066457271576,False
+Axiom has used previously compromised administrative accounts to escalate privileges.,initial-access|persistence|privilege-escalation|stealth,persistence|privilege-escalation|stealth,0.977022647857666,False
+"LAPSUS$ has gained access to internet-facing systems and applications, including virtual private network (VPN), remote desktop protocol (RDP), and virtual desktop infrastructure (VDI) including Citrix.",initial-access|persistence,initial-access,0.9768908023834229,False
+CoinTicker executes a Python script to download its second stage.,command-and-control,execution,0.9767136573791504,False
+FIN13 has harvested the NTDS.DIT file and leveraged the Impacket tool on the compromised domain controller to locally decrypt it.,credential-access,stealth,0.976669192314148,False
+MultiLayer Wiper creates a malicious scheduled task that launches a batch file to remove Windows Event Logs.,execution|persistence|privilege-escalation,persistence|privilege-escalation,0.9766246676445008,False
+"During Operation Dream Job, Lazarus Group used tools that collected `GetTickCount` and `GetSystemTimeAsFileTime` data to detect sandbox or VMware services.",discovery|stealth,discovery,0.9765800833702089,False
+AADInternals can check for the existence of user email addresses using public Microsoft APIs.,reconnaissance,discovery,0.9764007329940796,False
+Stuxnet used MS10-073 and an undisclosed Task Scheduler vulnerability to escalate privileges on local Windows machines.,privilege-escalation,persistence|privilege-escalation,0.9760379791259766,False
+BackConfig can download and run batch files to execute commands on a compromised host.,execution,command-and-control,0.9759923219680786,False
+Cuckoo Stealer has captured passwords by prompting victims with a “macOS needs to access System Settings” GUI window.,collection|credential-access,credential-access,0.9759464263916016,False
+"PlugX checks if VMware tools is running in the background by searching for any process named ""vmtoolsd"".",discovery|stealth,discovery,0.9758545756340028,False
+Higaisa used an XSL file to run VBScript code.,stealth,execution,0.9758085012435912,False
+UPPERCUT contains functionality to bypass UAC.,privilege-escalation,persistence|privilege-escalation|stealth,0.9758085012435912,False
+WellMess can use junk data in the Base64 string for additional obfuscation.,command-and-control,stealth,0.97576242685318,False
+"GreyEnergy chooses a service, drops a DLL file, and writes it to that serviceDLL Registry key.",persistence|privilege-escalation,defense-impairment|persistence|privilege-escalation,0.9757161140441896,False
+PlugX has deleted registry keys that store data and maintained persistence.,stealth,defense-impairment|persistence,0.9753900170326232,False
+Kali365's desktop client has made Microsoft Graph API calls using the distinct User-Agent string `kali365-live/1.0.0` to access victim mailboxes and enumerate account data following OAuth token capture.,command-and-control,execution,0.9752489924430848,False
+HermeticWiper can disable pop-up information about folders and desktop items and delete Registry keys to hide malicious services.,stealth,defense-impairment,0.9751545190811156,False
+"STARWHALE has the ability to create the following Windows service to establish persistence on an infected host: `sc create Windowscarpstss binpath= ""cmd.exe /c cscript.exe c:\\windows\\system32\\w7_1.wsf humpback_whale"" start= ""auto"" obj= ""LocalSystem""`.",persistence|privilege-escalation,execution|persistence|privilege-escalation,0.9751071333885192,False
+"LockBit 3.0 can terminate targeted processes and services related to security, backup, database management, and other applications that could stop or interfere with encryption.",impact,defense-impairment|impact,0.975012183189392,False
+LockBit 2.0 can automatically terminate processes that may interfere with the encryption or file extraction processes.,impact,defense-impairment|impact,0.9748690724372864,False
+Wingbird exploits CVE-2016-4117 to allow an executable to gain escalated privileges.,privilege-escalation,execution|persistence|privilege-escalation,0.9746769666671752,False
+APT38 has prepended a space to all of their terminal commands to operate without leaving traces in the HISTCONTROL environment.,defense-impairment,stealth,0.9746769666671752,False
+APT-C-36 has used compromised Google Drive accounts including one associated with a Colombian government organization.,resource-development,initial-access|stealth,0.974628746509552,False
+KGH_SPY can send a file containing victim system information to C2.,collection,exfiltration,0.9745803475379944,False
+"BlackEnergy has used a plug-in to gather credentials stored in files on the host by various software programs, including The Bat! email client, Outlook, and Windows Credential Store.",credential-access,collection|credential-access,0.9744833707809448,False
+CHOPSTICK may store RC4 encrypted configuration information in the Windows Registry.,stealth,defense-impairment,0.974239468574524,False
+POSHSPY uses a WMI event subscription to establish persistence.,persistence|privilege-escalation,execution|persistence|privilege-escalation,0.974239468574524,False
+"USBStealer registers itself under a Registry Run key with the name ""USB Disk Security.""",persistence|privilege-escalation,defense-impairment|persistence|privilege-escalation,0.974141240119934,False
+AshTag has enabled execution via DLL sideloading using a legitimate executable paired with a malicious DLL named wtsapi32.,execution|stealth,execution,0.974141240119934,False
+MirageFox is likely loaded via DLL hijacking into a legitimate McAfee binary.,execution|stealth,stealth,0.9740425944328308,False
+Qilin has created a scheduled task named TVInstallRestore to mimic TeamViewer.,stealth,execution|persistence|privilege-escalation,0.973993182182312,False
+NETWIRE can store its configuration information in the Registry under `HKCU:\Software\Netwire`.,stealth,defense-impairment|persistence,0.9739436507225036,False
+SDBbot has the ability to inject a downloaded DLL into a newly created rundll32.exe process.,privilege-escalation|stealth,stealth,0.9739436507225036,False
+Kapeka utilizes WinAPI calls to gather victim system information.,execution,discovery,0.9737945199012756,False
+Indrik Spider used wmic.exe to add a new user to the system.,persistence,execution,0.9736947417259216,False
+MgBot includes modules for dumping and capturing credentials from process memory.,credential-access,collection|credential-access,0.9731897711753844,False
+APT33 has used compromised Office 365 accounts in tandem with Ruler in an attempt to gain control of endpoints.,initial-access|persistence|privilege-escalation|stealth,initial-access,0.9731387495994568,False
+Grandoreiro can use malicious browser extensions to steal cookies and other user information.,persistence,credential-access,0.9729852676391602,False
+FIN6 has collected schemas and user accounts from systems running SQL Server.,collection,discovery,0.9728823304176332,False
+"ZIPLINE can identify a specific string in intercepted network traffic, `SSH-2.0-OpenSSH_0.3xx.`, to trigger its command functionality.",command-and-control|persistence|stealth,discovery,0.9728307723999025,False
+The AADInternals `Set-AADIntUserMFA` command can be used to disable MFA for a specified user.,credential-access|defense-impairment|persistence,defense-impairment,0.972779095172882,False
+Higaisa dropped and added officeupdate.exe to scheduled tasks.,execution|persistence|privilege-escalation,persistence|privilege-escalation,0.972727358341217,False
+"Pupy can send screenshots files, keylogger data, files, and recorded audio back to the C2 server.",exfiltration,collection|exfiltration,0.972727358341217,False
+"StrelaStealer has sideloaded a DLL payload using a renamed, legitimate `msinfo32.exe` executable.",execution|stealth,stealth,0.9726754426956176,False
+"During Operation AkaiRyū, MirrorFace used compromised accounts to send spearphishing emails.",resource-development,initial-access,0.9725192785263062,False
+Empire can utilize Invoke-DCOM to leverage remote COM execution for lateral movement.,lateral-movement,execution|lateral-movement,0.9724670648574828,False
+"During the 2025 Poland Wiper Attacks, the adversaries leveraged stolen credentials from on-premises environments to access cloud services.",initial-access|persistence|privilege-escalation|stealth,initial-access,0.972151517868042,False
+"FIN6 has used tools to exploit Windows vulnerabilities in order to escalate privileges. The tools targeted CVE-2013-3660, CVE-2011-2005, and CVE-2010-4398, all of which could allow local users to access kernel-level privileges.",privilege-escalation,execution|persistence|privilege-escalation,0.9719924926757812,False
+Stuxnet can create registry keys to load driver files.,defense-impairment|persistence,defense-impairment|persistence|privilege-escalation,0.9718859195709229,False
+LockBit 3.0 can reboot the infected host into Safe Mode.,defense-impairment,defense-impairment|impact,0.9718859195709229,False
+Qilin can bypass standard user access controls by using stolen tokens to launch processes at an elevated security context.,privilege-escalation,persistence|privilege-escalation|stealth,0.9718325734138488,False
+Regin stage 1 modules for 64-bit systems have been found to be signed with fake certificates masquerading as originating from Microsoft Corporation and Broadcom Corporation.,stealth,defense-impairment,0.9716717004776,False
+HyperBro has the ability to start and stop a specified service.,execution,impact,0.9716179370880128,False
+"njRAT is capable of manipulating and deleting registry keys, including those used for persistence.",stealth,defense-impairment|persistence,0.9716179370880128,False
+KGH_SPY has the ability to set the HKCU\Environment\UserInitMprLogonScript Registry key to execute logon scripts.,persistence|privilege-escalation,defense-impairment|persistence|privilege-escalation,0.971563994884491,False
+"APT-C-36 has used a macro function to set scheduled tasks, disguised as those used by Google.",execution|persistence|privilege-escalation,execution,0.9715099930763244,False
+StoneDrill has relied on injecting its payload directly into the process memory of the victim's preferred browser.,privilege-escalation|stealth,stealth,0.9714558720588684,False
+Kapeka writes persistent configuration information to the victim host registry.,defense-impairment|persistence,defense-impairment|persistence|privilege-escalation,0.9714558720588684,False
+APT29 has installed web shells on exploited Microsoft Exchange servers.,persistence,execution|persistence,0.9710193276405334,False
+DustySky searches for removable media and duplicates itself onto it.,initial-access|lateral-movement,lateral-movement,0.9709092378616332,False
+"Pacu can enumerate and download files stored in AWS storage services, such as S3 buckets.",collection,discovery,0.9707432389259338,False
+Crutch can exfiltrate files from compromised systems.,collection,exfiltration,0.970687747001648,False
+APT-C-36 has used a compromised account to send a phishing email to an address likely used and monitored by the IT team within the same targeted organization.,lateral-movement,initial-access,0.9705764651298524,False
+Dtrack has used cmd.exe to add a persistent service.,execution,execution|persistence|privilege-escalation,0.970520555973053,False
+APT29 has hijacked legitimate application-specific startup scripts to enable malware to execute on system startup.,persistence|privilege-escalation,execution|persistence|privilege-escalation,0.9704646468162536,False
+Rising Sun can clear a memory blog in the process by overwriting it with junk bytes.,stealth,defense-impairment|impact,0.9704646468162536,False
+Embargo has avoided encrypting specific files and directories by leveraging a regular expression within the ransomware binary.,stealth,impact|stealth,0.9704086184501648,False
+"During the T9000 installation process, it drops a copy of the legitimate Microsoft binary igfxtray.exe. The executable contains a side-loading weakness which is used to load a portion of the malware.",execution|stealth,stealth,0.9704086184501648,False
+APT33 has attempted to use WMI event subscriptions to establish persistence on compromised hosts.,persistence|privilege-escalation,execution|persistence|privilege-escalation,0.9703524708747864,False
+Koadic can use mshta to serve additional payloads and to help schedule tasks for persistence.,stealth,execution|persistence|privilege-escalation,0.9703524708747864,False
+LAPSUS$ has deleted the target's systems and resources in the cloud to trigger the organization's incident and crisis response process.,defense-impairment,impact,0.9701269268989564,False
+APT-C-36 has used phishing pages appearing like legitimate banking login portals to compromise credentials.,resource-development,initial-access|reconnaissance,0.9700134992599488,False
+"Suckfly the victim's internal network for hosts with ports 8080, 5900, and 40 open.",discovery,command-and-control,0.969956636428833,False
+LAMEHUG can use HTTP POST requests to exfiltrate data from compromised hosts to C2.,command-and-control,exfiltration,0.9697853922843932,False
+APT38 has conducted watering holes schemes to gain initial access to victims.,initial-access,initial-access|reconnaissance,0.9697281122207642,False
+Kapeka can identify system proxy settings via `WinHttpGetIEProxyConfigForCurrentUser()` during initialization and utilize these settings for subsequent command and control operations.,command-and-control,discovery,0.9694979190826416,False
+Empire has a module for creating a new domain user if permissions allow.,persistence,persistence|privilege-escalation,0.9693241715431212,False
+Qilin can terminate antivirus-related processes and services.,defense-impairment,defense-impairment|impact,0.9692660570144652,False
+"During the 2025 Poland Wiper Attacks, the adversaries modified two-factor settings within the FortiGate solution to `unset`.",credential-access|defense-impairment|persistence,defense-impairment,0.9692078232765198,False
+"APT-C-36 has used geolocation filtering in malware delivery to redirect traffic not coming from a targeted region or country, such as Ecuador or Colombia, to legitimate sites.",stealth,command-and-control,0.9690910577774048,False
+APT38 has used a custom secure delete function to make deleted files unrecoverable.,impact,stealth,0.9690910577774048,False
+WastedLocker can perform a UAC bypass if it is not executed with administrator rights or if the infected host runs Windows Vista or later.,privilege-escalation,defense-impairment|persistence|privilege-escalation,0.9690910577774048,False
+Stuxnet uses an RPC server that contains a file dropping routine and support for payload version updates for P2P communications within a victim network.,lateral-movement,command-and-control,0.9689738154411316,False
+Higaisa discovered system proxy settings and used them if available.,command-and-control,discovery,0.9687971472740172,False
+"LAPSUS$ has exploited unpatched vulnerabilities on internally accessible servers including JIRA, GitLab, and Confluence for privilege escalation.",privilege-escalation,initial-access,0.9687971472740172,False
+Stuxnet infects remote servers via network shares and by infecting WinCC database views with malicious code.,lateral-movement,initial-access|lateral-movement,0.9680808186531068,False
+HermeticWiper can disable the VSS service on a compromised host using the service control manager.,impact,defense-impairment,0.968020498752594,False
+"LAPSUS$ has payed employees, suppliers, and business partners of target organizations for credentials.",resource-development,reconnaissance,0.968020498752594,False
+Turian can scan for removable media to collect data.,discovery,collection,0.968020498752594,False
+PlugX has leveraged an initial executable disguised as a legitimate document to trick the target into opening it.,execution,stealth,0.9678993225097656,False
+APT-C-36 has regularly used compromised email accounts in spearphishing campaigns.,resource-development,initial-access,0.9678385257720948,False
+TONESHELL included functionality to create sub-processes with a specific user’s token.,privilege-escalation|stealth,execution|persistence|privilege-escalation,0.967348575592041,False
+"During the 2025 Poland Wiper Attacks, the adversaries leveraged stolen credentials within cloud services to download targeted data from SharePoint, and Teams.",collection,initial-access|lateral-movement,0.9671630263328552,False
+APT29 has embedded ISO images and VHDX files in HTML to evade Mark-of-the-Web.,defense-impairment,stealth,0.9670388102531432,False
+"MirrorFace has employed malicious macros and native Windows tools such as csvde.exe, nltest.exe and quser.exe for discovery.",discovery,execution,0.9667888283729552,False
+Stuxnet transforms encrypted binary data into an ASCII string in order to use it as a URL parameter value.,command-and-control,stealth,0.9667888283729552,False
+SharpDisco has dropped a recent-files stealer plugin to `C:\Users\Public\WinSrcNT\It11.exe`.,collection,stealth,0.9667260646820068,False
+BADNEWS typically loads its DLL file into a legitimate signed Java or VMware executable.,execution|stealth,stealth,0.966663122177124,False
+SDBbot has the ability to use image file execution options for persistence if it detects it is running with admin privileges on a Windows version newer than Windows 7.,persistence|privilege-escalation,execution|persistence|privilege-escalation,0.966537058353424,False
+HermeticWiper can compress 32-bit and 64-bit driver files with the Lempel-Ziv algorithm.,stealth,collection,0.9664104580879213,False
+"Impacket has used its `wmiexec` command, leveraging Windows Management Instrumentation, to remotely stage and execute payloads in victim networks.",lateral-movement,execution,0.9662834405899048,False
+"Wingbird uses services.exe to register a new autostart service named ""Audit Service"" using a copy of the local lsass.exe file.",execution,defense-impairment|persistence|privilege-escalation,0.9662834405899048,False
+PureCrypter code contains an ExclusionRegionNames option where it can compare the results of `kernel32!GetGeoInfo` with a list of regions.,stealth,discovery,0.9660280346870422,False
+TrickBot has used a hidden VNC (hVNC) window to monitor the victim and collect information stealthily.,stealth,collection,0.9657707214355468,False
+"Pacu can search for sensitive data: for example, in Code Build environment variables, EC2 user data, and Cloud Formation templates.",credential-access,discovery,0.9657707214355468,False
+HermeticWiper can overwrite the `C:\Windows\System32\winevt\Logs` file on a targeted system.,defense-impairment,defense-impairment|impact,0.9657061100006104,False
+DOWNIISSA can use the `URLDownloadToFileA()` API to download from remote resources.,execution,command-and-control,0.9657061100006104,False
+SMOKEDHAM has created user accounts.,persistence,persistence|privilege-escalation,0.9657061100006104,False
+"During Operation AkaiRyū, MirrorFace abused Visual Studio Code (VS Code) remote tunnels to gain access and execute code on compromised machines.",command-and-control,initial-access,0.9655115008354188,False
+KGH_SPY has the ability to set a Registry key to run a cmd.exe command.,execution,defense-impairment|persistence|privilege-escalation,0.9654463529586792,False
+WinMM sets a WH_CBT Windows hook to search for and capture files on the victim.,discovery,collection,0.9654463529586792,False
+"MultiLayer Wiper deletes files on network drives, but corrupts and overwrites with random data files stored locally.",impact,impact|stealth,0.9653811454772948,False
+Agent.btz creates a file named thumb.dd on all USB flash drives connected to the victim. This file contains information about the infected system and activity logs.,exfiltration,discovery,0.9653811454772948,False
+LockBit 3.0 can enable automatic logon through the `SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon` Registry key.,persistence|privilege-escalation,defense-impairment|persistence,0.9653158187866212,False
+APT19 launched an HTTP malware variant and a Port 22 malware variant using a legitimate executable that loaded the malicious DLL.,execution|stealth,command-and-control,0.96518474817276,False
+MirrorFace has used remote template injection to retrieve malicious payloads from the C2.,stealth,command-and-control,0.96518474817276,False
+DarkTortilla can implement the `kernel32.dll` Sleep function to delay execution for up to 300 seconds before implementing persistence or processing an addon package.,discovery|stealth,stealth,0.964987337589264,False
+KillDisk loads and executes functions from a DLL.,execution,execution|stealth,0.964855134487152,False
+Daggerfly created code signing certificates to sign malicious macOS files.,resource-development,defense-impairment,0.9645892381668092,False
+Embargo has cleared files from the recycle bin by invoking `SHEmptyRecycleBinW()` and disabled Windows recovery through `C:\Windows\System32\cmd.exe /q /c bcdedit /set {default} recoveryenabled no`.,impact,defense-impairment|impact,0.964522421360016,False
+MirrorFace has sent targeted emails purporting to be from a Japanese political party’s PR department.,stealth,initial-access,0.9643886089324952,False
+TrickBot has used a VNC module to monitor the victim and collect information to pivot to valuable systems on the network,lateral-movement,collection,0.9643214344978333,False
+"During APT28 Nearest Neighbor Campaign, APT28 used the built-in netsh portproxy command to create internal proxies on compromised systems.",command-and-control,execution,0.9641867876052856,False
+Indrik Spider has searched files to obtain and exfiltrate credentials.,credential-access,collection|credential-access,0.9641192555427552,False
+Downdelph uses search order hijacking of the Windows executable sysprep.exe to escalate privileges.,execution|stealth,privilege-escalation|stealth,0.9636433720588684,False
+KillDisk deletes system files to make the OS unbootable. KillDisk also targets and deletes files with 35 different file extensions.,impact,impact|stealth,0.9635748267173768,False
+FIN13 has created MS-SQL local accounts in a compromised network.,persistence,persistence|privilege-escalation,0.9635062217712402,False
+BoomBox can encrypt data using AES prior to exfiltration.,stealth,collection|exfiltration,0.963230550289154,False
+LAPSUS$ has removed a targeted organization's global admin accounts to lock the organization out of all access.,impact,defense-impairment|impact,0.963161289691925,False
+BoomBox can upload data to dedicated per-victim folders in Dropbox.,exfiltration,collection|exfiltration,0.9630919694900512,False
+Grandoreiro can store its configuration in the Registry at `HKCU\Software\` under frequently changing names including %USERNAME% and ToolTech-RM .,stealth,defense-impairment|persistence,0.9630224108695984,False
+DOWNIISSA can create an instance of msiexec.exe and inject LODEINFO shellcode into the memory of the process.,stealth,privilege-escalation|stealth,0.9629528522491456,False
+Elise configures itself as a service.,persistence|privilege-escalation,privilege-escalation|stealth,0.9629528522491456,False
+"During RedPenguin, UNC3886 exploited CVE-2025-21590 to bypass Veriexec protections in Junos OS designed to prevent unauthorized binary execution.",execution,persistence|privilege-escalation|stealth,0.9628831148147584,False
+APT38 has used the legitimate application `ieinstal.exe` to bypass UAC.,privilege-escalation,privilege-escalation|stealth,0.9627432227134703,False
+Qilin can configure a Winlogon registry entry.,persistence|privilege-escalation,defense-impairment|persistence,0.9625324606895448,False
+EXOTIC LILY has searched for information on targeted individuals on business databases including RocketReach and CrunchBase.,reconnaissance,discovery|reconnaissance,0.9625324606895448,False
+The BlackEnergy 3 variant drops its main DLL component and then creates a .lnk shortcut to that file in the startup folder.,persistence|privilege-escalation,privilege-escalation|stealth,0.9622496962547302,False
+"During APT28 Nearest Neighbor Campaign, APT28 dumped NTDS.dit through creating volume shadow copies via vssadmin .",credential-access,lateral-movement,0.9618934392929076,False
+DarkTortilla has used the `WshShortcut` COM object to create a .lnk shortcut file in the Windows startup folder.,execution,execution|persistence|privilege-escalation,0.9617499113082886,False
+"KGH_SPY has the ability to steal data from the Chrome, Edge, Firefox, Thunderbird, and Opera browsers.",credential-access,collection,0.961533784866333,False
+APT29 uses compromised residential endpoints as proxies for defense evasion and network access.,command-and-control,initial-access,0.9614614844322203,False
+APT19 performed a watering hole attack on forbes.com in 2014 to compromise targets.,initial-access,initial-access|reconnaissance,0.9611709713935852,False
+"APT29 has leveraged compromised high-privileged on-premises accounts synced to Office 365 to move laterally into a cloud environment, including through the use of Azure AD PowerShell.",lateral-movement,initial-access|persistence|privilege-escalation,0.9606574773788452,False
+Lizar has used the Reflective DLL injection module from Github to inject itself into a process’s memory.,stealth,privilege-escalation|stealth,0.9605836272239684,False
+MirrorFace has placed specific content in phishing emails to target members of particular political parties.,reconnaissance,initial-access,0.9605096578598022,False
+"APT29 targets dormant or inactive user accounts, accounts belonging to individuals no longer at the organization but whose accounts remain on the system, for access and persistence.",initial-access|persistence|privilege-escalation|stealth,persistence|privilege-escalation,0.9603611826896667,False
+UPPERCUT can upload files to the C2 from infected machines.,collection,exfiltration,0.9603611826896667,False
+TrickBot has used printf and file I/O loops to delay process execution as part of API hammering.,discovery|stealth,stealth,0.9602867364883424,False
+NETWIRE can capture session logon details from a compromised host.,discovery,collection,0.9597620368003844,False
+Troll Stealer encrypts data sent to command and control infrastructure using a combination of RC4 and RSA-4096 algorithms.,command-and-control,exfiltration,0.9596865773200988,False
+Axiom has been observed using SQL injection to gain access to systems.,initial-access,initial-access|lateral-movement,0.9593832492828368,False
+PAKLOG has used legitimate signed binaries such as PACLOUD.exe for follow-on execution of malicious DLLs through DLL Side-Loading.,defense-impairment,defense-impairment|stealth,0.958769917488098,False
+AADInternals can register a device to Azure AD.,persistence|privilege-escalation,defense-impairment,0.9584600329399108,False
+Doki has used Ngrok to establish C2 and exfiltrate data.,exfiltration,command-and-control,0.9584600329399108,False
+Qilin can reboot targeted systems in safe mode to avoid detection.,defense-impairment,defense-impairment|impact,0.958304226398468,False
+Some SeaDuke samples have a module to extract email from Microsoft Exchange servers using compromised credentials.,initial-access|persistence|privilege-escalation|stealth,collection|credential-access,0.9579908847808838,False
+Neoichor can clear the browser history on a compromised host by changing the `ClearBrowsingHistoryOnExit` value to 1 in the `HKEY_CURRENT_USER\Software\Microsoft\Internet Explorer\Privacy` Registry key.,stealth,defense-impairment,0.9579908847808838,False
+"During RedPenguin, UNC3886 used malware implants to deobfuscate incoming C2 messages and encoded archives.",stealth,command-and-control,0.9577545523643494,False
+HermeticWiper has the ability to deploy through an infected system's default domain policy.,defense-impairment|privilege-escalation,defense-impairment|persistence|privilege-escalation,0.95743727684021,False
+Latrodectus can use the Windows Component Object Model (COM) to set scheduled tasks.,execution,execution|persistence,0.95735764503479,False
+KEYMARBLE can upload files to the victim’s machine and can download additional payloads.,command-and-control,command-and-control|exfiltration,0.957277774810791,False
+FIN6 has used the Stealer One credential stealer to target e-mail and file transfer utilities including FTP.,credential-access,reconnaissance,0.9571978449821472,False
+Empire has a module for creating a local user if permissions allow.,persistence,persistence|privilege-escalation,0.957117795944214,False
+StoneDrill has used several anti-emulation techniques to prevent automated analysis by emulators or sandboxes.,discovery|stealth,stealth,0.957117795944214,False
+Empire can add a SID-History to a user if on a domain controller.,privilege-escalation|stealth,persistence|privilege-escalation,0.9567152261734008,False
+Empire has a dylib hijacker module that generates a malicious dylib given the path to a legitimate dylib of a vulnerable application.,execution|stealth,privilege-escalation|stealth,0.9565531015396118,False
+"During Operation Dream Job, Lazarus Group digitally signed their malware and the dbxcli utility.",resource-development,defense-impairment,0.9564718008041382,False
+Kazuar can overwrite files with random data before deleting them.,impact,impact|stealth,0.956308901309967,False
+Grandoreiro can use MSI files to execute DLLs.,stealth,execution|stealth,0.9562273025512696,False
+Spark has used a splash screen to check whether an user actively clicks on the screen before running malicious code.,discovery|stealth,discovery,0.956063449382782,False
+Crutch can use Dropbox to receive commands and upload stolen data.,command-and-control,exfiltration,0.9558990597724916,False
+Empire can use built-in modules to abuse trusted utilities like MSBuild.exe.,execution|stealth,execution,0.9554855227470398,False
+LAPSUS$ has purchased credentials and session tokens from criminal underground forums.,reconnaissance,credential-access,0.9549844264984132,False
+Grandoreiro has infected victims via malicious attachments.,execution,initial-access,0.9548162817955016,False
+AADInternals can inject a malicious DLL (`PTASpy`) into the `AzureADConnectAuthenticationAgentService` to backdoor Azure AD Pass-Through Authentication.,credential-access|defense-impairment|persistence,persistence|privilege-escalation|stealth,0.9547319412231444,False
+Emotet has installed itself as a new service with the service name `Windows Defender System Service` and display name `WinDefService`.,stealth,persistence|privilege-escalation|stealth,0.9542226791381836,False
+Hikit has used DLL to load oci.dll as a persistence mechanism.,execution|stealth,execution|persistence|privilege-escalation,0.9535353183746338,False
+KillDisk terminates various processes to get the user to reboot the victim machine.,impact,defense-impairment|impact,0.95344877243042,False
+"During RedPenguin, UNC3886 peformed a local memory patching attack to modify the snmpd and mgd Junos OS daemons.",persistence,defense-impairment|persistence|privilege-escalation,0.95344877243042,False
+Empire has modules to interact with the Windows task scheduler.,execution|persistence|privilege-escalation,execution,0.95344877243042,False
+Troll Stealer creates and executes a PowerShell script to delete itself.,execution,execution|stealth,0.9533619284629822,False
+Mis-Type may create a temporary user on the system named `Lost_{Unique Identifier}`.,persistence,persistence|privilege-escalation,0.9531880021095276,False
+One variant of BlackEnergy creates a new service using either a hard-coded or randomly generated name.,persistence|privilege-escalation,stealth,0.9531008005142212,False
+Pacu leverages the AWS CLI for its operations.,execution,resource-development,0.9531008005142212,False
+Emotet has sent Microsoft Word documents with embedded macros that will invoke scripts to download additional payloads.,execution,command-and-control,0.9529258608818054,False
+FIN13 has utilized `nmap` for reconnaissance efforts. FIN13 has also scanned for internal MS-SQL servers in a compromised network.,discovery,reconnaissance,0.952397346496582,False
+"HARDRAIN uses the command cmd.exe /c netsh firewall add portopening TCP 443 ""adp"" and makes the victim machine function as a proxy server.",command-and-control,defense-impairment,0.952397346496582,False
+BlackByte Ransomware checks for files related to known sandboxes.,discovery|stealth,discovery,0.9523086547851562,False
+REvil can force a reboot in safe mode with networking.,defense-impairment,defense-impairment|impact,0.9523086547851562,False
+MirrorFace has used tools including the Secure Copy Protocol (SCP) client from PuTTY and Cobalt Strike.,resource-development,command-and-control,0.9521309733390808,False
+MirrorFace has used the the PuTTY suite Secure Copy Protocol (SCP) client for file transfer.,command-and-control,lateral-movement,0.9519526958465576,False
+"Part of APT28's operation involved using CHOPSTICK modules to copy itself to air-gapped machines, using files written to USB sticks to transfer data and command traffic.",command-and-control,lateral-movement,0.9517735838890076,False
+"Daggerfly used Reg to dump the Security Account Manager (SAM), System, and Security Windows registry hives from victim machines.",discovery,credential-access,0.951594054698944,False
+"SUNSPOT created a copy of the SolarWinds Orion software source file with a .bk extension to backup the original content, wrote SUNBURST using the same filename but with a .tmp extension, and then moved SUNBURST using MoveFileEx to the original filename with a .cs extension so it could be compiled within Orion software.",impact,stealth,0.9515040516853333,False
+MultiLayer Wiper uses a batch script launched via a scheduled task to delete Windows Event Logs.,execution,execution|persistence|privilege-escalation,0.9514138102531432,False
+EXOTIC LILY has used contact forms on victim websites to generate phishing e-mails.,reconnaissance,initial-access|reconnaissance,0.951323390007019,False
+Brute Ratel C4 has used reflective loading to execute malicious DLLs.,stealth,execution|stealth,0.95123291015625,False
+APT38 has unhooked DLLs to disable endpoint detection and response (EDR) or anti-virus (AV) tools.,defense-impairment,defense-impairment|stealth,0.951142191886902,False
+Embargo has created a service named irnagentd that executed the MDeployer loader after the system is rebooted in Safe Mode.,execution,execution|privilege-escalation|stealth,0.9510514140129088,False
+KillDisk has used the FindNextFile command as part of its file deletion process.,discovery,stealth,0.9509603977203368,False
+"Agent.btz drops itself onto removable media devices and creates an autorun.inf file with an instruction to run that file. When the device is inserted into another system, it opens autorun.inf and loads the malware.",initial-access|lateral-movement,persistence|privilege-escalation|stealth,0.95059472322464,False
+xCaon has encrypted data sent to the C2 server using a XOR key.,command-and-control,exfiltration,0.9503188729286194,False
+FIN13 has leveraged `WMI` to move laterally within a compromised network via application servers and SQL servers.,lateral-movement,execution|lateral-movement,0.9498556852340698,False
+P8RAT can send randomly-generated data as part of its C2 communication.,command-and-control,command-and-control|exfiltration,0.9495759606361388,False
+Stuxnet sends compromised victim information via HTTP.,exfiltration,command-and-control|exfiltration,0.9494823217391968,False
+"During RedPenguin, UNC3886 used malware to clear the `HISTFILE` environmental variable and to inject into Junos OS processes to inhibit logging.",defense-impairment,defense-impairment|stealth,0.9491063356399536,False
+"SilverTerrier targets organizations in high technology, higher education, and manufacturing for business email compromise (BEC) campaigns with the goal of financial theft.",impact,reconnaissance,0.9491063356399536,False
+"Embargo has leveraged MDeployer to terminate the MS4Killer process, delete the decrypted payload files and a driver file dropped by MS4killer, and reboot the system.",stealth,defense-impairment|impact,0.9490118622779846,False
+ShimRatReporter sent collected system and network information compiled into a report to an adversary-controlled C2.,exfiltration,collection|exfiltration,0.948917269706726,False
+APT29 has installed a run command on a compromised system to enable malware execution on system startup.,persistence|privilege-escalation,execution|persistence|privilege-escalation,0.948917269706726,False
+Troll Stealer creates and can execute a BAT script that will delete the malware.,stealth,execution|stealth,0.9479621648788452,False
+"During the 2025 Poland Wiper Attacks, the adversaries used the Rubeus tool to forge a Diamond Ticket that is a modified legitimate Kerberos ticket.",credential-access,credential-access|lateral-movement,0.9477691650390624,False
+Qilin can execute `vssadmin.exe delete shadows /all /quiet` to remove volume shadow copies and can disable High Availability (HA) and Distributed Resource Scheduler (DRS) in vCenter clusters.,impact,defense-impairment|impact,0.9477691650390624,False
+"Regin appears to have functionality to sniff for credentials passed over HTTP, SMTP, and SMB.",credential-access|discovery,credential-access,0.9474782943725586,False
+Pysa has used RSA and AES-CBC encryption algorithm to encrypt a list of targeted file extensions.,impact,impact|stealth,0.9466953873634338,False
+Cuckoo Stealer can use `launchctl` to load a LaunchAgent for persistence.,execution,execution|persistence|privilege-escalation,0.9466953873634338,False
+MultiLayer Wiper removes the Volume Shadow Copy (VSS) service from infected devices along with all present shadow copies.,defense-impairment,defense-impairment|impact,0.9465966820716858,False
+"BADNEWS identifies files with certain extensions from USB devices, then copies them to a predefined directory.",discovery,collection,0.9464978575706482,False
+Neoichor can use the Internet Explorer (IE) COM interface to connect and receive commands from C2.,execution,command-and-control,0.9463988542556764,False
+"During C0015, the threat actors used `mshta` to execute DLLs.",stealth,execution|stealth,0.9463988542556764,False
+REvil has used obfuscated VBA macros for execution.,execution,stealth,0.94629967212677,False
+An APT19 Port 22 malware variant registers itself as a service.,persistence|privilege-escalation,stealth,0.94629967212677,False
+"BlackByte Ransomware creates a mutex value with a hard-coded name, and terminates if that mutex already exists on the victim system. BlackByte Ransomware checks the system language to see if it matches one of a list of hard-coded values; if a match is found, the malware will terminate.",stealth,impact|stealth,0.9462003111839294,False
+EXOTIC LILY has used the e-mail notification features of legitimate file sharing services for spearphishing.,initial-access,initial-access|reconnaissance,0.9458011984825134,False
+"For Operation Dream Job, Lazarus Group used LinkedIn to identify and target employees within a chosen organization.",reconnaissance,discovery|reconnaissance,0.9458011984825134,False
+"Ixeshe has used registry values and file names associated with Adobe software, such as AcroRd32.exe.",stealth,defense-impairment|stealth,0.945600688457489,False
+SMOKEDHAM has used Powershell to download UltraVNC and ngrok from third-party file sharing sites.,command-and-control,execution,0.9452984929084778,False
+APT33 has used a publicly available exploit for CVE-2017-0213 to escalate privileges on a local system.,privilege-escalation,execution|persistence|privilege-escalation,0.9446893334388732,False
+"During Operation AkaiRyū, MirrorFace abused a signed McAfee executable to load UPPERCUT.",defense-impairment,stealth,0.9443824291229248,False
+ShimRat has registered two registry keys for shim databases.,defense-impairment|persistence,defense-impairment,0.9443824291229248,False
+Pikabot Distribution February 2024 utilized obfuscated JavaScript files for initial Pikabot payload download.,execution,stealth,0.9443824291229248,False
+APT29 has used a compromised global administrator account in Azure AD to backdoor a service principal with `ApplicationImpersonation` rights to start collecting emails from targeted mailboxes; APT29 has also used compromised accounts holding `ApplicationImpersonation` rights in Exchange to collect emails.,persistence|privilege-escalation,initial-access|persistence|privilege-escalation,0.9443824291229248,False
+Emissary has the capability to execute ver and systeminfo commands.,discovery,execution,0.9442797303199768,False
+LazyWiper has overwritten files with pseudorandom 32‑byte sequences written at 16‑byte intervals making the file unrecoverable.,impact,stealth,0.9441768527030944,False
+Blue Mockingbird has executed custom-compiled XMRIG miner DLLs using regsvr32.exe.,stealth,execution|stealth,0.9436599016189576,False
+"Cuckoo Stealer can collect bookmarks, cookies, and history from Safari.",discovery,credential-access,0.9431384205818176,False
+BlackByte Ransomware enables SMBv1 during execution.,defense-impairment,lateral-movement,0.9430335760116576,False
+Empire contains modules for executing commands over SSH as well as in-memory VNC agent injection.,lateral-movement,execution|lateral-movement,0.9430335760116576,False
+KillDisk has called the Windows API to retrieve the hard disk handle and shut down the machine.,execution,impact,0.9430335760116576,False
+"APT29 uses stolen tokens to access victim accounts, without needing a password.",credential-access,lateral-movement,0.9427180886268616,False
+"For Operation Dream Job, Lazarus Group gathered victim organization information to identify specific targets.",reconnaissance,discovery|reconnaissance,0.9427180886268616,False
+TONESHELL has encoded a payload with a random 32-byte key using XOR. TONESHELL has also encoded payloads with a 256-byte key using XOR.,command-and-control,stealth,0.9426124691963196,False
+REvil can connect to and disable the Symantec server on the victim's network.,defense-impairment,defense-impairment|impact,0.9425067901611328,False
+Indrik Spider has used Group Policy Objects to deploy batch scripts.,defense-impairment|privilege-escalation,defense-impairment|persistence|privilege-escalation,0.9424007534980774,False
+Pysa has the functionality to delete shadow copies.,impact,impact|stealth,0.941223442554474,False
+StrelaStealer has been delivered via JScript files in a ZIP archive.,stealth,execution,0.9411153197288512,False
+Impacket modules like GetUserSPNs can be used to get Service Principal Names (SPNs) for user accounts. The output is formatted to be compatible with cracking tools like John the Ripper and Hashcat.,credential-access,discovery,0.9408984184265136,False
+MirrorFace has exfiltrated stored emails from compromised hosts.,collection,collection|exfiltration,0.9404625296592712,False
+PlugX can modify the characteristics of folders to hide them from the compromised user. PlugX has also modified file attributes to hidden and system.,stealth,defense-impairment|stealth,0.9403530955314636,False
+Kali365 has searched compromised mailboxes for credential material such as seed phrases and API keys.,credential-access,credential-access|reconnaissance,0.940133571624756,False
+Keydnap puts a space after a false .jpg extension so that execution actually goes through the Terminal.app program.,stealth,privilege-escalation|stealth,0.9400236010551452,False
+ShimRatReporter encrypted gathered information with a combination of shifting and XOR using a static key.,stealth,collection,0.9399133324623108,False
+Kali365 has the ability to modify email rules to delete email based notifications prior to the victim seeing them.,stealth,defense-impairment,0.9394705891609192,False
+Kali365 has utilized an Exchange Admin module that captured admin tokens to create rogue mailbox connectors and change mail-flow rules.,lateral-movement,credential-access|lateral-movement,0.9394705891609192,False
+LockBit 2.0 can delete log files through the use of wevtutil.,defense-impairment,stealth,0.939359486103058,False
+"APT29 used sticky-keys to obtain unauthenticated, privileged console access.",persistence|privilege-escalation,lateral-movement,0.939359486103058,False
+SslMM creates a new thread implementing a keylogging facility using Windows Keyboard Accelerators.,collection|credential-access,credential-access,0.939136564731598,False
+"Indrik Spider has used Cobalt Strike to empty log files. Additionally, Indrik Spider has cleared all event logs using `wevutil`.",defense-impairment,defense-impairment|impact,0.939024806022644,False
+Part of APT28's operation involved using CHOPSTICK modules to copy itself to air-gapped machines and using files written to USB sticks to transfer data and command traffic.,initial-access|lateral-movement,lateral-movement,0.9385759830474854,False
+"FIN13 has observed the victim's software and infrastructure over several months to understand the technical process of legitimate financial transactions, prior to attempting to conduct fraudulent transactions.",impact,discovery|reconnaissance,0.9384632706642152,False
+Manjusaka communication includes a client-created session cookie with base64-encoded information representing information from the victim system.,command-and-control,credential-access,0.9383503198623656,False
+Dridex has used the OutputDebugStringW function to avoid malware analysis as part of its anti-debugging technique.,execution,stealth,0.9382373094558716,False
+"During APT28 Nearest Neighbor Campaign, APT28 staged captured credential information in the C:\ProgramData directory.",collection,collection|credential-access,0.9378969073295592,False
+BoomBox can check its current working directory and for the presence of a specific file and terminate if specific values are not found.,stealth,discovery|stealth,0.9377830028533936,False
+Stuxnet reduces the integrity level of objects to allow write actions.,defense-impairment,defense-impairment|stealth,0.9377830028533936,False
+Stuxnet calls LoadLibrary then executes exports from a DLL.,execution,execution|stealth,0.937325656414032,False
+MirrorFace has used vssadmin to copy registry hives including SAM.,credential-access,lateral-movement,0.937095820903778,False
+"During C0015, the threat actors used a DLL named `D8B3.dll` that was injected into the Winlogon process.",privilege-escalation|stealth,execution|stealth,0.937095820903778,False
+HermeticWiper can load drivers by creating a new service using the `CreateServiceW` API.,persistence|privilege-escalation,execution|privilege-escalation,0.9365176558494568,False
+AADInternals can create a backdoor by converting a domain to a federated domain which will be able to authenticate any user across the tenant. AADInternals can also modify DesktopSSO information.,defense-impairment|privilege-escalation,defense-impairment|persistence,0.936051607131958,False
+LockBit 3.0 can enable options for propogation through Group Policy Objects.,defense-impairment|privilege-escalation,defense-impairment|persistence|privilege-escalation,0.9356999397277832,False
+DarkTortilla can use a .NET-based DLL named `RunPe6` for process injection.,privilege-escalation|stealth,execution|stealth,0.9355823397636414,False
+Empire can be used to conduct packet captures on target hosts.,credential-access|discovery,collection,0.9353464841842652,False
+Skidmap has installed itself via crontab.,execution|persistence|privilege-escalation,execution|privilege-escalation,0.9352282881736756,False
+HermeticWiper has the ability to overwrite its own file with random bites.,stealth,impact|stealth,0.9349913001060486,False
+Stuxnet uses a driver registered as a boot start service as the main load-point.,persistence|privilege-escalation,persistence|privilege-escalation|stealth,0.9348725080490112,False
+njRAT has executed PowerShell commands via auto-run registry key persistence.,execution,execution|persistence,0.9348725080490112,False
+USBStealer mimics a legitimate Russian program called USB Disk Security.,stealth,defense-impairment,0.934634268283844,False
+Skidmap has the ability to replace the pam_unix.so file on an infected machine with its own malicious version that accepts a specific backdoor password for all users.,credential-access|defense-impairment|persistence,credential-access,0.934634268283844,False
+LAPSUS$ has created new virtual machines within the target's cloud environment after leveraging credential access to cloud assets.,defense-impairment,resource-development,0.9343951344490052,False
+"Indrik Spider has downloaded tools, such as the Advanced Port Scanner utility and Lansweeper, to conduct internal reconnaissance of the victim network. Indrik Spider has also accessed the victim’s VMware VCenter, which had information about host configuration, clusters, etc.",reconnaissance,discovery,0.9342753291130066,False
+SharpDisco has been used to download a Python interpreter to `C:\Users\Public\WinTN\WinTN.exe` as well as other plugins from external sources.,command-and-control,execution,0.9342753291130066,False
+Javali has used the MSI installer to download and execute malicious payloads.,stealth,execution,0.934155285358429,False
+LAPSUS$ has searched a victim's network for collaboration platforms like SharePoint to discover further high-privilege account credentials.,collection,credential-access|reconnaissance,0.933914601802826,False
+APT19 downloaded and launched code within a SCT file.,execution,command-and-control,0.9331876635551452,False
+Dtrack can remove its persistence and delete itself.,stealth,privilege-escalation|stealth,0.9326989054679872,False
+China Chopper's server component is a Web Shell payload.,persistence,execution,0.9325762391090392,False
+TEARDROP checked that HKU\SOFTWARE\Microsoft\CTF existed before decoding its embedded payload.,discovery,stealth,0.9318356513977052,False
+FIN6 has used Pastebin and Google Storage to host content for their operations.,command-and-control,resource-development,0.9312127232551576,False
+Daggerfly compromised web servers hosting updates for software as part of a supply chain intrusion.,resource-development,initial-access|resource-development,0.9312127232551576,False
+"Wingbird drops a malicious file (sspisrv.dll) alongside a copy of lsass.exe, which is used to register a service that loads sspisrv.dll as a driver. The payload of the malicious driver (located in its entry-point function) is executed when loaded by lsass.exe before the spoofed service becomes unstable and crashes.",persistence|privilege-escalation,execution|privilege-escalation|stealth,0.930962085723877,False
+Penquin can execute the command code do_upload to send files to C2.,exfiltration,command-and-control|exfiltration,0.9307105541229248,False
+Stuxnet attempts to access network resources with a domain account’s credentials.,initial-access|persistence|privilege-escalation|stealth,credential-access,0.9307105541229248,False
+ZIPLINE can add itself to the exclusion list for the Ivanti Connect Secure Integrity Checker Tool if the `--exclude` parameter is passed by the `tar` process.,defense-impairment,defense-impairment|privilege-escalation|stealth,0.9296960830688475,False
+Suckfly has used stolen certificates to sign its malware.,defense-impairment,resource-development,0.9296960830688475,False
+Brute Ratel C4 can call `NtDelayExecution` to pause execution.,discovery|stealth,stealth,0.929568350315094,False
+LAPSUS$ has searched a victim's network for organization collaboration channels like MS Teams or Slack to discover further high-privilege account credentials.,collection,credential-access|reconnaissance,0.929312229156494,False
+Akira deletes administrator accounts in victim networks prior to encryption.,impact,defense-impairment|impact,0.929312229156494,False
+NETWIRE can copy itself to and launch itself from hidden folders.,stealth,lateral-movement,0.929055154323578,False
+NPPSPY creates a network listener using the misspelled label logincontroll recorded to the Registry key HKLM\\SYSTEM\\CurrentControlSet\\Control\\NetworkProvider\\Order .,stealth,defense-impairment|persistence,0.9289263486862184,False
+Qilin can require a specific password to be passed by command-line argument during execution which must match a pre-defined value in the configuration in order for it to continue execution.,stealth,execution|stealth,0.9289263486862184,False
+AADInternals can be used to create SAML tokens using the AD Federated Services token signing certificate.,credential-access,privilege-escalation,0.9287972450256348,False
+APT29 has embedded an ISO file within an HTML attachment that contained JavaScript code to initiate malware execution.,stealth,execution|stealth,0.9282788634300232,False
+TONESHELL has utilized a magic value in C2 communications and only executes in memory when response packets match specific values.,command-and-control|persistence|stealth,command-and-control,0.9282788634300232,False
+Pupy can also perform pass-the-ticket.,lateral-movement,credential-access|lateral-movement,0.9281486868858336,False
+Axiom has used digital certificates to deliver malware.,defense-impairment,resource-development,0.9280183911323548,False
+Skidmap has the ability to install several loadable kernel modules (LKMs) on infected machines.,persistence|privilege-escalation,execution,0.9280183911323548,False
+"APT29 has enrolled their own devices into compromised cloud tenants, including enrolling a device in MFA to an Azure AD environment following a successful password guessing attack against a dormant account.",persistence|privilege-escalation,resource-development,0.9280183911323548,False
+Pysa has executed a malicious executable by naming it svchost.exe.,stealth,execution|stealth,0.9278878569602966,False
+"During Operation Dream Job, Lazarus Group used a remote XSL script to download a Base64-encoded DLL custom downloader.",stealth,command-and-control,0.9278878569602966,False
+LockBit 3.0 can exclude files associated with core system functions from encryption.,discovery,stealth,0.9273633360862732,False
+Qilin can use the Splashtop remote management service (SRManager.exe) to execute the Linux ransomware binary directly on Windows systems.,command-and-control,execution,0.9268352389335632,False
+NPPSPY captures user input into the Winlogon process by redirecting RPC traffic from legitimate listening DLLs within the operating system to a newly registered malicious item that allows for recording logon information in cleartext.,collection|credential-access,collection,0.9267027974128724,False
+Emotet uses obfuscated URLs to download a ZIP file.,stealth,command-and-control|stealth,0.9260365962982178,False
+Latrodectus has called `msiexec` to install remotely-hosted MSI files.,stealth,execution,0.9259026646614076,False
+Axiom has used large groups of compromised machines for use as proxy nodes.,resource-development,command-and-control,0.9257686138153076,False
+Indrik Spider has used a service account to extract copies of the `Security` Registry hive.,discovery,persistence,0.925634264945984,False
+REvil can obtain the token from the user that launched the explorer.exe process to avoid affecting the desktop of the SYSTEM user.,privilege-escalation|stealth,privilege-escalation,0.925364911556244,False
+Gazer can execute a task to download a file.,command-and-control,execution,0.9252299070358276,False
+"During Operation Dream Job, Lazarus Group deployed malware designed not to run on computers set to Korean, Japanese, or Chinese in Windows language preferences.",discovery,execution,0.925094723701477,False
+LockBit 2.0 can exclude files associated with core system functions from encryption.,discovery,stealth,0.9246877431869508,False
+LockBit 3.0 can delete log files on targeted systems.,defense-impairment,stealth,0.9246877431869508,False
+APT29 has used spearphishing with a link to trick victims into clicking on a link to a zip file containing malicious files.,initial-access,execution,0.9244152307510376,False
+"During Operation Dream Job, Lazarus Group used tools that used the `IsDebuggerPresent` call to detect debuggers.",discovery|stealth,discovery,0.9241418242454528,False
+EnvyScout can use protocol handlers to coax the operating system to send NTLMv2 authentication responses to attacker-controlled infrastructure.,credential-access,lateral-movement,0.9238675236701964,False
+RogueRobin can save a new file to the system from the C2 server.,command-and-control,exfiltration,0.9238675236701964,False
+Wiarp creates a backdoor through which remote attackers can create a service.,persistence|privilege-escalation,persistence,0.9234544038772584,False
+LAPSUS$ has gathered detailed knowledge of team structures within a target organization.,reconnaissance,discovery,0.9233161807060242,False
+Indrik Spider has served fake updates via legitimate websites that have been compromised.,resource-development,initial-access,0.9233161807060242,False
+Pillowmint can iterate through running processes every six seconds collecting a list of processes to capture from later.,discovery,collection,0.9230391979217528,False
+LAPSUS$ has searched a victim's network for code repositories like GitLab and GitHub to discover further high-privilege account credentials.,collection,credential-access|reconnaissance,0.9226218461990356,False
+APT33 has used a variety of publicly available tools like Gpppassword to gather credentials.,credential-access,reconnaissance,0.9223425984382628,False
+FIN13 has used the PowerShell utility `Invoke-SMBExec` to execute the pass the hash method for lateral movement within an compromised environment.,lateral-movement,execution|lateral-movement,0.9222025275230408,False
+Grandoreiro can detect VMWare via its I/O port and Virtual PC via the vpcext instruction.,discovery|stealth,discovery,0.922062337398529,False
+"StrelaStealer searches for and if found collects the contents of files such as `logins.json` and `key4.db` in the `$APPDATA%\Thunderbird\Profiles\` directory, associated with the Thunderbird email application.",credential-access,discovery,0.921074151992798,False
+StrelaStealer attempts to identify and collect mail login data from Thunderbird and Outlook following execution.,collection,discovery,0.920217990875244,False
+"HermeticWiper can use `AdjustTokenPrivileges` to grant itself privileges for debugging with `SeDebugPrivilege`, creating backups with `SeBackupPrivilege`, loading drivers with `SeLoadDriverPrivilege`, and shutting down a local system with `SeShutdownPrivilege`.",privilege-escalation|stealth,defense-impairment,0.9199306964874268,False
+TEARDROP ran as a Windows service from the c:\windows\syswow64 folder.,persistence|privilege-escalation,execution|persistence|privilege-escalation,0.9197867512702942,False
+"Kali365 has directed victims to actor-controlled phishing pages through malicious links, initiating device code authorization flows or adversary-in-the-middle session capture.",execution,initial-access|reconnaissance,0.9197867512702942,False
+GrimAgent can sleep for 195 - 205 seconds after payload execution and before deleting its task.,discovery|stealth,stealth,0.9197867512702942,False
+HyperBro can be delivered encrypted to a compromised host.,stealth,command-and-control|stealth,0.9196425676345824,False
+REvil can launch an instance of itself with administrative rights using runas.,privilege-escalation|stealth,execution|privilege-escalation,0.9193534255027772,False
+PureCrypter can execute PowerShell commands to exclude files from EDR and to self-delete.,execution,execution|stealth,0.9193534255027772,False
+"During Operation AkaiRyū, MirrorFace loaded malicious Word templates containing VBA code leading to installation of UPPERCUT.",persistence,execution|stealth,0.9189178347587584,False
+Empire can utilize built-in modules to modify service binaries and restore them to their original state.,persistence|privilege-escalation,defense-impairment|persistence|privilege-escalation,0.9181873202323914,False
+TONESHELL has used DLL injection to execute payloads received from the C2 server.,privilege-escalation|stealth,execution|stealth,0.9177460074424744,False
+"Empire can leverage WMI debugging to remotely replace binaries like sethc.exe, Utilman.exe, and Magnify.exe with cmd.exe.",persistence|privilege-escalation,execution|stealth,0.9175984263420104,False
+Empire contains modules that can discover and exploit various DLL hijacking opportunities.,execution|stealth,execution,0.9174507260322572,False
+Lokibot's second stage DLL has set a timer using “timeSetEvent” to schedule its next execution.,execution|persistence|privilege-escalation,stealth,0.917302668094635,False
+FIN13 has injected fraudulent transactions into compromised networks that mimic legitimate behavior to siphon off incremental amounts of money.,impact,initial-access,0.917302668094635,False
+Playcrypt can use AlphaVSS to delete shadow copies.,impact,impact|stealth,0.917302668094635,False
+"During Operation Dream Job, Lazarus Group used code signing certificates issued by Sectigo RSA for some of its malware and tools.",resource-development,defense-impairment|resource-development,0.9171544313430786,False
+UPSTYLE creates a `.pth` file beginning with the text `import` so that any time another process or script attempts to reference the modified item the malicious code will also run.,persistence|privilege-escalation,stealth,0.916857123374939,False
+SUNSPOT encrypted log entries it collected with the stream cipher RC4 using a hard-coded key. It also uses AES128-CBC encrypted blobs for SUNBURST source code and data extracted from the SolarWinds Orion process.,stealth,collection,0.916857123374939,False
+Pacu can collect CloudTrail event histories and CloudWatch logs.,discovery,collection|discovery,0.9167081117630004,False
+SharpDisco has the ability to transfer data between SMB shares.,command-and-control,lateral-movement,0.915808916091919,False
+Pacu can allowlist IP addresses in AWS GuardDuty.,defense-impairment,discovery,0.9152045845985411,False
+LAPSUS$ has searched a victim's network for collaboration platforms like Confluence and JIRA to discover further high-privilege account credentials.,collection,credential-access|reconnaissance,0.9149009585380554,False
+Penquin can add the executable flag to a downloaded file.,defense-impairment,stealth,0.9147487282752992,False
+HAWKBALL has used an OLE object that uses Equation Editor to drop the embedded shellcode.,execution,execution|stealth,0.9145963191986084,False
+TONESHELL has been initiated using LNK files that were programmed to display a PDF icon to entice the victim to click on the file to execute an office.exe binary.,stealth,execution|stealth,0.914290726184845,False
+"During APT28 Nearest Neighbor Campaign, APT28 accessed volume shadow copies through executing vssadmin in order to dump the NTDS.dit file.",stealth,credential-access,0.9135223627090454,False
+schtasks is used to schedule tasks on a Windows system to run at a specific date and time.,execution|persistence|privilege-escalation,execution,0.9132132530212402,False
+Elise executes ipconfig /all after initial communication is made to the remote server.,discovery,command-and-control,0.9124361872673036,False
+The DustySky dropper uses Windows Management Instrumentation to extract information about the operating system and whether an anti-virus is active.,execution,discovery|execution,0.912280023097992,False
+ShimRat can hijack the cryptbase.dll within migwiz.exe to escalate privileges and bypass UAC controls.,execution|stealth,privilege-escalation|stealth,0.9121235609054564,False
+"Qilin has used PsExec to distribute a second encryptor, named encryptor_1.exe, across the targeted environment.",lateral-movement,command-and-control,0.9118099808692932,False
+DarkTortilla has used `%HiddenReg%` and `%HiddenKey%` as part of its persistence via the Windows registry.,stealth,persistence|privilege-escalation|stealth,0.9110215306282043,False
+HTTPBrowser is capable of writing a file to the compromised system from the C2 server.,command-and-control,exfiltration,0.9108630418777466,False
+Skidmap is a kernel-mode rootkit used for cryptocurrency mining.,impact,impact|stealth,0.9107043743133544,False
+APT38 has used `msiexec.exe` to execute malicious files.,stealth,execution|stealth,0.9103862047195436,False
+"During Operation Dream Job, Lazarus Group impersonated HR hiring personnel through LinkedIn messages and conducted interviews with victims in order to deceive them into downloading malware.",stealth,initial-access|stealth,0.9099069833755492,False
+"APT38 has created new services or modified existing ones to run executables, commands, or scripts.",execution,persistence|privilege-escalation,0.9097468256950378,False
+Keydnap adds the setuid flag to a binary so it can easily elevate in the future.,privilege-escalation,stealth,0.9087799787521362,False
+"During the 2025 Poland Wiper Attacks, the adversaries had leveraged Group Policy Objects to distribute wiper malware to victim devices through a network share.",defense-impairment|privilege-escalation,lateral-movement,0.9087799787521362,False
+APT29 has use `mshta` to execute malicious scripts on a compromised host.,stealth,execution|stealth,0.9084556102752686,False
+"During RedPenguin, UNC3886 used infrastructure associated with operational relay box (ORB) networks.",command-and-control,resource-development,0.908293068408966,False
+TrickBot uses an AES CBC (256 bits) encryption algorithm for its loader and configuration files.,stealth,command-and-control|stealth,0.9081302285194396,False
+"Blue Mockingbird has executed custom-compiled XMRIG miner DLLs by configuring them to execute via the ""wercplsupport"" service.",execution,execution|stealth,0.906983196735382,False
+WastedLocker checked if UCOMIEnumConnections and IActiveScriptParseProcedure32 Registry keys were detected as part of its anti-analysis technique.,discovery|stealth,discovery,0.906983196735382,False
+"Kali365 has obtained OAuth access and refresh tokens by deceiving victims into completing actor-initiated device authorization requests, and intercepting authentication sessions with legitimate identity providers through adversary-in-the-middle reverse proxy infrastructure.",credential-access,lateral-movement,0.9068183302879332,False
+"FIN13 has utilized obfuscated and open-source web shells such as JspSpy, reGeorg, MiniWebCmdShell, and Vonloesch Jsp File Browser 1.2 to enable remote code execution and to execute commands on compromised web server.",persistence,execution,0.9068183302879332,False
+"Playcrypt can avoid encrypting files with a .PLAY, .exe, .msi, .dll, .lnk, or .sys file extension.",discovery,stealth,0.9068183302879332,False
+FRP can support the use of a JSON configuration file.,execution,execution|stealth,0.9066531658172609,False
+A variant of Elise executes dir C:\progra~1 when initially run.,discovery,execution|stealth,0.9066531658172609,False
+BackConfig has the ability to use hidden columns in Excel spreadsheets to store executable files or commands for VBA macros.,persistence,stealth,0.9066531658172609,False
+Stuxnet uses the SetSecurityDescriptorDacl API to reduce object integrity levels.,execution,execution|stealth,0.9059898257255554,False
+BlackEnergy has removed the watermark associated with enabling the TESTSIGNING boot configuration option by removing the relevant strings in the user32.dll.mui of the system.,stealth,defense-impairment|stealth,0.9058233499526978,False
+SslMM sends the logged-on username to its hard-coded C2.,discovery,command-and-control,0.9056565761566162,False
+One of Dtrack can replace the normal flow of a program execution with malicious code.,execution|stealth,stealth,0.9054896235466005,False
+Pacu leverages valid cloud accounts to perform most of its operations.,initial-access|persistence|privilege-escalation|stealth,persistence,0.9054896235466005,False
+Koadic has used the command Powershell.exe -ExecutionPolicy Bypass -WindowStyle Hidden to hide its window.,stealth,execution|stealth,0.9053223133087158,False
+TrickBot has used Nt* Native API functions to inject code into legitimate processes such as wermgr.exe .,privilege-escalation|stealth,execution|stealth,0.9053223133087158,False
+Qilin can define specific processes to be terminated or left alone at execution.,discovery,discovery|stealth,0.9051547646522522,False
+PlugX has leveraged XOR encryption with the key of 123456789.,stealth,command-and-control,0.904818832874298,False
+Dridex contains a module for VNC.,command-and-control,lateral-movement,0.9046505093574524,False
+Emissary is capable of configuring itself as a service.,persistence|privilege-escalation,privilege-escalation|stealth,0.9043130874633788,False
+APT33 has used a variety of publicly available tools like LaZagne to gather credentials.,credential-access,reconnaissance,0.903464674949646,False
+Pupy can enable/disable RDP connection and can start a remote desktop session using a browser web socket client.,lateral-movement,defense-impairment,0.9031234383583068,False
+Blue Mockingbird has used wmic.exe and Windows Registry modifications to set the COR_PROFILER environment variable to execute a malicious DLL whenever a process loads the .NET CLR.,execution|stealth,execution|persistence,0.9014011025428772,False
+"LockBit 2.0 has been observed creating accounts for persistence using simple names like ""a"".",persistence,privilege-escalation,0.9014011025428772,False
+Empire can ZIP directories on the target system.,collection,discovery,0.9012274742126464,False
+"During C0015, the threat actors used WMI to load Cobalt Strike onto additional hosts within a compromised network.",lateral-movement,execution,0.9001793265342712,False
+Kali365 has generated tailored branded phishing lures to target victims utilizing a myriad of reputable services and brands that entice users to interact with the content. Kali365 has also been enabled with AI such as Claude Sonnet that evaluates emails and generates tailored responses to facilitate BEC activities.,resource-development,initial-access,0.9001793265342712,False
+DCRAT can use certificate-based authentication for C2 servers.,command-and-control,,0.8992984294891357,False
+"During Operation AkaiRyū, MirrorFace used Word templates containing VBA code for malware execution.",execution,execution|stealth,0.8982321619987488,False
+"During the 2025 Poland Wiper Attacks, the adversaries had staged tools and files for use on Dropbox and Pastebin.",resource-development,,0.8967949151992798,False
+"During Operation AkaiRyū, MirrorFace used links to direct victims to malicious files hosted on OneDrive.",resource-development,execution,0.8964328765869141,False
+The net user username \password commands in Net can be used to create a local account.,persistence,credential-access,0.8964328765869141,False
+ZIPLINE can use AES-128-CBC to encrypt data for both upload and download.,command-and-control,,0.8964328765869141,False
+Emissary has the capability to execute the command net start to interact with services.,discovery,execution,0.896251380443573,False
+BlackEnergy attempts to bypass default User Access Control (UAC) settings by exploiting a backward-compatibility setting found in Windows 7 and later.,privilege-escalation,persistence|privilege-escalation,0.8958876132965088,False
+Diskpart can be used to delete a partition or a volume. Diskpart can also be used to remove all partitions or volume formatting from the selected disk.,impact,stealth,0.894789457321167,False
+Grandoreiro can monitor browser activity for online banking actions and display full-screen overlay images to block user access to the intended site or present additional data fields.,collection,discovery,0.894789457321167,False
+Qilin can use WinSCP for the secure file transfer of the Linux ransomware binary to a targeted system.,command-and-control,lateral-movement,0.8942365646362305,False
+APT29 has abused misconfigured AD CS certificate templates to impersonate admin users and create additional authentication certificates.,credential-access,defense-impairment|persistence,0.8940516710281372,False
+WellMess can write files to a compromised host.,command-and-control,lateral-movement,0.8931231498718262,False
+Stuxnet infected WinCC machines via a hardcoded database server password.,initial-access|persistence|privilege-escalation|stealth,credential-access,0.8931231498718262,False
+APT-C-36 has used a botnet management interface to control large numbers of compromised hosts.,resource-development,,0.8927496671676636,False
+The Komplex C2 channel uses an 11-byte XOR algorithm to hide data.,command-and-control,,0.8927496671676636,False
+Kapeka utilizes JSON objects to send and receive information from command and control nodes.,command-and-control,,0.8925625681877136,False
+"Brute Ratel C4 can use legitimate websites for external C2 channels including Slack, Discord, and MS Teams.",command-and-control,,0.8921873569488525,False
+Lizar has used the PowerKatz plugin that can be loaded into the address space of a PowerShell process through reflective DLL loading.,privilege-escalation|stealth,execution|stealth,0.8921873569488525,False
+"LazyWiper can specifically target multiple files by extension including: .rar, .tar.gz, .zip, .7z, .json, .bcp, .bak, .gho, .erf, .edb, .onepkg, .pst, and .ldiff.",discovery,stealth,0.891999363899231,False
+Emotet has been observed leveraging a module that can scrape email addresses from Outlook.,collection,discovery,0.8918110132217407,False
+"EnvyScout can call window.location.pathname to ensure that embedded files are being executed from the C: drive, and will terminate if they are not.",stealth,discovery|stealth,0.8916224837303162,False
+DarkTortilla can download a clipboard information stealer module.,collection,,0.8916224837303162,False
+LAPSUS$ has gathered detailed knowledge of an organization's supply chain relationships.,reconnaissance,discovery,0.8916224837303162,False
+HUI Loader can be deployed to targeted systems via legitimate programs that are vulnerable to DLL search order hijacking.,execution|stealth,execution,0.8901033401489258,False
+LAMEHUG has used the Hugging Face API to query the Qwen2.5-Coder-32B-Instruct LLM to generate one-line Windows commands for the collection of system information and documents in specific folders on compromised hosts. LAMEHUG subsequently executed the returned commands and exfiltrated the collected files and information to adversary-controlled C2 servers.,command-and-control,,0.889720618724823,False
+Pillowmint has used shellcode which reads code stored in the registry keys \REGISTRY\SOFTWARE\Microsoft\DRM using the native Windows API as well as read HKEY_LOCAL_MACHINE\System\CurrentControlSet\Services\Tcpip\Parameters\Interfaces as part of its C2.,discovery,execution,0.889720618724823,False
+"RogueRobin uses WMI to check BIOS version for VBOX, bochs, qemu, virtualbox, and vm to check for evidence that the script might be executing within an analysis environment.",discovery|stealth,execution,0.8895288109779358,False
+Qilin can use AES-256 or ChaCha20 for domain-wide encryption of victim servers and workstations and RSA-4096 or RSA-2048 to secure generated encryption keys.,impact,,0.8893368244171143,False
+"During the 2025 Poland Wiper Attacks, the adversaries copied volume shadow copies through executing `vssadmin` in order to dump the `NTDS.dit` file.",stealth,lateral-movement,0.888372004032135,False
+LAPSUS$ has used Windows built-in tool `ntdsutil` to extract the Active Directory (AD) database.,credential-access,discovery,0.8881781101226807,False
+KARAE can use public cloud-based storage providers for command and control.,command-and-control,,0.8875949382781982,False
+"During C0015, the threat actors used a malicious HTA file that contained a mix of encoded HTML and JavaScript/VBScript code.",execution,execution|stealth,0.8875949382781982,False
+PureCrypter can execute a PowerShell command to self-delete.,stealth,execution|stealth,0.8870089650154114,False
+"During APT28 Nearest Neighbor Campaign, APT28 unarchived data using the GUI version of WinRAR.",stealth,,0.8864204287528992,False
+LockBit 2.0 can use the PowerShell module `InvokeGPUpdate` to modify Group Policy.,execution,defense-impairment|persistence,0.8852352499961853,False
+WastedLocker can delete shadow volumes.,impact,stealth,0.8846385478973389,False
+STARWHALE has the ability to hex-encode collected data from an infected host.,command-and-control,,0.8840392827987671,False
+Qilin can exclude specific directories and files from encryption.,discovery,stealth,0.8838388919830322,False
+"Penquin can use the command code do_vslist to send file names, size, and status to C2.",discovery,,0.8836382627487183,False
+ShimRat has hijacked the cryptbase.dll within migwiz.exe to escalate privileges. This prevented the User Access Control window from appearing.,privilege-escalation,stealth,0.8832359910011292,False
+TrickBot collects local files and information from the victim’s local machine.,collection,,0.8822250962257385,False
+AshTag can use a set sleep time to delay C2 beaconing.,stealth,,0.8816148638725281,False
+"FIN6 used publicly available tools (including Microsoft's built-in SQL querying tool, osql.exe) to map the internal network and conduct reconnaissance against Active Directory, Structured Query Language (SQL) servers, and NetBIOS.",discovery,,0.8814108967781067,False
+"During Operation Dream Job, Lazarus Group digitally signed their own malware to evade detection.",defense-impairment,,0.8812065720558167,False
+Pillowmint has encrypted stolen credit card information with AES and further encoded it with Base64.,collection,stealth,0.8804891109466553,False
+LAMEHUG has the ability to collect system information and files of interest from compromised systems.,collection,discovery,0.8790429830551147,False
+"During Operation Spalax, the threat actors used OneDrive and MediaFire to host payloads.",command-and-control,,0.8782098889350891,False
+"UPSTYLE removes `bootstrap.min.css` after parsing command and control instructions, restoring the file to its original state.",stealth,defense-impairment|stealth,0.8766343593597412,False
+SeaDuke uses an event filter in WMI code to execute a previously dropped executable shortly after system startup.,persistence|privilege-escalation,execution|stealth,0.8759993314743042,False
+BlackEnergy has enabled the TESTSIGNING boot configuration option to facilitate loading of a driver component.,defense-impairment,defense-impairment|stealth,0.8750414848327637,False
+Lokibot embedded the commands schtasks /Run /TN \Microsoft\Windows\DiskCleanup\SilentCleanup /I inside a batch script.,execution|persistence|privilege-escalation,execution,0.8749346137046814,False
+Pacu can generate SSH and API keys for AWS infrastructure and additional API keys for other IAM users.,persistence|privilege-escalation,,0.8740772008895874,False
+BlackByte Ransomware uses the `SetThreadExecutionState` API to prevent the victim system from entering sleep.,execution,stealth,0.873214840888977,False
+"During the 2025 Poland Wiper Attacks, the adversaries generated custom script with an LLM.",resource-development,,0.8731066584587097,False
+China Chopper's server component can upload local files.,collection,,0.8728901743888855,False
+Emissary has the capability to execute gpresult .,discovery,execution,0.8725647330284119,False
+UPPERCUT has been sideloaded through a legitimately signed application from the JustSystems Corporation.,execution|stealth,stealth,0.8721297383308411,False
+Grandoreiro can write or modify browser shortcuts to enable launching of malicious browser extensions.,persistence|privilege-escalation,defense-impairment,0.8721297383308411,False
+BPFDoor clears the file location `/proc/ /environ` removing all environment variables for the process.,stealth,defense-impairment|stealth,0.8719117641448975,False
+The net start and net stop commands can be used in Net to execute or stop Windows services.,execution,defense-impairment,0.8715841770172119,False
+"During C0015, the threat actors limited Rclone's bandwidth setting during exfiltration.",exfiltration,,0.8705973029136658,False
+FIN6 has deployed a utility script named kill.bat to disable anti-virus.,defense-impairment,defense-impairment|stealth,0.869714617729187,False
+Koadic can retrieve the current content of the user clipboard.,collection,discovery,0.8694931268692017,False
+Emotet has used `CreateProcess` to create a new process to run its executable and `WNetEnumResourceW` to enumerate non-hidden shares.,execution,discovery,0.8693822026252747,False
+SUNSPOT malware was designed and used to insert SUNBURST into software builds of the SolarWinds Orion IT management product.,initial-access,execution,0.8692712783813477,False
+Empire contains modules that can discover and exploit search order hijacking vulnerabilities.,execution|stealth,execution,0.8688268065452576,False
+WastedLocker has the ability to save and execute files as an alternate data stream (ADS).,stealth,,0.8683809638023376,False
+Elise is capable of launching a remote shell on the host to delete itself.,stealth,execution|stealth,0.8680456876754761,False
+HAWKBALL has encrypted data with XOR before sending it over the C2 channel.,collection,,0.8674854636192322,False
+TONESHELL has an exception handler that executes when ESET antivirus applications `ekrn.exe` and `egui.exe` are not found and directly injects its code into waitfor.exe using Native Windows API including `WriteProcessMemory` and `CreateRemoteThreadEx`.,stealth,execution|stealth,0.8664718866348267,False
+Cuckoo Stealer has copied its binary and the victim's scraped password into a hidden folder in the `/Users` directory.,stealth,credential-access,0.8652240633964539,False
+"ifconfig can be used to display adapter configuration on Unix systems, including information for TCP/IP, DNS, and DHCP.",discovery,discovery|stealth,0.8652240633964539,False
+"Winexe installs a service on the remote system, executes the command, then uninstalls the service.",execution,,0.8646537065505981,False
+Kivars has the ability to remotely trigger keyboard input and mouse clicks.,lateral-movement,,0.8646537065505981,False
+Lizar can execute PE files in the address space of the specified process.,privilege-escalation|stealth,execution|stealth,0.8645393252372742,False
+Skidmap has used pm.sh to download and install its main payload.,execution,,0.8643104434013367,False
+"During the 2025 Poland Wiper Attacks, the adversaries gathered and used the FortiGate bookmarks defined in the configuration file to include the statically defined credentials that facilitated RDP connections to jump hosts.",collection,credential-access,0.8637367486953735,False
+"USBStealer drops commands for a second victim onto a removable media drive inserted into the first victim, and commands are executed when the drive is inserted into the second victim.",command-and-control,execution,0.8630456924438477,False
+"BlackByte Ransomware uses the `mountvol.exe` command to mount volume names and leverages the Microsoft Discretionary Access Control List tool, `icacls.exe`, to grant the group to “Everyone” full access to the root of the drive.",defense-impairment,discovery,0.8630456924438477,False
+China Chopper's server component is capable of opening a command terminal.,execution,,0.8629302382469177,False
+APT38 has used DYEPACK.FOX to manipulate PDF data as it is accessed to remove traces of fraudulent SWIFT transactions from the data displayed to the end user.,impact,stealth,0.8617710471153259,False
+EnvyScout contains JavaScript code that can extract an encoded blob from its HTML body and write it to disk.,stealth,execution|stealth,0.8611882925033569,False
+The BlackEnergy component KillDisk is capable of deleting Windows Event Logs.,defense-impairment,defense-impairment|stealth,0.8594279289245605,False
+"OilBooster uses the Microsoft Graph API to connect to an actor-controlled OneDrive account to download and execute files and shell commands, and to create directories to share exfiltrated data.",command-and-control,,0.8594279289245605,False
+UPSTYLE clears error logs after reading embedded commands for execution.,defense-impairment,defense-impairment|stealth,0.8590735793113708,False
+Kali365 has dynamically generated legitimate device codes that displays on the victims screen alongside instructions to copy and paste the device code to initiate and complete a successful authentication process.,execution,credential-access,0.8588370084762573,False
+StrelaStealer installers have used obfuscated PowerShell scripts to retrieve follow-on payloads from WebDAV servers.,command-and-control,execution|stealth,0.858244001865387,False
+APT38 has used a custom MBR wiper named BOOTWRECK to render systems inoperable.,impact,stealth,0.8563323616981506,False
+"Pupy has a built-in utility command for netstat , can do net session through PowerView, and has an interactive shell which can be used to discover additional information.",discovery,discovery|execution,0.8559715747833252,False
+Industroyer downloads a shellcode payload from a remote C2 server and loads it into memory.,command-and-control,,0.8543993234634399,False
+FIN13 has utilized tools such as Incognito V2 for token manipulation and impersonation.,privilege-escalation|stealth,stealth,0.8542778491973877,False
+RGDoor encrypts files with XOR before sending them back to the C2 server.,collection,,0.8518295884132385,False
+Indrik Spider has used the win32_service WMI class to retrieve a list of services from the system.,discovery,discovery|execution,0.851582944393158,False
+Doki has resolved the path of a process PID to use as a script argument.,discovery,discovery|stealth,0.8508408069610596,False
+REvil can save encryption parameters and system information in the Registry.,stealth,defense-impairment,0.8507168292999268,False
+"During the 2025 Poland Wiper Attacks, the adversaries configured the FortiGate devices to send notifications to an attacker-controlled Slack channel. During the 2025 Poland Wiper Attacks, the adversaries had also staged tools and files on services such as Dropbox and Pastebin.",resource-development,,0.8497219681739807,False
+"During the 2025 Poland Wiper Attacks, the adversaries observed that their malware was initially detected by the victims EDR solutions, so they modified the payload and attempted to execute the new version within the same day.",resource-development,stealth,0.8493474125862122,False
+"During Operation AkaiRyū, MirrorFace used remote access tools including PuTTY.",command-and-control,lateral-movement,0.8492224216461182,False
+Brute Ratel C4 can decode Kerberos 5 tickets and convert it to hashcat format for subsequent cracking.,credential-access,stealth,0.8484706878662109,False
+"During Operation Dream Job, Lazarus Group executed malware with `C:\\windows\system32\rundll32.exe ""C:\ProgramData\ThumbNail\thumbnail.db""`, `CtrlPanel S-6-81-3811-75432205-060098-6872 0 0 905`.",stealth,execution|stealth,0.8483450412750244,False
+APT12 has used multiple variants of DNS Calculation including multiplying the first two octets of an IP address and adding the third octet to that value in order to get a resulting command and control port.,command-and-control,,0.8483450412750244,False
+BPFDoor creates a zero byte PID file at `/var/run/haldrund.pid`. BPFDoor uses this file to determine if it is already running on a system to ensure only one instance is executing at a time.,stealth,discovery|stealth,0.8480936288833618,False
+Troll Stealer gathers information from infected systems such as SSH information from the victim's `.ssh` directory. Troll Stealer collects information from local FileZilla installations and Microsoft Sticky Note.,collection,discovery,0.8478417992591858,False
+"During RedPenguin, UNC3886 exploited CVE-2025-21590 to enable malicious code injection into the memory of legitimate processes.",privilege-escalation|stealth,execution|stealth,0.8475897312164307,False
+SMOKEDHAM has used Google Drive and Dropbox to host files downloaded by victims via malicious links.,command-and-control,,0.8469578623771667,False
+LockBit 3.0 can check heap memory parameters for indications of a debugger and stop the flow of events to the attached debugger in order to hinder dynamic analysis.,discovery|stealth,stealth,0.8464508652687073,False
+"During RedPenguin, UNC3886 used a backdoor that binds to port 45678 by default.",command-and-control,stealth,0.8463238477706909,False
+LAPSUS$ has leverage NordVPN for its egress points when targeting intended victims.,command-and-control,lateral-movement,0.8447935581207275,False
+Empire can exploit vulnerabilities such as MS16-032 and MS16-135.,privilege-escalation,lateral-movement,0.8438951373100281,False
+APT29 has used the `reg save` command to save registry hives.,credential-access,discovery,0.8411743640899658,False
+"To establish persistence, SslMM identifies the Start Menu Startup directory and drops a link to its own executable disguised as an “Office Start,” “Yahoo Talk,” “MSN Gaming Z0ne,” or “MSN Talk” shortcut.",persistence|privilege-escalation,,0.8402590155601501,False
+Brute Ratel C4 has the ability to hide memory artifacts and to patch Event Tracing for Windows (ETW) and the Anti Malware Scan Interface (AMSI).,defense-impairment,stealth,0.8397339582443237,False
+MgBot includes modules capable of gathering information from USB thumb drives and CD-ROMs on the victim machine given a list of provided criteria.,collection,discovery,0.8393393158912659,False
+USBStealer drops itself onto removable media and relies on Autorun to execute the malicious file when a user opens the removable media on another system.,initial-access|lateral-movement,execution|lateral-movement,0.8381505608558655,False
+UPSTYLE attempts to retrieve a non-existent webpage from the command and control server resulting in hidden commands sent via resulting error messages.,command-and-control,,0.8380180597305298,False
+FIN13 has utilized web shells and Java tools for tunneling capabilities to and from compromised assets.,command-and-control,execution,0.8380180597305298,False
+"Downdelph inserts pseudo-random characters between each original character during encoding of C2 network requests, making it difficult to write signatures on them.",command-and-control,stealth,0.8378854393959045,False
+APT38 has used DYEPACK to manipulate SWIFT messages en route to a printer.,impact,execution,0.8369547128677368,False
+LockBit 2.0 can execute command line arguments in a hidden window.,stealth,execution|stealth,0.8356177806854248,False
+StrelaStealer has included BAT files in some instances for installation.,execution,execution|stealth,0.8331889510154724,False
+Troll Stealer performs XOR encryption and Base64 encoding of data prior to sending to command and control infrastructure.,command-and-control,stealth,0.8323729634284973,False
+"During Operation Dream Job, Lazarus Group conducted word searches within documents on a compromised host in search of security and financial matters.",discovery,,0.8301814794540405,False
+"During the 2025 Poland Wiper Attacks, the adversaries used compromised Cisco routers for network communications.",resource-development,,0.8292155861854553,False
+"During C0015, PowerView's file share enumeration results were stored in the file `c:\ProgramData\found_shares.txt`.",collection,discovery,0.8276889324188232,False
+"CHOPSTICK provides access to the Windows Registry, which can be used to gather information.",discovery,,0.8265718221664429,False
+"During RedPenguin, UNC3886 leveraged malware capable of inpecting packets for a magic-string to activate backdoor functionalities.",command-and-control|persistence|stealth,stealth,0.8244618773460388,False
+Dtrack contains a function that calls LoadLibrary and GetProcAddress .,execution,execution|stealth,0.823470413684845,False
+Doki has used a script that gathers information from a hardcoded list of IP addresses and uploads to an Ngrok URL.,exfiltration,discovery,0.8223318457603455,False
+Lokibot is delivered via a malicious XLS attachment contained within a spearhpishing email.,initial-access,execution,0.8203255534172058,False
+"During C0015, the threat actors installed the AnyDesk remote desktop application onto the compromised network.",command-and-control,,0.8194603323936462,False
+BPFDoor can require a password to activate the backdoor and uses RC4 encryption or static library encryption `libtomcrypt`.,stealth,,0.8191711902618408,False
+APT38 has used CHM files to move concealed payloads.,stealth,,0.8177201151847839,False
+REvil can use the Windows command line to delete volume shadow copies and disable recovery.,execution,,0.8161134123802185,False
+OilBooster can use a backup channel to request a new refresh token from its C2 server after 10 consecutive unsuccessful connections to the primary OneDrive C2 server.,command-and-control,,0.815966784954071,False
+"APT29 has used residential proxies, including Azure Virtual Machines, to obfuscate their access to victim environments.",resource-development,stealth,0.8155264854431152,False
+"Empire has a limited number of built-in modules for exploiting remote SMB, JBoss, and Jenkins servers.",lateral-movement,,0.8149381279945374,False
+Kazuar can sleep for a specific time and be set to communicate at specific intervals.,exfiltration,,0.814495861530304,False
+"StrelaStealer has been distributed in ISO archives. StrelaStealer has been delivered in encrypted, password-protected ZIP archives.",stealth,,0.8140527606010437,False
+"Kali365 has executed JavaScript within victims' browsers through a React frontend that detects browser sessions to evade automated analysis, auto-copies actor-generated device codes to the victim's clipboard, and polls the actor's C2 infrastructure every three seconds to confirm when OAuth token capture has completed..",execution,discovery,0.8100284934043884,False
+EXOTIC LILY has copied data from social media sites to impersonate targeted individuals.,reconnaissance,,0.8091251850128174,False
+meek uses Domain Fronting to disguise the destination of network traffic as another server that is hosted in the same Content Delivery Network (CDN) as the intended destination.,command-and-control,stealth,0.8089743256568909,False
+PureCrypter has executed `Set-MpPreference -ExclusionPath` to exclude files or folders from Windows Defender scans.,defense-impairment,discovery|stealth,0.8089743256568909,False
+"Pacu can set up S3 bucket notifications to trigger a malicious Lambda function when a CloudFormation template is uploaded to the bucket. It can also create Lambda functions that trigger upon the creation of users, roles, and groups.",persistence|privilege-escalation,execution,0.8085212111473083,False
+NETWIRE has used web services including Paste.ee to host payloads.,command-and-control,,0.8057851195335388,False
+"For Operation Spalax, the threat actors used packers that read pixel data from images contained in PE files' resource sections and build the next layer of execution from the data.",stealth,execution,0.8050197958946228,False
+Stuxnet schedules a network job to execute two minutes after host infection.,execution|persistence|privilege-escalation,,0.804405927658081,False
+"EXOTIC LILY has uploaded malicious payloads to file-sharing services including TransferNow, TransferXL, WeTransfer, and OneDrive.",resource-development,,0.8036365509033203,False
+Stuxnet extracts and writes driver files that match the times of other legitimate files.,stealth,,0.8019358515739441,False
+The AshTag stager component can retrieve and execute the main payload.,command-and-control,execution,0.7986582517623901,False
+PlugX has made calls to Windows API `CheckRemoteDebuggerPresent` and exits if it detects a debugger.,discovery|stealth,stealth,0.7978719472885132,False
+Hikit supports peer connections.,command-and-control,,0.7978719472885132,False
+MirrorFace has used remote templates with VBA code in malware infection chains.,execution,,0.7975567579269409,False
+"HAWKBALL has leveraged several Windows API calls to create processes, gather disk information, and detect debugger activity.",execution,discovery|execution,0.79739910364151,False
+Lizar has a command to open the command-line on the infected system.,execution,discovery|execution,0.7964508533477783,False
+Cuckoo Stealer can create and populate property list (plist) files to enable execution.,defense-impairment,execution|stealth,0.7950222492218018,False
+"During Operation AkaiRyū, MirrorFace used WMI to proxy execution of UPPERCUT.",execution,,0.7943849563598633,False
+"DarkTortilla can download additional packages for keylogging, cryptocurrency mining, and other capabilities; it can also retrieve malicious payloads such as Agent Tesla, AsyncRat, NanoCore, RedLine, Cobalt Strike, and Metasploit.",command-and-control,,0.7932661771774292,False
+MESSAGETAP has XOR-encrypted and stored contents of SMS messages that matched its target list.,collection,,0.791176438331604,False
+"APT-C-36 has used DDNS services such as DuckDNS, noip[.]com, and con-ip[.]com to redirect victims to sites or repositories hosting malware implants.",command-and-control,,0.7908535599708557,False
+Doki’s container was configured to bind the host root directory.,privilege-escalation,stealth,0.7900447845458984,False
+"During C0015, the threat actors employed code that used `regsvr32` for execution.",stealth,execution|stealth,0.7862948179244995,False
+FIN13 has utilized the following temporary folders on compromised Windows and Linux systems for their operations prior to exfiltration: `C:\Windows\Temp` and `/tmp`.,collection,,0.7823300957679749,False
+"FIN6 has used scripting to iterate through a list of compromised PoS systems, copy data to a log file, and remove the original data files.",execution,stealth,0.7818307876586914,False
+LazyWiper is believed to have been generated by a large language model (LLM) due to the non-sensical comments in the code.,resource-development,execution|stealth,0.7809967398643494,False
+Qilin can attempt to log on to the local computer via `LogonUserW` and use `GetLogicalDrives()` and `EnumResourceW()` for discovery.,execution,discovery,0.7799928784370422,False
+"During Operation Dream Job, Lazarus Group used DOCX files to retrieve a malicious document template/DOTM file.",stealth,execution,0.7796576023101807,False
+The AshTag AshenOrchestrator component has process management functionality.,discovery,execution,0.7791538238525391,False
+Psylo has a command to conduct timestomping by setting a specified file’s timestamps to match those of a system file in the System32 directory.,stealth,discovery|stealth,0.7774689197540283,False
+Water Galura operates a news channel on Telegram to make announcements for the Qilin RaaS.,resource-development,,0.7774689197540283,False
+Empire contains modules that can discover and exploit unquoted path vulnerabilities.,execution|stealth,execution,0.7771308422088623,False
+PureCrypter can use Telegram or Discord to send infection status messages.,command-and-control,,0.7769615650177002,False
+Mis-Type may create a file containing the results of the command cmd.exe /c ipconfig /all .,discovery,execution|stealth,0.7766229510307312,False
+Indrik Spider used fake updates for FlashPlayer plugin and Google Chrome as initial infection vectors.,stealth,,0.7754347920417786,False
+"NPPSPY opens a new network listener for the mpnotify.exe process that is typically contacted by the Winlogon process in Windows. A new, alternative RPC channel is set up with a malicious DLL recording plaintext credentials entered into Winlogon, effectively intercepting and redirecting the logon information.",collection|credential-access,,0.7735586762428284,False
+"CoinTicker downloads the EggShell mach-o binary using curl, which does not set the quarantine flag.",defense-impairment,,0.7706374526023865,False
+"Emotet has the ability to duplicate the user’s token. For example, Emotet may use a variant of Google’s ProtoBuf to send messages that specify how code will be executed.",privilege-escalation|stealth,stealth,0.7676898241043091,False
+"Daggerfly has used signed, but not notarized, malicious files for execution in macOS environments.",defense-impairment,stealth,0.7668178677558899,False
+Sykipot is known to contain functionality that enables targeting of smart card technologies to proxy authentication for connections to restricted network resources using detected hardware tokens.,credential-access,,0.7661187648773193,False
+KillDisk has called GetCurrentProcess .,discovery,stealth,0.7650671601295471,False
+"During Operation Dream Job, Lazarus Group launched malicious DLL files, created new folders, and renamed folders with the use of the Windows command shell.",execution,execution|stealth,0.7650671601295471,False
+"During the 2025 Poland Wiper Attacks, the adversaries had stolen Security Account Manager (SAM) and SYSTEM registry hives.",credential-access,,0.7613611221313477,False
+Keydnap uses the keychaindump project to read securityd memory.,credential-access,,0.7583316564559937,False
+"SslMM sends information to its hard-coded C2, including OS version, service pack information, processor speed, system name, and OS install date.",discovery,,0.7568970322608948,False
+"APT38 has used DYEPACK to create, delete, and alter records in databases used for SWIFT transactions.",impact,stealth,0.754553496837616,False
+"During RedPenguin, UNC3886 used malware capable of reading the PID for the Junos OS snmpd daemon.",discovery,execution,0.753829300403595,False
+LAMEHUG can encode queries sent to LLMs.,command-and-control,,0.7532851696014404,False
+"Embargo has leveraged MS4Killer to deliver a vulnerable driver to the victim device, sometimes referred to as Bring Your Own Vulnerable Driver (BYOVD). Embargo has utilized the vulnerable driver probmon.sys version 3.0.0.4 which had a revoked certificated from “ITM System Co.,LTD.”",privilege-escalation,,0.7525585293769836,False
+Indrik Spider has conducted Kerberoasting attacks using a module from GitHub.,credential-access,,0.7500038743019104,False
+"MESSAGETAP uses the libpcap library to listen to all traffic and parses network protocols starting with Ethernet and IP layers. It continues parsing protocol layers including SCTP, SCCP, and TCAP and finally extracts SMS message data and routing metadata.",credential-access|discovery,,0.7474316954612732,False
+Turian can insert pseudo-random characters into its network encryption setup.,command-and-control,stealth,0.7440989017486572,False
+LAPSUS$ has called victims' help desk to convince the support personnel to reset a privileged account’s credentials.,reconnaissance,,0.7424216866493225,False
+"BPFDoor starts a shell on a high TCP port starting at 42391 up to 43391, then changes the local `iptables` rules to redirect all packets from the attacker to the shell port.",defense-impairment,,0.7422348856925964,False
+SeaDuke compressed data with zlib prior to sending it over C2.,collection,,0.7405498027801514,False
+Kali365 has used Cloudflare Workers to redirect traffic and to host malicious phishing pages. Kali365 has also leveraged Telegram chat to facilitate administrative tasks for the panel across affiliate users.,command-and-control,,0.7362110018730164,False
+APT-C-36 has generated email content impersonating official notifications and documents that direct victims to execute malicious payloads.,resource-development,stealth,0.7348812818527222,False
+ShimRat can sleep when instructed to do so by the C2.,exfiltration,,0.7339288592338562,False
+WastedLocker has copied a random file from the Windows System32 folder to the %APPDATA% location under a different hidden filename.,stealth,,0.7320175170898438,False
+Pysa has used PsExec to copy and execute the ransomware.,execution,,0.7320175170898438,False
+"Diskpart can be used to display, set, or clear attributes of a disk or volume.",defense-impairment,discovery,0.731634259223938,False
+APT29 has used encoded PowerShell scripts uploaded to CozyCar installations to download and install SeaDuke.,execution,stealth,0.7301936745643616,False
+LAMEHUG can xcopy for file collection on targeted systems.,collection,discovery,0.728168785572052,False
+"During Operation Dream Job, Lazarus Group targeted Windows servers running Internet Information Systems (IIS) to install C2 components.",persistence,,0.7268136143684387,False
+Akira uses legitimate utilities such as AnyDesk and PuTTy for maintaining remote access to victim environments.,command-and-control,,0.7264255881309509,False
+KillDisk uses VMProtect to make reverse engineering the malware more difficult.,stealth,execution|stealth,0.7261344194412231,False
+POSHSPY downloads and executes additional PowerShell code and Windows binaries.,command-and-control,execution,0.7233095169067383,False
+"After checking for the existence of two files, keyword_parm.txt and parm.txt, MESSAGETAP XOR decodes and read the contents of the files.",stealth,discovery|stealth,0.7191864252090454,False
+Penquin installs a `TCP` and `UDP` filter on the `eth0` interface.,command-and-control|persistence|stealth,,0.7178038358688354,False
+"During Operation Dream Job, Lazarus Group used malicious Trojans and DLL files to exfiltrate data from an infected host.",collection,,0.7079098224639893,False
+FIN13 has compressed the dump output of compromised credentials with a 7zip binary.,collection,,0.7037531733512878,False
+Industroyer uses a custom DoS tool that leverages CVE-2015-5374 and targets hardcoded IP addresses of Siemens SIPROTEC devices.,impact,execution,0.7010995149612427,False
+"FIN6 has encoded data gathered from the victim with a simple substitution cipher and single-byte XOR using the 0xAA key, and Base64 with character permutation.",collection,stealth,0.7007924318313599,False
+"During RedPenguin, UNC3886 used a passive backdoor to act as a libpcap-based packet sniffer.",credential-access|discovery,,0.6977118849754333,False
+TrickBot can implant malicious code into a compromised device's firmware.,persistence|stealth,stealth,0.692225992679596,False
+UPSTYLE parses encoded commands from error logs after attempting to resolve a non-existing webpage from the command and control server.,command-and-control,stealth,0.6902459859848022,False
+Pupy can user PowerView to execute “net user” commands and create local system accounts.,persistence,,0.685949444770813,False
+Emotet has encrypted data before sending to the C2 server.,command-and-control,,0.6857390403747559,False
+"Cuckoo Stealer can send information about the targeted system to C2 including captured passwords, OS build, hostname, and username.",exfiltration,,0.6854233145713806,False
+PAKLOG has used Windows API `SetWindowsHookExW` with `idHook` set to `WH_KEYBOARD_LL` and a custom hook procedure to support its keylogging functions.,execution,,0.6848966479301453,False
+Industroyer sends information about hardware profiles and previously-received commands back to the C2 server in a POST-request.,exfiltration,,0.6846858263015747,False
+LAPSUS$ has reconfigured a victim's DNS records to actor-controlled domains and websites.,resource-development,,0.679816722869873,False
+Higaisa sent the victim computer identifier in a User-Agent string back to the C2 server every 10 minutes.,exfiltration,,0.6758716106414795,False
+"During the 2025 Poland Wiper Attacks, the adversaries leveraged the native CLI of the targeted FortiGate device.",execution,stealth,0.675336480140686,False
+"BPFDoor uses BPF bytecode to attach a filter to a network socket to view ICMP, UDP, or TCP packets coming through ports 22 (ssh), 80 (http), and 443 (https). When BPFDoor finds a packet containing its “magic” bytes, it parses out two fields and forks itself. The parent process continues to monitor filtered traffic while the child process executes the instructions from the parsed fields.",command-and-control|persistence|stealth,,0.6687721014022827,False
+PACEMAKER can enter a loop to read `/proc/` entries every 2 seconds in order to read a target application's memory.,collection,,0.6677979230880737,False
+"Cuckoo Stealer can use osascript to generate a password-stealing prompt, duplicate files and folders, and set environmental variables.",execution,,0.6629056334495544,False
+APT29 has ensured web servers in a victim environment are Internet accessible before copying tools or malware to it.,discovery,,0.6575384140014648,False
+Elise executes systeminfo after initial communication is made to the remote server.,discovery,,0.6482437252998352,False
+Pupy can user PowerView to execute “net user” commands and create domain accounts.,persistence,,0.6477982401847839,False
+Daggerfly utilizes victim machine operating system information to create custom User Agent strings for subsequent command and control communication.,discovery,,0.6384972333908081,False
+Turian has the ability to use a XOR decryption key to extract C2 server domains and IP addresses.,stealth,,0.6374822854995728,False
+LockBit 3.0 will not affect machines with language settings matching a defined exlusion list of mainly Eastern European languages.,discovery,stealth,0.6346564888954163,False
+MirrorFace has embedded OneDrive URLs in emails leading to malicious file installation.,initial-access,,0.616070032119751,False
+Lizar has encrypted data before sending it to the server.,collection,,0.6073721051216125,False
+"Winnti for Linux has used a passive listener, capable of identifying a specific magic value before executing tasking, as a secondary command and control (C2) mechanism.",command-and-control|persistence|stealth,,0.6017690896987915,False
+Regin leveraged several compromised universities as proxies to obscure its origin.,command-and-control,,0.5846269726753235,False
+Mis-Type may create a file containing the results of the command cmd.exe /c net user {Username} .,discovery,,0.5773166418075562,False
+Empire contains modules that can discover and exploit path interception opportunities in the PATH environment variable.,execution|stealth,,0.5750511884689331,False
+Kali365 has created obfuscated phishing landing pages that act as an adversary in the middle infrastructure that intercepts communications between the victim host and legitimate services to steal credentials and user sessions.,collection|credential-access,,0.570451021194458,False
+MirrorFace has used ipconfig for reconnaissance.,discovery,,0.555917501449585,False
+Skidmap has the ability to set SELinux to permissive mode.,defense-impairment,,0.5529924035072327,False
+LAPSUS$ has set an Office 365 tenant level mail transport rule to send all mail in and out of the targeted organization to the newly created account.,collection,,0.5498219132423401,False
+Hikit performs XOR encryption.,command-and-control,,0.5297651886940002,False
+UPSTYLE retrieves a non-existent webpage from the command and control server then parses commands from the resulting error logs to decode commands to the web shell.,command-and-control,,0.5285637974739075,False
+TA551 has retrieved DLLs and installer binaries for malware execution from C2.,command-and-control,,0.5281683802604675,False
+TA551 has used a DGA to generate URLs from executed macros.,command-and-control,,0.5224305987358093,False
+LAPSUS$ has spammed target users with MFA prompts in the hope that the legitimate user will grant necessary approval.,credential-access,,0.5141868591308594,False
+"T9000 searches removable storage devices for files with a pre-defined list of file extensions (e.g. * .doc, *.ppt, *.xls, *.docx, *.pptx, *.xlsx). Any matching files are encrypted and written to a local user directory.",collection,,0.4776455461978912,False
+SDBbot has the ability to access the file system on a compromised host.,collection,,0.4739463627338409,False
+PACEMAKER can use PTRACE to attach to a targeted process to read process memory.,privilege-escalation|stealth,,0.4621392786502838,False
+Qilin has run `cmd /C [PsExec] -accepteula \\IP Address -c -f -h -d -i C:\Users\xxx\ .exe --password [PASSWORD] --spread --spread-process` to execute its encryptor to target multiple network shares.,execution,,0.4239349663257599,False
+KOPILUWAK has piped the results from executed C2 commands to `%TEMP%\result2.dat` on the local machine.,collection,,0.4108744859695434,False
+ZIPLINE can find and append specific files on Ivanti Connect Secure VPNs based upon received commands.,discovery,,0.3042483627796173,False
