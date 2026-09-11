@@ -39,30 +39,76 @@ class TacticPredictor:
             routing_threshold=routing_threshold if routing_threshold is not None else config["confidence"]["default_threshold"],
         )
 
-    def predict(self, text: str) -> dict[str, Any]:
-        cleaned = text.strip()
-        if not cleaned:
-            raise ValueError("Threat description cannot be empty")
-        scores = np.asarray(self.pipeline.decision_function([cleaned])).reshape(1, -1)
+    def predict_many(
+        self,
+        texts: list[str],
+        routing_threshold: float | None = None,
+    ) -> list[dict[str, Any]]:
+        """Classify a batch in one vectorized model call."""
+        cleaned = [text.strip() for text in texts]
+        if not cleaned or any(not text for text in cleaned):
+            raise ValueError("Threat descriptions cannot be empty")
+
+        scores = np.asarray(self.pipeline.decision_function(cleaned))
+        if scores.ndim == 1:
+            scores = scores.reshape(1, -1)
         logits = scores * self.calibration_coefficients + self.calibration_intercepts
-        probabilities = 1.0 / (1.0 + np.exp(-logits))
+        probabilities = 1.0 / (1.0 + np.exp(-np.clip(logits, -40, 40)))
         predicted = (probabilities >= self.label_thresholds).astype(int)
-        confidence = float(routing_confidence(probabilities, predicted)[0])
-        decision = str(route_predictions(np.asarray([confidence]), self.routing_threshold)[0])
-        selected = [
-            {"tactic": label, "confidence": float(probabilities[0, index])}
-            for index, label in enumerate(self.labels)
-            if predicted[0, index]
-        ]
-        selected.sort(key=lambda item: item["confidence"], reverse=True)
-        top_index = int(np.argmax(probabilities[0]))
-        return {
-            "predictions": selected,
-            "top_candidate": {"tactic": self.labels[top_index], "confidence": float(probabilities[0, top_index])},
-            "routing_confidence": confidence,
-            "routing_threshold": self.routing_threshold,
-            "decision": decision,
-        }
+        confidences = routing_confidence(probabilities, predicted)
+        threshold = self.routing_threshold if routing_threshold is None else routing_threshold
+        decisions = route_predictions(confidences, threshold)
+
+        results = []
+        for row in range(len(cleaned)):
+            selected = [
+                {"tactic": label, "confidence": float(probabilities[row, index])}
+                for index, label in enumerate(self.labels)
+                if predicted[row, index]
+            ]
+            selected.sort(key=lambda item: item["confidence"], reverse=True)
+            top_index = int(np.argmax(probabilities[row]))
+            results.append(
+                {
+                    "predictions": selected,
+                    "top_candidate": {
+                        "tactic": self.labels[top_index],
+                        "confidence": float(probabilities[row, top_index]),
+                    },
+                    "routing_confidence": float(confidences[row]),
+                    "routing_threshold": float(threshold),
+                    "decision": str(decisions[row]),
+                }
+            )
+        return results
+
+    def predict(self, text: str, routing_threshold: float | None = None) -> dict[str, Any]:
+        return self.predict_many([text], routing_threshold)[0]
+
+    def explain(self, text: str, tactic: str, top_n: int = 6) -> list[dict[str, Any]]:
+        """Return the strongest positive TF-IDF contributions for one tactic."""
+        if tactic not in self.labels:
+            raise ValueError(f"Unknown tactic: {tactic}")
+        features = self.pipeline.named_steps.get("features")
+        classifier = self.pipeline.named_steps.get("classifier")
+        if features is None or classifier is None or not hasattr(classifier, "estimators_"):
+            return []
+
+        row = features.transform([text.strip()])
+        label_index = self.labels.index(tactic)
+        estimator = classifier.estimators_[label_index]
+        contributions = row.multiply(estimator.coef_[0]).tocoo()
+        names = features.get_feature_names_out()
+        ranked = sorted(
+            (
+                (str(names[column]).removeprefix("word__"), float(value))
+                for column, value in zip(contributions.col, contributions.data, strict=True)
+                if value > 0
+            ),
+            key=lambda item: item[1],
+            reverse=True,
+        )
+        return [{"feature": feature, "contribution": value} for feature, value in ranked[:top_n]]
 
 
 def main() -> None:

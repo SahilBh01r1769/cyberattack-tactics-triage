@@ -6,7 +6,7 @@ from src.inference.predict import TacticPredictor
 
 class FakePipeline:
     def decision_function(self, texts):
-        return np.array([[2.0, -1.0]])
+        return np.tile(np.array([[2.0, -1.0]]), (len(texts), 1))
 
 
 def test_inference_returns_expected_schema() -> None:
@@ -37,6 +37,18 @@ def test_inference_rejects_empty_text() -> None:
         assert "cannot be empty" in str(exc)
     else:
         raise AssertionError("Expected ValueError")
+
+
+def test_batch_inference_uses_threshold_override() -> None:
+    predictor = TacticPredictor(
+        FakePipeline(), np.ones(2), np.zeros(2), ["execution", "collection"], np.array([0.5, 0.5]), 0.7
+    )
+
+    results = predictor.predict_many(["PowerShell command", "A second command"], routing_threshold=0.95)
+
+    assert len(results) == 2
+    assert all(result["decision"] == "analyst_review" for result in results)
+    assert all(result["routing_threshold"] == 0.95 for result in results)
 
 
 def test_saved_artifact_loads(tmp_path) -> None:
