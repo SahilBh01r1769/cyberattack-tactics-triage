@@ -34,6 +34,11 @@ confidence:
   default_threshold: 0.70
   thresholds: [0.40, 0.50, 0.60, 0.70, 0.80, 0.90]
 
+technique_holdout:
+  test_size: 0.20
+  seed_offset: 2000
+  candidate_attempts: 64
+
 transformer:
   model_name: distilbert-base-uncased
   max_length: 128

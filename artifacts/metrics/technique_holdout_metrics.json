@@ -1,0 +1,40 @@
+{
+  "purpose": "Stress test generalization to ATT&CK techniques absent from training",
+  "selection_dataset": "main grouped-source training partition only",
+  "model": "TF-IDF word+character features with Linear SVM",
+  "selection_seed": 2059,
+  "selection_balance_score": 0.024047961385208934,
+  "train_examples": 8748,
+  "holdout_examples": 2258,
+  "train_techniques": 452,
+  "holdout_techniques": 114,
+  "technique_overlap": 0,
+  "source_overlap": 572,
+  "metrics": {
+    "micro_f1": 0.6063149480415667,
+    "macro_f1": 0.5164408477719477,
+    "weighted_f1": 0.605596906157334,
+    "samples_f1": 0.566795309797967,
+    "micro_precision": 0.6662274923144489,
+    "micro_recall": 0.5562889622295563,
+    "hamming_loss": 0.058163566578092706,
+    "subset_accuracy": 0.466784765279008,
+    "per_label_f1": {
+      "collection": 0.5221238938053098,
+      "command-and-control": 0.68,
+      "credential-access": 0.7272727272727273,
+      "defense-impairment": 0.4507042253521127,
+      "discovery": 0.7756653992395437,
+      "execution": 0.3815789473684211,
+      "exfiltration": 0.4406779661016949,
+      "impact": 0.45569620253164556,
+      "initial-access": 0.25263157894736843,
+      "lateral-movement": 0.5217391304347826,
+      "persistence": 0.5034324942791762,
+      "privilege-escalation": 0.5714285714285714,
+      "reconnaissance": 0.32432432432432434,
+      "resource-development": 0.47619047619047616,
+      "stealth": 0.6631467793030623
+    }
+  }
+}

@@ -39,13 +39,14 @@ def select_grouped_holdout(
     holdout_size: float,
     base_seed: int,
     attempts: int = 64,
+    group_column: str = "source_id",
 ) -> SplitCandidate:
     """Choose a strict group holdout with reasonable size and label balance."""
     best: SplitCandidate | None = None
     for offset in range(attempts):
         seed = base_seed + offset
         splitter = GroupShuffleSplit(n_splits=1, test_size=holdout_size, random_state=seed)
-        train_indices, holdout_indices = next(splitter.split(frame, groups=frame["source_id"]))
+        train_indices, holdout_indices = next(splitter.split(frame, groups=frame[group_column]))
         if (targets[holdout_indices].sum(axis=0) == 0).any():
             continue
         score = _distribution_score(targets, targets[holdout_indices], len(holdout_indices) / len(frame), holdout_size)
