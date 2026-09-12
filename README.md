@@ -6,11 +6,17 @@ An NLP project that maps short cyber-threat descriptions to one or more Enterpri
 
 The project is both an ML investigation and a small triage aid. It is not intended to replace analyst judgment.
 
+## What I built
+
+I built the dataset from official ATT&CK procedure examples, created source-grouped splits, trained and compared multilabel classifiers, separated probability calibration from threshold selection, and packaged the selected model into a Streamlit workbench. The workbench also exposes local feature contributions and routes uncertain cases to manual review.
+
 ## What it predicts
 
 The target is **multilabel tactic classification**, not fine-grained technique identification. A single description can therefore map to several tactics when the linked ATT&CK technique spans more than one phase. For example, a scheduled task that launches PowerShell may support Execution, Persistence and Privilege Escalation.
 
 Predictions include per-tactic probabilities and a separate routing decision. If the strongest predicted tactic does not meet the selected routing threshold, the workbench returns `analyst_review` instead of forcing an automatic decision.
+
+For example, a description such as “The adversary executed a PowerShell command through a scheduled task” can produce Execution, Persistence and Privilege Escalation predictions, their probabilities, and a decision on whether the result is confident enough to route automatically.
 
 ## Try the workbench
 
@@ -52,6 +58,8 @@ Results use a source-grouped holdout: an actor, malware family, tool or campaign
 
 Linear SVM is the strongest verified model on the cleaned split. A previous DistilBERT run reached 0.779 macro F1, but it predates the near-duplicate cleanup and is kept as historical evidence until rerun rather than mixed into the current comparison.
 
+I initially expected the transformer to provide the clearest improvement. Instead, the classical SVM remained strongest on the verified, cleaned evaluation. Because these descriptions are short and terminology-heavy, I deployed the simpler verified model rather than selecting the most complex model by default.
+
 Macro F1 is the primary selection metric because it gives small tactics meaningful weight. Micro F1 is included to show aggregate label performance, while exact match requires the complete predicted tactic set to match the reference labels. The results show that the linear SVM remains a strong model for this relatively concise, terminology-heavy text.
 
 ![Grouped-source model comparison](artifacts/figures/model_comparison.png)
@@ -71,6 +79,13 @@ Routing confidence is the highest calibrated probability among the predicted tac
 ### Unseen-technique stress test
 
 A secondary test trains the selected SVM on 452 techniques and evaluates it on 114 entirely unseen techniques. Macro F1 falls to **0.516** with zero technique overlap. This is intentionally not presented as a competing benchmark: it shows that unfamiliar behaviors remain substantially harder than unfamiliar actors or tools.
+
+## How the project changed
+
+- A random split looked stronger, but allowed the same actors and tools to appear across partitions.
+- I replaced it with a source-grouped split and later removed eight audited cross-partition near-duplicates.
+- I separated calibration fitting from threshold selection to avoid using the same validation examples for both decisions.
+- I added a technique-held-out stress test after realizing that unseen sources and unseen behaviors answer different questions.
 
 ## Data and methodology
 
