@@ -1,6 +1,6 @@
 # Cyber Threat Intelligence ATT&CK Triage
 
-[![tests](https://github.com/SahilBh01r1769/cyber/actions/workflows/tests.yml/badge.svg)](https://github.com/SahilBh01r1769/cyber/actions/workflows/tests.yml)
+[![tests](https://github.com/SahilBh01r1769/cyberattack-tactics-triage/actions/workflows/tests.yml/badge.svg)](https://github.com/SahilBh01r1769/cyberattack-tactics-triage/actions/workflows/tests.yml)
 
 An NLP project that maps short cyber-threat descriptions to one or more Enterprise MITRE ATT&CK tactics. It trains on official ATT&CK procedure examples—no LLM or external classification API is used.
 
@@ -29,8 +29,8 @@ The Streamlit workbench supports:
 - direct access to model, calibration and stress-test evidence.
 
 ```bash
-git clone https://github.com/SahilBh01r1769/cyber.git
-cd cyber
+git clone https://github.com/SahilBh01r1769/cyberattack-tactics-triage.git
+cd cyberattack-tactics-triage
 python -m venv .venv
 source .venv/bin/activate  # Windows: .venv\Scripts\activate
 python -m pip install -r requirements-app.txt
