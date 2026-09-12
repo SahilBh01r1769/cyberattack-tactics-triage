@@ -6,9 +6,21 @@ An NLP project that maps short cyber-threat descriptions to one or more Enterpri
 
 The project is both an ML investigation and a small triage aid. It is not intended to replace analyst judgment.
 
+## What it predicts
+
+The target is **multilabel tactic classification**, not fine-grained technique identification. A single description can therefore map to several tactics when the linked ATT&CK technique spans more than one phase. For example, a scheduled task that launches PowerShell may support Execution, Persistence and Privilege Escalation.
+
+Predictions include per-tactic probabilities and a separate routing decision. If the strongest predicted tactic does not meet the selected routing threshold, the workbench returns `analyst_review` instead of forcing an automatic decision.
+
 ## Try the workbench
 
-The Streamlit workbench supports individual threat triage, confidence-aware analyst routing, local feature explanations, CSV batch review and direct access to the experiment evidence.
+The Streamlit workbench supports:
+
+- individual threat triage with an interactive ATT&CK tactic map;
+- configurable confidence-aware analyst routing;
+- local TF-IDF feature contributions for the deployed classifier;
+- CSV batch classification and exportable review queues;
+- direct access to model, calibration and stress-test evidence.
 
 ```bash
 git clone https://github.com/SahilBh01r1769/cyber.git
@@ -40,11 +52,15 @@ Results use a source-grouped holdout: an actor, malware family, tool or campaign
 
 Linear SVM is the strongest verified model on the cleaned split. A previous DistilBERT run reached 0.779 macro F1, but it predates the near-duplicate cleanup and is kept as historical evidence until rerun rather than mixed into the current comparison.
 
+Macro F1 is the primary selection metric because it gives small tactics meaningful weight. Micro F1 is included to show aggregate label performance, while exact match requires the complete predicted tactic set to match the reference labels. The results show that the linear SVM remains a strong model for this relatively concise, terminology-heavy text.
+
 ![Grouped-source model comparison](artifacts/figures/model_comparison.png)
 
 ### Confidence-aware routing
 
 Platt calibrators and label thresholds are now fitted on separate, source-disjoint halves of the validation partition. Calibration reduces macro Brier score from 0.0266 to 0.0213 and expected calibration error from 0.0416 to 0.0085.
+
+Routing confidence is the highest calibrated probability among the predicted tactics—or the strongest candidate when no label passes its own threshold. Raising the routing threshold improves performance on accepted cases while sending more examples to manual review.
 
 | Routing threshold | Auto-route coverage | Micro F1 on accepted cases | Samples F1 on accepted cases |
 |---:|---:|---:|---:|
@@ -66,7 +82,20 @@ The dataset builder reads MITRE's official [Enterprise ATT&CK STIX data](https:/
 - zero exact-text, source or audited near-duplicate overlap across active partitions
 - model progression: trivial baseline → Logistic Regression → Linear SVM → DistilBERT
 
+The grouped-source split is more conservative than a random sentence split: the random comparison shared 882 source entities across train and test. Techniques are allowed to cross the primary split because the main question is whether the model generalizes to unseen threat actors and software describing known behavior categories. The separate technique-held-out experiment tests the harder alternative.
+
+Class imbalance is handled through balanced class weights rather than generated or oversampled text. The smallest tactic, Reconnaissance, has only 29 positive test examples, so its per-label result should be treated as less stable than the major classes.
+
 Detailed split diagnostics, calibration tables, per-label results, feature weights and error exports are committed under `artifacts/metrics/`. See [experiment notes](docs/experiment_notes.md) for decisions and observed errors.
+
+## Repository guide
+
+- `src/data/` builds the ATT&CK-derived dataset and reproducible splits.
+- `src/models/` trains classical models, calibrates confidence and fine-tunes DistilBERT.
+- `src/evaluation/` produces metrics, figures, stress tests and error exports.
+- `src/inference/` contains the reusable predictor and command-line interface.
+- `artifacts/` contains small committed evidence and the compressed demo model.
+- `tests/` uses local fixtures; unit tests never download the full ATT&CK dataset.
 
 ## Reproduce the experiment
 
