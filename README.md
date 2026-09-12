@@ -38,6 +38,7 @@ streamlit run app.py
 ```
 
 The repository includes a compressed, checksum-tested classical model, so the interface runs without retraining.
+For a short tour of every interaction and its expected result, use the [dashboard test plan](docs/dashboard_test_plan.md).
 
 CLI inference is also available:
 
