@@ -7,27 +7,27 @@ python -m pip install -r requirements-app.txt
 streamlit run app.py
 ```
 
-## Single report
+## Analyze a report
 
 Use the included examples so the checks are repeatable.
 
 | Check | Example and action | Expected result |
 |---|---|---|
-| Clear single label | Load **PowerShell execution**, then classify | Execution; auto-route; provenance and supporting terms appear |
-| Multilabel output | Load **Multi-tactic scheduled task**, then classify | Execution, Privilege Escalation and Persistence |
-| Abstention | Load **Ambiguous tool transfer**, then classify | Analyst review; no label passes its learned threshold; top candidate is shown |
-| Routing control | Load **Routing threshold check** | Auto-route at 0.70; analyst review at 0.90 without re-entering the text |
-| Empty input | Clear the text box and classify | Warning asking for a description; no traceback |
-| JSON export | Classify any example and download the prediction | JSON contains `predictions`, `top_candidate`, `routing_confidence`, `routing_threshold` and `decision` |
+| Clear single label | Load **PowerShell execution**, then analyze | Execution; accepted automatically; provenance and supporting words appear |
+| Multilabel output | Load **Multi-tactic scheduled task**, then analyze | Execution, Privilege Escalation and Persistence |
+| Abstention | Load **Ambiguous tool transfer**, then analyze | Needs analyst review; no suggestion is included; top candidate is shown |
+| Routing control | Load **Routing threshold check** | Accepted at 0.70; needs review at 0.90 without re-entering the text |
+| Empty input | Clear the text box and analyze | Warning asking for a description; no traceback |
+| JSON export | Analyze any example and download the prediction | JSON contains `predictions`, `top_candidate`, `routing_confidence`, `routing_threshold` and `decision` |
 
 The exact probabilities may change after retraining. Label selection and routing behavior should only change when updated evidence and artifacts are committed together.
 
-## Batch CSV
+## Review a CSV
 
-1. Open **Batch CSV** and download the sample.
+1. Open **Review a CSV** and download the sample.
 2. Upload the same file and select `text` as the description column.
-3. Classify it. Four rows should be returned and at least the WellMess row should enter the review queue at the default threshold.
-4. Enable **Show analyst-review rows only** and confirm the table is filtered.
+3. Analyze it. Four rows should be returned and at least the WellMess row should enter the review queue at the default threshold.
+4. Enable **Show only reports that need review** and confirm the table is filtered.
 5. Download the classified CSV and check that the original columns plus `predicted_tactics`, `routing_confidence` and `decision` are present.
 
 Also try these failure cases:
@@ -38,7 +38,7 @@ Also try these failure cases:
 - file larger than 2 MB;
 - file containing more than 200 rows, which should be truncated with a notice.
 
-## Experiment results
+## Model evidence
 
 Confirm that:
 

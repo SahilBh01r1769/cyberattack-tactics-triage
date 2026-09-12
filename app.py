@@ -44,7 +44,7 @@ def prediction_table(result: dict, catalog: list[dict]) -> pd.DataFrame:
                 "Tactic": metadata["name"],
                 "ATT&CK ID": metadata["external_id"],
                 "Confidence": prediction["confidence"],
-                "Passed label threshold": bool(result["predictions"]),
+                "Included in result": bool(result["predictions"]),
             }
         )
     return pd.DataFrame(rows)
@@ -53,30 +53,30 @@ def prediction_table(result: dict, catalog: list[dict]) -> pd.DataFrame:
 def render_prediction(result: dict, predictor: TacticPredictor, text: str, catalog: list[dict]) -> None:
     if result["decision"] == "auto_route":
         st.success(
-            f"Auto-route · {result['routing_confidence']:.1%} routing confidence "
-            f"(required: {result['routing_threshold']:.0%})"
+            f"Accepted automatically · {result['routing_confidence']:.1%} confidence "
+            f"(minimum: {result['routing_threshold']:.0%})"
         )
     else:
         st.warning(
-            f"Analyst review recommended · {result['routing_confidence']:.1%} routing confidence "
-            f"(required: {result['routing_threshold']:.0%})"
+            f"Needs analyst review · {result['routing_confidence']:.1%} confidence "
+            f"(minimum: {result['routing_threshold']:.0%})"
         )
 
-    st.markdown("#### Predicted tactics")
+    st.markdown("#### Suggested ATT&CK tactics")
     if not result["predictions"]:
-        st.caption("No tactic passed its learned label threshold. The strongest candidate is shown for context.")
+        st.caption("No suggestion was confident enough to include. The strongest candidate is shown for context.")
     st.dataframe(
         prediction_table(result, catalog),
         width="stretch",
         hide_index=True,
         column_config={
             "Confidence": st.column_config.ProgressColumn(format="percent", min_value=0.0, max_value=1.0),
-            "Passed label threshold": st.column_config.CheckboxColumn(),
+            "Included in result": st.column_config.CheckboxColumn(),
         },
     )
 
-    st.markdown("#### Terms supporting the prediction")
-    st.caption("Positive contributions from the deployed TF-IDF Logistic Regression model; they are not causal explanations.")
+    st.markdown("#### Words that influenced this result")
+    st.caption("These words pushed the model toward each suggestion. They help inspect the result, but do not prove why an attack happened.")
     predictions = result["predictions"] or [result["top_candidate"]]
     for index, prediction in enumerate(predictions[:3]):
         tactic = prediction["tactic"]
@@ -95,7 +95,7 @@ def render_prediction(result: dict, predictor: TacticPredictor, text: str, catal
             else:
                 st.caption("No positive feature contribution was available for this input.")
 
-    with st.expander("ATT&CK tactic reference"):
+    with st.expander("What these ATT&CK tactics mean"):
         reference = pd.DataFrame(catalog)[["external_id", "name", "description", "url"]]
         reference.columns = ["ID", "Tactic", "Description", "Reference"]
         st.dataframe(
@@ -114,7 +114,8 @@ def render_prediction(result: dict, predictor: TacticPredictor, text: str, catal
 
 
 def single_report(predictor: TacticPredictor | None, threshold: float, catalog: list[dict]) -> None:
-    st.subheader("Single report")
+    st.subheader("Analyze one report")
+    st.write("Paste a short threat description, or start with one of the real ATT&CK examples included below.")
     examples = load_json(EXAMPLES_PATH)
     selected = st.selectbox(
         "Load an ATT&CK-derived example",
@@ -138,7 +139,7 @@ def single_report(predictor: TacticPredictor | None, threshold: float, catalog: 
             f"source entity: {source['source_name']} ({source['source_id']})"
         )
 
-    if st.button("Classify report", type="primary"):
+    if st.button("Analyze report", type="primary"):
         if predictor is None:
             st.error("The model artifact is unavailable. Regenerate it using the command shown in the sidebar.")
         elif not text.strip():
@@ -157,8 +158,8 @@ def single_report(predictor: TacticPredictor | None, threshold: float, catalog: 
 
 
 def batch_queue(predictor: TacticPredictor | None, threshold: float) -> None:
-    st.subheader("Batch CSV")
-    st.write("Upload a CSV and choose the column containing threat descriptions. The demo processes at most 200 rows.")
+    st.subheader("Review several reports")
+    st.write("Upload a CSV, choose the column that contains the descriptions, and receive a review queue. Up to 200 rows are processed at once.")
     st.download_button(
         "Download sample CSV",
         SAMPLE_BATCH_PATH.read_bytes(),
@@ -185,7 +186,7 @@ def batch_queue(predictor: TacticPredictor | None, threshold: float) -> None:
 
     text_column = st.selectbox("Description column", frame.columns.tolist())
     st.dataframe(frame.head(5), width="stretch", hide_index=True)
-    if st.button("Classify CSV", type="primary", disabled=predictor is None):
+    if st.button("Analyze CSV", type="primary", disabled=predictor is None):
         try:
             st.session_state.batch_result = classify_frame(frame, text_column, predictor, threshold)
         except ValueError as exc:
@@ -196,9 +197,9 @@ def batch_queue(predictor: TacticPredictor | None, threshold: float) -> None:
         review_count = int(result["decision"].eq("analyst_review").sum())
         left, middle, right = st.columns(3)
         left.metric("Rows", len(result))
-        middle.metric("Auto-routed", len(result) - review_count)
-        right.metric("Review queue", review_count)
-        review_only = st.checkbox("Show analyst-review rows only")
+        middle.metric("Accepted", len(result) - review_count)
+        right.metric("Needs review", review_count)
+        review_only = st.checkbox("Show only reports that need review")
         display = result[result["decision"].eq("analyst_review")] if review_only else result
         st.dataframe(
             display,
@@ -206,7 +207,7 @@ def batch_queue(predictor: TacticPredictor | None, threshold: float) -> None:
             hide_index=True,
             column_config={
                 "routing_confidence": st.column_config.ProgressColumn(
-                    "Routing confidence", format="percent", min_value=0.0, max_value=1.0
+                    "Confidence", format="percent", min_value=0.0, max_value=1.0
                 )
             },
         )
@@ -219,8 +220,8 @@ def batch_queue(predictor: TacticPredictor | None, threshold: float) -> None:
 
 
 def experiment_results() -> None:
-    st.subheader("Experiment results")
-    st.caption("All figures and tables below are generated from committed held-out predictions.")
+    st.subheader("How the model performed")
+    st.write("These results come from reports the models did not see during training. Sources were kept separate to make the comparison harder and more realistic.")
     stats = json.loads(Path("artifacts/metrics/dataset_statistics.json").read_text())
     left, middle_left, middle_right, right = st.columns(4)
     left.metric("Procedure examples", f"{stats['usable_samples']:,}")
@@ -238,8 +239,8 @@ def experiment_results() -> None:
         hide_index=True,
     )
     st.caption(
-        "Linear SVM is the strongest verified classifier. Calibrated Logistic Regression is deployed because "
-        "it provides evaluated confidence estimates and interpretable text features."
+        "Macro F1 gives every tactic equal importance, including rare ones. Linear SVM scored highest overall. "
+        "The Logistic Regression model is used in the workbench because its confidence scores were measured and calibrated."
     )
 
     chart_left, chart_right = st.columns(2)
@@ -247,60 +248,85 @@ def experiment_results() -> None:
     chart_right.image("artifacts/figures/confidence_coverage.png", caption="Routing threshold trade-off")
 
     stress = json.loads(Path("artifacts/metrics/technique_holdout_metrics.json").read_text())
-    with st.expander("Unseen-technique stress test"):
+    with st.expander("Harder test: techniques never seen during training"):
         st.write(
             f"The selected SVM was retrained on {stress['train_techniques']} techniques and evaluated on "
             f"{stress['holdout_techniques']} unseen techniques. Technique overlap: {stress['technique_overlap']}."
         )
-        st.metric("Stress-test macro F1", f"{stress['metrics']['macro_f1']:.3f}")
-        st.caption("This diagnostic changes the generalization target and is not directly comparable to the main test.")
+        st.metric("Macro F1 on this harder test", f"{stress['metrics']['macro_f1']:.3f}")
+        st.caption("This answers a harder question than the main test, so the two scores should not be compared directly.")
 
-    with st.expander("Prior DistilBERT run"):
-        st.warning("This run predates the eight-record split cleanup and is excluded from the current comparison.")
+    with st.expander("Earlier transformer experiment"):
+        st.warning("This DistilBERT run used an older data split, so it is shown as background evidence and not ranked with the current models.")
         transformer_left, transformer_right = st.columns(2)
         transformer_left.image("artifacts/figures/transformer_training_history.png", caption="Training history")
         transformer_right.image("artifacts/figures/transformer_per_label_comparison.png", caption="Per-label results")
 
 
-st.set_page_config(page_title="ATT&CK tactic classifier", page_icon="📄", layout="wide")
+st.set_page_config(page_title="Threat report triage", page_icon="◼", layout="wide", initial_sidebar_state="collapsed")
 st.markdown(
     """
     <style>
-    .block-container { max-width: 1120px; padding-top: 2rem; padding-bottom: 3rem; }
-    [data-testid="stSidebar"] { border-right: 1px solid #ded8ce; }
-    h1 { font-size: 2.2rem; }
+    .stApp { background: #26231f; color: #eee5d8; }
+    .block-container { max-width: 1120px; padding-top: 2.2rem; padding-bottom: 3rem; }
+    h1 { color: #f2e8da; font-size: 2.25rem; letter-spacing: -0.035em; }
+    h2, h3, h4 { color: #e7dac7; }
+    [data-testid="stHeader"] { background: rgba(38, 35, 31, 0.94); }
+    [data-testid="stSidebar"] { display: none; }
+    [data-testid="stVerticalBlockBorderWrapper"] {
+        background: #312d28;
+        border-color: #4d463c;
+        box-shadow: none;
+    }
+    [data-baseweb="tab-list"] {
+        gap: 0.25rem;
+        background: #1f1d1a;
+        border-radius: 0.4rem;
+        padding: 0.32rem;
+    }
+    [data-baseweb="tab"] {
+        color: #d8cbb8;
+        border-radius: 0.25rem;
+        padding-left: 1.15rem;
+        padding-right: 1.15rem;
+    }
+    [data-baseweb="tab"][aria-selected="true"] {
+        color: #241f1a;
+        background: #b99b76;
+    }
+    [data-baseweb="tab-highlight"] { display: none; }
+    [data-testid="stMetric"] { background: transparent; }
+    .stButton > button[kind="primary"] { color: #211d19; background: #b9976d; border-color: #b9976d; }
+    .stButton > button[kind="primary"]:hover { color: #181512; background: #c9aa83; border-color: #c9aa83; }
     </style>
     """,
     unsafe_allow_html=True,
 )
-st.title("ATT&CK tactic classifier")
-st.caption("A small NLP workbench for mapping short cyber-threat descriptions to Enterprise ATT&CK tactics.")
+st.title("Threat report triage")
+st.write("Turn a short cyber-threat report into suggested MITRE ATT&CK tactics, then decide whether the result is confident enough to use or needs a person to check it.")
 
 catalog = load_json(CATALOG_PATH)
 model_path = available_model()
 predictor = load_predictor(str(model_path)) if model_path else None
 
-with st.sidebar:
-    st.header("Model controls")
-    threshold = st.slider(
-        "Auto-route threshold",
-        min_value=0.40,
-        max_value=0.90,
-        value=0.70,
-        step=0.05,
-        help="Higher values send more cases to analyst review.",
-    )
-    st.caption("At 0.70: 78.0% test coverage and 0.878 micro F1 on accepted records.")
-    st.divider()
-    st.write("**Inference model**")
-    st.caption("TF-IDF + calibrated Logistic Regression")
-    st.write("**Best verified classifier**")
-    st.caption("TF-IDF + Linear SVM · 0.773 macro F1")
-    if predictor is None:
-        st.error("Model artifact missing")
-        st.code("python -m src.models.package_inference", language="bash")
+with st.container(border=True):
+    control, current, guidance = st.columns([2.2, 0.8, 1.5], vertical_alignment="center")
+    with control:
+        threshold = st.slider(
+            "Confidence needed to accept a result",
+            min_value=0.40,
+            max_value=0.90,
+            value=0.70,
+            step=0.05,
+            help="Raise this when you would rather review more reports than accept uncertain suggestions.",
+        )
+    current.metric("Current minimum", f"{threshold:.0%}")
+    guidance.caption("Higher settings accept fewer reports automatically and send more to review. At 70%, the test accepted 78% of reports.")
 
-single_tab, batch_tab, results_tab = st.tabs(["Single report", "Batch CSV", "Experiment results"])
+if predictor is None:
+    st.error("The saved model could not be loaded. Run `python -m src.models.package_inference` to rebuild it.")
+
+single_tab, batch_tab, results_tab = st.tabs(["Analyze a report", "Review a CSV", "Model evidence"])
 with single_tab:
     single_report(predictor, threshold, catalog)
 with batch_tab:
