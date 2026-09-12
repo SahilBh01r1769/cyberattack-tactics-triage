@@ -1,0 +1,5 @@
+case_id,text
+case-001,APT39 has used PowerShell to execute malicious code.
+case-002,"During Operation Wocao, threat actors used scheduled tasks to execute malicious PowerShell code on remote systems."
+case-003,WellMess can write files to a compromised host.
+case-004,LockBit 2.0 can use the PowerShell module `InvokeGPUpdate` to modify Group Policy.

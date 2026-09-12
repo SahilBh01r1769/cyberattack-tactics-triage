@@ -25,5 +25,14 @@
     "tactics": ["command-and-control"],
     "source_name": "WellMess",
     "source_id": "S0514"
+  },
+  {
+    "name": "Routing threshold check",
+    "text": "LockBit 2.0 can use the PowerShell module `InvokeGPUpdate` to modify Group Policy.",
+    "technique_id": "T1059.001",
+    "technique_name": "PowerShell",
+    "tactics": ["execution"],
+    "source_name": "LockBit 2.0",
+    "source_id": "S1199"
   }
 ]
