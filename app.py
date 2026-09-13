@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import html
 import json
 from pathlib import Path
 
@@ -33,141 +34,223 @@ def available_model() -> Path | None:
     return next((path for path in MODEL_CANDIDATES if path.exists()), None)
 
 
-def prediction_table(result: dict, catalog: list[dict]) -> pd.DataFrame:
+def result_rows(result: dict, catalog: list[dict]) -> list[dict]:
     catalog_by_slug = {item["slug"]: item for item in catalog}
     predictions = result["predictions"] or [result["top_candidate"]]
-    rows = []
-    for prediction in predictions:
-        metadata = catalog_by_slug[prediction["tactic"]]
-        rows.append(
-            {
-                "Tactic": metadata["name"],
-                "ATT&CK ID": metadata["external_id"],
-                "Confidence": prediction["confidence"],
-                "Included in result": bool(result["predictions"]),
-            }
+    return [
+        {
+            "Tactic": catalog_by_slug[item["tactic"]]["name"],
+            "ATT&CK ID": catalog_by_slug[item["tactic"]]["external_id"],
+            "Confidence": item["confidence"],
+        }
+        for item in predictions
+    ]
+
+
+def render_decision_sheet(result: dict | None, catalog: list[dict]) -> None:
+    st.markdown('<p class="section-label">Routing decision</p>', unsafe_allow_html=True)
+    if result is None:
+        st.markdown(
+            '<div class="empty-decision">The routing decision and suggested tactics will appear here.</div>',
+            unsafe_allow_html=True,
         )
-    return pd.DataFrame(rows)
+        return
 
-
-def render_prediction(result: dict, predictor: TacticPredictor, text: str, catalog: list[dict]) -> None:
+    threshold = result["routing_threshold"]
+    confidence = result["routing_confidence"]
     if result["decision"] == "auto_route":
-        st.success(
-            f"Accepted automatically · {result['routing_confidence']:.1%} confidence "
-            f"(minimum: {result['routing_threshold']:.0%})"
-        )
+        st.markdown('<p class="decision accepted">Accepted automatically</p>', unsafe_allow_html=True)
+        st.caption(f"Confidence reached the {threshold:.0%} requirement.")
     else:
-        st.warning(
-            f"Needs analyst review · {result['routing_confidence']:.1%} confidence "
-            f"(minimum: {result['routing_threshold']:.0%})"
-        )
+        st.markdown('<p class="decision review">Needs analyst review</p>', unsafe_allow_html=True)
+        st.caption(f"Confidence did not reach the {threshold:.0%} requirement.")
 
-    st.markdown("#### Suggested ATT&CK tactics")
+    st.markdown("#### Suggested tactics")
     if not result["predictions"]:
-        st.caption("No suggestion was confident enough to include. The strongest candidate is shown for context.")
+        st.caption("No tactic was confident enough to include. The strongest candidate is shown below.")
     st.dataframe(
-        prediction_table(result, catalog),
+        pd.DataFrame(result_rows(result, catalog)),
         width="stretch",
         hide_index=True,
         column_config={
             "Confidence": st.column_config.ProgressColumn(format="percent", min_value=0.0, max_value=1.0),
-            "Included in result": st.column_config.CheckboxColumn(),
         },
     )
+    st.caption(f"Routing confidence: {confidence:.1%}")
 
-    st.markdown("#### Words that influenced this result")
-    st.caption("These words pushed the model toward each suggestion. They help inspect the result, but do not prove why an attack happened.")
+    accept, review = st.columns(2)
+    if accept.button("Accept suggestion", width="stretch"):
+        st.session_state.review_action = "accepted"
+    if review.button("Keep for review", width="stretch"):
+        st.session_state.review_action = "review"
+    if st.session_state.get("review_action") == "accepted":
+        st.caption("Marked as accepted for this session.")
+    elif st.session_state.get("review_action") == "review":
+        st.caption("Kept in the review queue for this session.")
+
+
+def render_influential_terms(result: dict, predictor: TacticPredictor, text: str) -> None:
     predictions = result["predictions"] or [result["top_candidate"]]
-    for index, prediction in enumerate(predictions[:3]):
+    for prediction in predictions[:3]:
         tactic = prediction["tactic"]
-        contributions = predictor.explain(text, tactic)
-        with st.expander(format_tactic(tactic), expanded=index == 0):
-            if contributions:
-                evidence = pd.DataFrame(contributions).rename(
-                    columns={"feature": "Term", "contribution": "Positive contribution"}
-                )
-                st.dataframe(
-                    evidence,
-                    width="stretch",
-                    hide_index=True,
-                    column_config={"Positive contribution": st.column_config.NumberColumn(format="%.3f")},
-                )
-            else:
-                st.caption("No positive feature contribution was available for this input.")
-
-    with st.expander("What these ATT&CK tactics mean"):
-        reference = pd.DataFrame(catalog)[["external_id", "name", "description", "url"]]
-        reference.columns = ["ID", "Tactic", "Description", "Reference"]
-        st.dataframe(
-            reference,
-            width="stretch",
-            hide_index=True,
-            column_config={"Reference": st.column_config.LinkColumn(display_text="MITRE")},
-        )
-
-    st.download_button(
-        "Download prediction (JSON)",
-        json.dumps(result, indent=2),
-        file_name="attack_triage_result.json",
-        mime="application/json",
-    )
-
-
-def single_report(predictor: TacticPredictor | None, threshold: float, catalog: list[dict]) -> None:
-    st.subheader("Analyze one report")
-    st.write("Paste a short threat description, or start with one of the real ATT&CK examples included below.")
-    examples = load_json(EXAMPLES_PATH)
-    selected = st.selectbox(
-        "Load an ATT&CK-derived example",
-        range(len(examples)),
-        format_func=lambda index: examples[index]["name"],
-    )
-    if st.button("Use selected example"):
-        st.session_state.threat_text = examples[selected]["text"]
-        st.session_state.example_source = examples[selected]
-
-    text = st.text_area(
-        "Threat or incident description",
-        key="threat_text",
-        height=150,
-        placeholder="Example: The adversary used PowerShell to execute a downloaded payload.",
-    )
-    source = st.session_state.get("example_source")
-    if source and source["text"] == text:
-        st.caption(
-            f"ATT&CK example provenance: {source['technique_id']} {source['technique_name']} · "
-            f"source entity: {source['source_name']} ({source['source_id']})"
-        )
-
-    if st.button("Analyze report", type="primary"):
-        if predictor is None:
-            st.error("The model artifact is unavailable. Regenerate it using the command shown in the sidebar.")
-        elif not text.strip():
-            st.warning("Enter a threat description first.")
+        contributions = predictor.explain(text, tactic)[:5]
+        st.markdown(f"**{format_tactic(tactic)}**")
+        if contributions:
+            evidence = pd.DataFrame(contributions).rename(
+                columns={"feature": "Term", "contribution": "Contribution"}
+            )
+            st.dataframe(
+                evidence,
+                width="stretch",
+                hide_index=True,
+                column_config={"Contribution": st.column_config.NumberColumn(format="+%.3f")},
+            )
         else:
-            st.session_state.last_result = predictor.predict(text, threshold)
-            st.session_state.last_result_text = text
+            st.caption("No positive term contribution was available for this suggestion.")
+
+
+def render_lifecycle(result: dict, catalog: list[dict]) -> None:
+    highlighted = {item["tactic"] for item in result["predictions"]}
+    if not highlighted:
+        highlighted = {result["top_candidate"]["tactic"]}
+    items = []
+    for tactic in catalog:
+        selected = " selected" if tactic["slug"] in highlighted else ""
+        items.append(
+            f'<span class="lifecycle-item{selected}" title="{html.escape(tactic["description"])}">'
+            f'{html.escape(tactic["name"])}</span>'
+        )
+    st.markdown('<div class="lifecycle-strip">' + "".join(items) + "</div>", unsafe_allow_html=True)
+    st.caption("Highlighted stages are the model suggestions. Hover over a stage for its ATT&CK description.")
+
+
+def render_explanations(
+    result: dict,
+    predictor: TacticPredictor,
+    text: str,
+    catalog: list[dict],
+    source: dict | None,
+) -> None:
+    st.markdown("### Review the evidence")
+    with st.expander("Why these tactics were suggested"):
+        st.caption("The strongest words and phrases from the deployed text model. These are clues, not proof.")
+        render_influential_terms(result, predictor, text)
+
+    with st.expander("Position in the ATT&CK lifecycle"):
+        render_lifecycle(result, catalog)
+
+    with st.expander("Original example and provenance"):
+        st.write(text)
+        if source and source["text"] == text:
+            st.caption(
+                f"MITRE ATT&CK procedure example · {source['technique_id']} {source['technique_name']} · "
+                f"source: {source['source_name']} ({source['source_id']})"
+            )
+        else:
+            st.caption("User-provided report. No ATT&CK source metadata is attached.")
+        st.download_button(
+            "Download result as JSON",
+            json.dumps(result, indent=2),
+            file_name="attack_triage_result.json",
+            mime="application/json",
+        )
+
+
+def analyze_report(predictor: TacticPredictor | None, catalog: list[dict]) -> None:
+    st.subheader("Analyze report")
+    report_column, decision_column = st.columns([1.4, 1], gap="large")
+
+    with report_column:
+        st.markdown('<p class="section-label">Threat report</p>', unsafe_allow_html=True)
+        examples = load_json(EXAMPLES_PATH)
+        selected = st.selectbox(
+            "Select an ATT&CK example",
+            range(len(examples)),
+            format_func=lambda index: examples[index]["name"],
+        )
+        if st.button("Load example"):
+            st.session_state.threat_text = examples[selected]["text"]
+            st.session_state.example_source = examples[selected]
+            st.session_state.review_action = None
+
+        text = st.text_area(
+            "Report text",
+            key="threat_text",
+            height=180,
+            placeholder="Paste or edit a short threat description here.",
+            label_visibility="collapsed",
+        )
+        source = st.session_state.get("example_source")
+        if source and source["text"] == text:
+            st.caption(
+                f"Source: ATT&CK procedure example · {source['technique_id']} {source['technique_name']} · "
+                f"{source['source_name']}"
+            )
+        else:
+            st.caption("Source: user-provided report")
+
+        action_space, action = st.columns([1.7, 1])
+        with action:
+            analyze = st.button("Analyze report", type="primary", width="stretch")
+
+        st.markdown('<p class="policy-label">Review policy</p>', unsafe_allow_html=True)
+        threshold_percent = st.slider(
+            "Confidence needed for automatic routing",
+            min_value=40,
+            max_value=90,
+            value=70,
+            step=5,
+            key="routing_threshold_percent",
+            format="%d%%",
+            help="Higher settings send more uncertain reports to a person for review.",
+        )
+        threshold = threshold_percent / 100
+
+        if analyze:
+            if predictor is None:
+                st.error("The saved model is unavailable. Rebuild it before running the workbench.")
+            elif not text.strip():
+                st.warning("Enter a threat description first.")
+            else:
+                st.session_state.last_result = predictor.predict(text, threshold)
+                st.session_state.last_result_text = text
+                st.session_state.review_action = None
 
     result = st.session_state.get("last_result")
     if result and st.session_state.get("last_result_text") == text and predictor is not None:
         if result["routing_threshold"] != threshold:
             result = predictor.predict(text, threshold)
             st.session_state.last_result = result
+            st.session_state.review_action = None
+    else:
+        result = None
+
+    with decision_column:
+        with st.container(border=True):
+            render_decision_sheet(result, catalog)
+
+    if result is not None and predictor is not None:
         st.divider()
-        render_prediction(result, predictor, text, catalog)
+        render_explanations(result, predictor, text, catalog, source)
 
 
-def batch_queue(predictor: TacticPredictor | None, threshold: float) -> None:
-    st.subheader("Review several reports")
-    st.write("Upload a CSV, choose the column that contains the descriptions, and receive a review queue. Up to 200 rows are processed at once.")
-    st.download_button(
-        "Download sample CSV",
-        SAMPLE_BATCH_PATH.read_bytes(),
-        file_name="attack_triage_sample.csv",
-        mime="text/csv",
-    )
-    upload = st.file_uploader("CSV file", type="csv")
+def batch_queue(predictor: TacticPredictor | None) -> None:
+    st.subheader("Batch review")
+    st.write("Upload a CSV of short threat reports to create a simple review queue. Up to 200 rows are processed at once.")
+    download, upload_column = st.columns([1, 2.2], vertical_alignment="bottom")
+    with download:
+        st.download_button(
+            "Download example CSV",
+            SAMPLE_BATCH_PATH.read_bytes(),
+            file_name="attack_triage_sample.csv",
+            mime="text/csv",
+            width="stretch",
+        )
+    with upload_column:
+        upload = st.file_uploader("Upload report file", type="csv")
+
     if upload is None:
+        st.caption("The file should contain one column with the report text. Download the example to see the format.")
         return
     if upload.size > 2_000_000:
         st.error("The file must be smaller than 2 MB.")
@@ -181,158 +264,189 @@ def batch_queue(predictor: TacticPredictor | None, threshold: float) -> None:
         st.warning("The uploaded CSV has no rows.")
         return
     if len(frame) > 200:
-        st.info("Only the first 200 rows will be classified.")
+        st.info("Only the first 200 rows will be analyzed.")
         frame = frame.head(200)
 
-    text_column = st.selectbox("Description column", frame.columns.tolist())
-    st.dataframe(frame.head(5), width="stretch", hide_index=True)
-    if st.button("Analyze CSV", type="primary", disabled=predictor is None):
+    text_column = st.selectbox("Column containing the report", frame.columns.tolist())
+    if st.button("Create review queue", type="primary", disabled=predictor is None):
         try:
+            threshold = float(st.session_state.get("routing_threshold_percent", 70)) / 100
             st.session_state.batch_result = classify_frame(frame, text_column, predictor, threshold)
         except ValueError as exc:
             st.error(str(exc))
 
     result = st.session_state.get("batch_result")
-    if result is not None:
-        review_count = int(result["decision"].eq("analyst_review").sum())
-        left, middle, right = st.columns(3)
-        left.metric("Rows", len(result))
-        middle.metric("Accepted", len(result) - review_count)
-        right.metric("Needs review", review_count)
-        review_only = st.checkbox("Show only reports that need review")
-        display = result[result["decision"].eq("analyst_review")] if review_only else result
-        st.dataframe(
-            display,
-            width="stretch",
-            hide_index=True,
-            column_config={
-                "routing_confidence": st.column_config.ProgressColumn(
-                    "Confidence", format="percent", min_value=0.0, max_value=1.0
-                )
-            },
-        )
-        st.download_button(
-            "Download classified CSV",
-            safe_csv_bytes(result),
-            file_name="attack_triage_queue.csv",
-            mime="text/csv",
-        )
+    if result is None:
+        st.dataframe(frame.head(5), width="stretch", hide_index=True)
+        return
+
+    review_count = int(result["decision"].eq("analyst_review").sum())
+    st.markdown(
+        f'<p class="queue-summary"><strong>{len(result)}</strong> reports &nbsp;&nbsp; '
+        f'<strong>{len(result) - review_count}</strong> accepted &nbsp;&nbsp; '
+        f'<strong>{review_count}</strong> need review</p>',
+        unsafe_allow_html=True,
+    )
+    filter_choice = st.selectbox("Filter", ["All reports", "Needs review", "Accepted"])
+    if filter_choice == "Needs review":
+        display = result[result["decision"].eq("analyst_review")]
+    elif filter_choice == "Accepted":
+        display = result[result["decision"].eq("auto_route")]
+    else:
+        display = result
+
+    display = display[[text_column, "predicted_tactics", "routing_confidence", "decision"]].copy()
+    display["decision"] = display["decision"].map(
+        {"auto_route": "Accepted", "analyst_review": "Needs review"}
+    )
+    display.columns = ["Report", "Suggested tactics", "Confidence", "Decision"]
+    event = st.dataframe(
+        display,
+        width="stretch",
+        hide_index=True,
+        on_select="rerun",
+        selection_mode="single-row",
+        column_config={"Confidence": st.column_config.ProgressColumn(format="percent", min_value=0.0, max_value=1.0)},
+    )
+    st.download_button(
+        "Download review queue",
+        safe_csv_bytes(result),
+        file_name="attack_triage_queue.csv",
+        mime="text/csv",
+    )
+
+    selected_rows = event.selection.rows
+    if selected_rows:
+        row = display.iloc[selected_rows[0]]
+        with st.container(border=True):
+            st.markdown("#### Selected report")
+            st.write(row["Report"])
+            st.caption(
+                f"Suggested tactics: {row['Suggested tactics']} · Confidence: {row['Confidence']:.1%} · "
+                f"Decision: {row['Decision']}"
+            )
 
 
-def experiment_results() -> None:
-    st.subheader("How the model performed")
-    st.write("These results come from reports the models did not see during training. Sources were kept separate to make the comparison harder and more realistic.")
+def model_notes() -> None:
     stats = json.loads(Path("artifacts/metrics/dataset_statistics.json").read_text())
-    left, middle_left, middle_right, right = st.columns(4)
-    left.metric("Procedure examples", f"{stats['usable_samples']:,}")
-    middle_left.metric("Techniques", stats["techniques"])
-    middle_right.metric("Tactics", stats["tactics"])
-    right.metric("Multilabel records", f"{stats['multilabel_fraction']:.1%}")
-
     comparison = pd.read_csv("artifacts/metrics/model_comparison.csv")
-    comparison = comparison[["model", "macro_f1", "micro_f1", "samples_f1", "subset_accuracy"]]
-    comparison.columns = ["Model", "Macro F1", "Micro F1", "Samples F1", "Exact match"]
-    st.markdown("#### Grouped-source test set")
+    comparison = comparison[["model", "macro_f1", "micro_f1", "subset_accuracy"]]
+    comparison.columns = ["Model", "Macro F1", "Micro F1", "Exact match"]
+    stress = json.loads(Path("artifacts/metrics/technique_holdout_metrics.json").read_text())
+
+    st.subheader("Model notes")
+    st.markdown("### What was trained?")
+    st.markdown(
+        f"- **{stats['usable_samples']:,}** official ATT&CK procedure examples\n"
+        f"- **{stats['tactics']}** possible tactics; one report may have several\n"
+        "- Training and test data grouped by source, so the same actor, malware or campaign does not cross the split\n"
+        "- No generated threat descriptions and no external classification API"
+    )
+
+    st.markdown("### How well did it perform?")
     st.dataframe(
         comparison.style.format({column: "{:.3f}" for column in comparison.columns[1:]}),
         width="stretch",
         hide_index=True,
     )
-    st.caption(
-        "Macro F1 gives every tactic equal importance, including rare ones. Linear SVM scored highest overall. "
-        "The Logistic Regression model is used in the workbench because its confidence scores were measured and calibrated."
+    st.image("artifacts/figures/model_comparison.png", caption="Performance on the source-grouped test set", width=720)
+    st.info(
+        "Linear SVM achieved the strongest classification score. Calibrated Logistic Regression powers the "
+        "workbench because confidence-based routing needs measured probabilities."
     )
 
-    chart_left, chart_right = st.columns(2)
-    chart_left.image("artifacts/figures/model_comparison.png", caption="Classical model comparison")
-    chart_right.image("artifacts/figures/confidence_coverage.png", caption="Routing threshold trade-off")
-
-    stress = json.loads(Path("artifacts/metrics/technique_holdout_metrics.json").read_text())
-    with st.expander("Harder test: techniques never seen during training"):
-        st.write(
-            f"The selected SVM was retrained on {stress['train_techniques']} techniques and evaluated on "
-            f"{stress['holdout_techniques']} unseen techniques. Technique overlap: {stress['technique_overlap']}."
-        )
-        st.metric("Macro F1 on this harder test", f"{stress['metrics']['macro_f1']:.3f}")
-        st.caption("This answers a harder question than the main test, so the two scores should not be compared directly.")
-
+    st.markdown("### When should it not be trusted?")
+    st.markdown(
+        f"- On techniques never seen during training, macro F1 fell to **{stress['metrics']['macro_f1']:.3f}**.\n"
+        "- Rare tactics have fewer examples, so their scores are less stable.\n"
+        "- Confidence helps choose what to review; it does not guarantee that a suggestion is correct.\n"
+        "- Short or vague descriptions can omit the context needed to distinguish related tactics.\n"
+        "- A person should still check the original report before acting on a prediction."
+    )
     with st.expander("Earlier transformer experiment"):
-        st.warning("This DistilBERT run used an older data split, so it is shown as background evidence and not ranked with the current models.")
-        transformer_left, transformer_right = st.columns(2)
-        transformer_left.image("artifacts/figures/transformer_training_history.png", caption="Training history")
-        transformer_right.image("artifacts/figures/transformer_per_label_comparison.png", caption="Per-label results")
+        st.write(
+            "A previous DistilBERT run used an older split. It remains in the repository as historical evidence, "
+            "but is not ranked against the cleaned results above until it is rerun."
+        )
 
 
-st.set_page_config(page_title="Threat report triage", page_icon="◼", layout="wide", initial_sidebar_state="collapsed")
+st.set_page_config(page_title="ATT&CK report triage", page_icon="◼", layout="wide", initial_sidebar_state="collapsed")
 st.markdown(
     """
     <style>
-    .stApp { background: #26231f; color: #eee5d8; }
-    .block-container { max-width: 1120px; padding-top: 2.2rem; padding-bottom: 3rem; }
-    h1 { color: #f2e8da; font-size: 2.25rem; letter-spacing: -0.035em; }
-    h2, h3, h4 { color: #e7dac7; }
-    [data-testid="stHeader"] { background: rgba(38, 35, 31, 0.94); }
-    [data-testid="stSidebar"] { display: none; }
+    .stApp { background: #24211e; color: #eee6da; }
+    .block-container { max-width: 1120px; padding-top: 1.8rem; padding-bottom: 3rem; }
+    h1 { color: #f1e8da; font-size: 2.15rem; letter-spacing: -0.035em; margin-bottom: 0.25rem; }
+    h2, h3, h4 { color: #e8ddcc; letter-spacing: -0.015em; }
+    [data-testid="stHeader"] { background: rgba(36, 33, 30, 0.96); }
+    [data-testid="stSidebar"], [data-testid="stSidebarCollapsedControl"] { display: none; }
     [data-testid="stVerticalBlockBorderWrapper"] {
-        background: #312d28;
-        border-color: #4d463c;
+        background: #302c27;
+        border: 1px solid #50483f;
+        border-radius: 3px;
         box-shadow: none;
     }
     [data-baseweb="tab-list"] {
-        gap: 0.25rem;
-        background: #1f1d1a;
-        border-radius: 0.4rem;
-        padding: 0.32rem;
+        gap: 0;
+        margin-top: 1.1rem;
+        background: #1d1b18;
+        border-top: 1px solid #51483d;
+        border-bottom: 1px solid #51483d;
+        padding: 0 0.3rem;
     }
     [data-baseweb="tab"] {
-        color: #d8cbb8;
-        border-radius: 0.25rem;
-        padding-left: 1.15rem;
-        padding-right: 1.15rem;
+        color: #cfc3b2;
+        border-radius: 0;
+        padding: 0.65rem 1.35rem;
     }
-    [data-baseweb="tab"][aria-selected="true"] {
-        color: #241f1a;
-        background: #b99b76;
-    }
+    [data-baseweb="tab"][aria-selected="true"] { color: #171411; background: #b39468; }
     [data-baseweb="tab-highlight"] { display: none; }
-    [data-testid="stMetric"] { background: transparent; }
-    .stButton > button[kind="primary"] { color: #211d19; background: #b9976d; border-color: #b9976d; }
-    .stButton > button[kind="primary"]:hover { color: #181512; background: #c9aa83; border-color: #c9aa83; }
+    .section-label {
+        color: #b9aa95;
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        margin: 0 0 0.65rem 0;
+        text-transform: uppercase;
+    }
+    .policy-label { color: #c9baa5; font-size: 0.82rem; font-weight: 650; margin: 0.6rem 0 -0.5rem; }
+    .empty-decision { color: #ad9f8e; min-height: 255px; padding-top: 5rem; text-align: center; }
+    .decision { font-family: Georgia, serif; font-size: 1.65rem; line-height: 1.15; margin: 0.25rem 0 0; }
+    .decision.accepted { color: #d0ad77; }
+    .decision.review { color: #c27d72; }
+    .queue-summary { color: #d9cebf; border-top: 1px solid #51483d; border-bottom: 1px solid #51483d; padding: 0.75rem 0; }
+    .lifecycle-strip { display: flex; flex-wrap: wrap; gap: 0.32rem; }
+    .lifecycle-item {
+        color: #ad9f8e;
+        border: 1px solid #51493f;
+        border-radius: 2px;
+        font-size: 0.76rem;
+        padding: 0.38rem 0.52rem;
+    }
+    .lifecycle-item.selected { color: #1d1915; background: #b39468; border-color: #b39468; font-weight: 650; }
+    .stButton > button[kind="primary"] { color: #1d1915; background: #b39468; border-color: #b39468; }
+    .stButton > button[kind="primary"]:hover { color: #171411; background: #c3a477; border-color: #c3a477; }
     </style>
     """,
     unsafe_allow_html=True,
 )
-st.title("Threat report triage")
-st.write("Turn a short cyber-threat report into suggested MITRE ATT&CK tactics, then decide whether the result is confident enough to use or needs a person to check it.")
+
+st.title("ATT&CK report triage")
+st.caption("Review a threat description, receive suggested ATT&CK tactics, and send uncertain results to a person.")
 
 catalog = load_json(CATALOG_PATH)
 model_path = available_model()
 predictor = load_predictor(str(model_path)) if model_path else None
-
-with st.container(border=True):
-    control, current, guidance = st.columns([2.2, 0.8, 1.5], vertical_alignment="center")
-    with control:
-        threshold = st.slider(
-            "Confidence needed to accept a result",
-            min_value=0.40,
-            max_value=0.90,
-            value=0.70,
-            step=0.05,
-            help="Raise this when you would rather review more reports than accept uncertain suggestions.",
-        )
-    current.metric("Current minimum", f"{threshold:.0%}")
-    guidance.caption("Higher settings accept fewer reports automatically and send more to review. At 70%, the test accepted 78% of reports.")
-
 if predictor is None:
     st.error("The saved model could not be loaded. Run `python -m src.models.package_inference` to rebuild it.")
 
-single_tab, batch_tab, results_tab = st.tabs(["Analyze a report", "Review a CSV", "Model evidence"])
-with single_tab:
-    single_report(predictor, threshold, catalog)
+analyze_tab, batch_tab, notes_tab = st.tabs(["Analyze report", "Review batch", "Model notes"])
+with analyze_tab:
+    analyze_report(predictor, catalog)
 with batch_tab:
-    batch_queue(predictor, threshold)
-with results_tab:
-    experiment_results()
+    batch_queue(predictor)
+with notes_tab:
+    model_notes()
 
 st.divider()
-st.caption("Decision-support prototype. Predictions should be reviewed alongside the original intelligence context.")
+st.caption("Decision-support prototype · Predictions should be checked against the original intelligence context.")
