@@ -28,6 +28,8 @@ The Streamlit workbench supports:
 - CSV batch classification and exportable review queues;
 - direct access to model, calibration and stress-test evidence.
 
+![Analyze a threat report and review suggested ATT&CK tactics](docs/images/analyze-report.png)
+
 ```bash
 git clone https://github.com/SahilBh01r1769/cyberattack-tactics-triage.git
 cd cyberattack-tactics-triage
@@ -45,6 +47,12 @@ CLI inference is also available:
 ```bash
 python -m src.inference.predict --text "The adversary executed a PowerShell command."
 ```
+
+### Batch review
+
+The same classifier can turn a CSV of reports into a filterable review queue.
+
+![Filter and inspect a batch review queue](docs/images/batch-review.gif)
 
 ## Results
 
@@ -76,6 +84,8 @@ Routing confidence is the highest calibrated probability among the predicted tac
 | 0.50 | 86.8% | 0.854 | 0.870 |
 | 0.70 | 78.0% | 0.878 | 0.897 |
 | 0.90 | 59.4% | 0.913 | 0.928 |
+
+![Changing the confidence policy routes an uncertain result for review](docs/images/confidence-routing.gif)
 
 ### Unseen-technique stress test
 
