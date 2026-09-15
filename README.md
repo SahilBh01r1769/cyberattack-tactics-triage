@@ -72,11 +72,9 @@ For the main experiment, source entities are kept on only one side of the split.
 
 ## Confidence and manual review
 
-The deployed Logistic Regression model is calibrated so its probabilities are more useful for routing decisions. A higher routing threshold accepts fewer reports automatically and sends more uncertain cases to manual review.
+The app uses calibrated probabilities to decide whether a prediction is confident enough to route automatically or should be left for manual review. A higher threshold sends more cases to review.
 
 ![Changing the confidence policy routes an uncertain result for review](docs/images/confidence-routing.gif)
-
-The app does not treat confidence as proof that a prediction is correct; it is simply a way to decide which cases deserve more attention.
 
 ## A harder test
 
