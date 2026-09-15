@@ -6,15 +6,13 @@ This project uses NLP to map short cyber-threat descriptions to one or more **MI
 
 The training data comes from official Enterprise ATT&CK procedure examples. No LLM or external classification API is used for prediction.
 
-The idea is simple: given a short report describing what an attacker did, predict the broad ATT&CK phases it belongs to and show when the model is uncertain enough that a person should review the result.
+Given a short report describing what an attacker did, the model predicts the broad ATT&CK phases it belongs to and shows when the result is uncertain enough that a person should review it.
 
 ## What the project does
 
 A single description can belong to more than one tactic. For example, a scheduled task that launches PowerShell may be related to Execution, Persistence and Privilege Escalation at the same time.
 
 The project therefore treats this as **multilabel text classification** rather than choosing only one class.
-
-The workflow is roughly:
 
 ```text
 MITRE ATT&CK procedure examples
@@ -88,8 +86,6 @@ The first version used a random split and produced stronger-looking results. Aft
 
 Later I removed eight cross-partition near-duplicates, separated confidence calibration from threshold selection, and added the unseen-technique test. I also expected the transformer model to clearly outperform the classical models, but the verified SVM remained very competitive on these short, terminology-heavy descriptions.
 
-That progression is more important to the project than simply choosing the most complex model.
-
 ## Data
 
 The dataset builder reads MITRE's official [Enterprise ATT&CK STIX data](https://github.com/mitre-attack/attack-stix-data), resolves procedure-to-technique relationships and converts technique phases into tactic labels.
@@ -108,16 +104,15 @@ Class imbalance is handled with class weights rather than generated training tex
 ## Repository guide
 
 ```text
-src/data/         dataset building and splits
-src/models/       classical models, calibration and DistilBERT training
-src/evaluation/   metrics, error analysis and the technique-held-out test
-src/inference/    reusable prediction code
-artifacts/        saved metrics, figures and the packaged demo model
-docs/             experiment notes and dashboard material
-tests/            local unit tests
+src/data/        dataset building and splits
+src/models/      model training and calibration
+src/evaluation/  metrics and stress tests
+src/inference/   reusable prediction code
+artifacts/       saved metrics, figures and packaged demo model
+tests/           local unit tests
 ```
 
-For a full experiment rerun:
+For the main experiment:
 
 ```bash
 python -m pip install -r requirements-dev.txt
@@ -128,8 +123,6 @@ python -m src.models.calibrate
 python -m src.evaluation.evaluate
 python -m pytest
 ```
-
-The additional analysis scripts and DistilBERT training code remain in the repository for anyone who wants to reproduce the deeper experiments.
 
 ## Scope
 
