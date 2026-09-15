@@ -2,31 +2,35 @@
 
 [![tests](https://github.com/SahilBh01r1769/cyberattack-tactics-triage/actions/workflows/tests.yml/badge.svg)](https://github.com/SahilBh01r1769/cyberattack-tactics-triage/actions/workflows/tests.yml)
 
-An NLP project that maps short cyber-threat descriptions to one or more Enterprise MITRE ATT&CK tactics. It trains on official ATT&CK procedure examples—no LLM or external classification API is used.
+This project uses NLP to map short cyber-threat descriptions to one or more **MITRE ATT&CK tactics** such as Execution, Persistence or Credential Access.
 
-The project is both an ML investigation and a small triage aid. It is not intended to replace analyst judgment.
+The training data comes from official Enterprise ATT&CK procedure examples. No LLM or external classification API is used for prediction.
 
-## What I built
+The idea is simple: given a short report describing what an attacker did, predict the broad ATT&CK phases it belongs to and show when the model is uncertain enough that a person should review the result.
 
-I built the dataset from official ATT&CK procedure examples, created source-grouped splits, trained and compared multilabel classifiers, separated probability calibration from threshold selection, and packaged the selected model into a Streamlit workbench. The workbench also exposes local feature contributions and routes uncertain cases to manual review.
+## What the project does
 
-## What it predicts
+A single description can belong to more than one tactic. For example, a scheduled task that launches PowerShell may be related to Execution, Persistence and Privilege Escalation at the same time.
 
-The target is **multilabel tactic classification**, not fine-grained technique identification. A single description can therefore map to several tactics when the linked ATT&CK technique spans more than one phase. For example, a scheduled task that launches PowerShell may support Execution, Persistence and Privilege Escalation.
+The project therefore treats this as **multilabel text classification** rather than choosing only one class.
 
-Predictions include per-tactic probabilities and a separate routing decision. If the strongest predicted tactic does not meet the selected routing threshold, the workbench returns `analyst_review` instead of forcing an automatic decision.
+The workflow is roughly:
 
-For example, a description such as “The adversary executed a PowerShell command through a scheduled task” can produce Execution, Persistence and Privilege Escalation predictions, their probabilities, and a decision on whether the result is confident enough to route automatically.
+```text
+MITRE ATT&CK procedure examples
+        ↓
+clean and split the text data
+        ↓
+TF-IDF text features
+        ↓
+multilabel classifiers
+        ↓
+predicted tactics + probabilities
+        ↓
+auto-route or send for analyst review
+```
 
-## Try the workbench
-
-The Streamlit workbench supports:
-
-- individual threat triage with an interactive ATT&CK tactic map;
-- configurable confidence-aware analyst routing;
-- local TF-IDF feature contributions for the deployed classifier;
-- CSV batch classification and exportable review queues;
-- direct access to model, calibration and stress-test evidence.
+The Streamlit app supports individual reports, CSV batches, confidence-based review routing and simple feature-level explanations for the deployed classical model.
 
 ![Analyze a threat report and review suggested ATT&CK tactics](docs/images/analyze-report.png)
 
@@ -39,24 +43,17 @@ python -m pip install -r requirements-app.txt
 streamlit run app.py
 ```
 
-The repository includes a compressed, checksum-tested classical model, so the interface runs without retraining.
-For a short tour of every interaction and its expected result, use the [dashboard test plan](docs/dashboard_test_plan.md).
-
-CLI inference is also available:
-
-```bash
-python -m src.inference.predict --text "The adversary executed a PowerShell command."
-```
+A packaged classical model is included, so the interface can run without retraining.
 
 ### Batch review
 
-The same classifier can turn a CSV of reports into a filterable review queue.
+The same classifier can process a CSV of reports and produce a review queue.
 
 ![Filter and inspect a batch review queue](docs/images/batch-review.gif)
 
-## Results
+## Models and results
 
-Results use a source-grouped holdout: an actor, malware family, tool or campaign cannot appear in more than one partition. Eight cross-partition near-duplicate records are explicitly excluded.
+I compared a trivial baseline with TF-IDF based Logistic Regression and Linear SVM models. A DistilBERT experiment is also included, but its saved result predates the final near-duplicate cleanup, so I do not mix it into the current verified comparison.
 
 | Model | Macro F1 | Micro F1 | Samples F1 | Exact match |
 |---|---:|---:|---:|---:|
@@ -65,67 +62,64 @@ Results use a source-grouped holdout: an actor, malware family, tool or campaign
 | Calibrated TF-IDF + LR | 0.752 | 0.807 | 0.789 | 0.685 |
 | TF-IDF + Linear SVM | **0.773** | **0.826** | 0.807 | **0.720** |
 
-Linear SVM is the strongest verified model on the cleaned split. A previous DistilBERT run reached 0.779 macro F1, but it predates the near-duplicate cleanup and is kept as historical evidence until rerun rather than mixed into the current comparison.
-
-I initially expected the transformer to provide the clearest improvement. Instead, the classical SVM remained strongest on the verified, cleaned evaluation. Because these descriptions are short and terminology-heavy, I deployed the simpler verified model rather than selecting the most complex model by default.
-
-Macro F1 is the primary selection metric because it gives small tactics meaningful weight. Micro F1 is included to show aggregate label performance, while exact match requires the complete predicted tactic set to match the reference labels. The results show that the linear SVM remains a strong model for this relatively concise, terminology-heavy text.
+The Linear SVM is the strongest verified model on the cleaned split.
 
 ![Grouped-source model comparison](artifacts/figures/model_comparison.png)
 
-### Confidence-aware routing
+One important part of the evaluation is the way the data is split. ATT&CK contains many examples tied to the same malware, actor, tool or campaign. A random sentence split can place closely related material in both training and testing and make the result look better than it really is.
 
-Platt calibrators and label thresholds are now fitted on separate, source-disjoint halves of the validation partition. Calibration reduces macro Brier score from 0.0266 to 0.0213 and expected calibration error from 0.0416 to 0.0085.
+For the main experiment, source entities are kept on only one side of the split. Eight audited near-duplicate records that still crossed partitions are excluded as well.
 
-Routing confidence is the highest calibrated probability among the predicted tactics—or the strongest candidate when no label passes its own threshold. Raising the routing threshold improves performance on accepted cases while sending more examples to manual review.
+## Confidence and manual review
 
-| Routing threshold | Auto-route coverage | Micro F1 on accepted cases | Samples F1 on accepted cases |
-|---:|---:|---:|---:|
-| 0.50 | 86.8% | 0.854 | 0.870 |
-| 0.70 | 78.0% | 0.878 | 0.897 |
-| 0.90 | 59.4% | 0.913 | 0.928 |
+The deployed Logistic Regression model is calibrated so its probabilities are more useful for routing decisions. A higher routing threshold accepts fewer reports automatically and sends more uncertain cases to manual review.
 
 ![Changing the confidence policy routes an uncertain result for review](docs/images/confidence-routing.gif)
 
-### Unseen-technique stress test
+The app does not treat confidence as proof that a prediction is correct; it is simply a way to decide which cases deserve more attention.
 
-A secondary test trains the selected SVM on 452 techniques and evaluates it on 114 entirely unseen techniques. Macro F1 falls to **0.516** with zero technique overlap. This is intentionally not presented as a competing benchmark: it shows that unfamiliar behaviors remain substantially harder than unfamiliar actors or tools.
+## A harder test
+
+The main split asks whether the model can handle **new actors and tools describing known ATT&CK behavior**.
+
+I also ran a separate test where the evaluation set contains techniques that never appear in training. Performance drops substantially: macro F1 falls to **0.516**. That test is useful because it shows a real limitation of the system—recognizing completely unfamiliar behavior is much harder than recognizing familiar behavior described by a new source.
 
 ## How the project changed
 
-- A random split looked stronger, but allowed the same actors and tools to appear across partitions.
-- I replaced it with a source-grouped split and later removed eight audited cross-partition near-duplicates.
-- I separated calibration fitting from threshold selection to avoid using the same validation examples for both decisions.
-- I added a technique-held-out stress test after realizing that unseen sources and unseen behaviors answer different questions.
+The first version used a random split and produced stronger-looking results. After checking the data more closely, I found that the same actors and tools could appear on both sides of the split, so I replaced it with the grouped version.
 
-## Data and methodology
+Later I removed eight cross-partition near-duplicates, separated confidence calibration from threshold selection, and added the unseen-technique test. I also expected the transformer model to clearly outperform the classical models, but the verified SVM remained very competitive on these short, terminology-heavy descriptions.
 
-The dataset builder reads MITRE's official [Enterprise ATT&CK STIX data](https://github.com/mitre-attack/attack-stix-data), resolves procedure-to-technique relationships and technique-to-tactic phases, cleans markup, removes exact duplicates and retains source provenance.
+That progression is more important to the project than simply choosing the most complex model.
 
-- 16,955 usable procedure examples, 611 techniques and 15 tactics
-- 2,267 multilabel examples (13.4%)
-- 11,006 train / 2,550 validation / 3,391 test / 8 excluded near-duplicates
-- zero exact-text, source or audited near-duplicate overlap across active partitions
-- model progression: trivial baseline → Logistic Regression → Linear SVM → DistilBERT
+## Data
 
-The grouped-source split is more conservative than a random sentence split: the random comparison shared 882 source entities across train and test. Techniques are allowed to cross the primary split because the main question is whether the model generalizes to unseen threat actors and software describing known behavior categories. The separate technique-held-out experiment tests the harder alternative.
+The dataset builder reads MITRE's official [Enterprise ATT&CK STIX data](https://github.com/mitre-attack/attack-stix-data), resolves procedure-to-technique relationships and converts technique phases into tactic labels.
 
-Class imbalance is handled through balanced class weights rather than generated or oversampled text. The smallest tactic, Reconnaissance, has only 29 positive test examples, so its per-label result should be treated as less stable than the major classes.
+Current cleaned dataset:
 
-Detailed split diagnostics, calibration tables, per-label results, feature weights and error exports are committed under `artifacts/metrics/`. See [experiment notes](docs/experiment_notes.md) for decisions and observed errors.
+- 16,955 usable procedure examples
+- 611 techniques
+- 15 tactics
+- 2,267 multilabel examples
+- 11,006 train / 2,550 validation / 3,391 test
+- 8 excluded near-duplicates
+
+Class imbalance is handled with class weights rather than generated training text.
 
 ## Repository guide
 
-- `src/data/` builds the ATT&CK-derived dataset and reproducible splits.
-- `src/models/` trains classical models, calibrates confidence and fine-tunes DistilBERT.
-- `src/evaluation/` produces metrics, figures, stress tests and error exports.
-- `src/inference/` contains the reusable predictor and command-line interface.
-- `artifacts/` contains small committed evidence and the compressed demo model.
-- `tests/` uses local fixtures; unit tests never download the full ATT&CK dataset.
+```text
+src/data/         dataset building and splits
+src/models/       classical models, calibration and DistilBERT training
+src/evaluation/   metrics, error analysis and the technique-held-out test
+src/inference/    reusable prediction code
+artifacts/        saved metrics, figures and the packaged demo model
+docs/             experiment notes and dashboard material
+tests/            local unit tests
+```
 
-## Reproduce the experiment
-
-Python 3.10 or newer is required.
+For a full experiment rerun:
 
 ```bash
 python -m pip install -r requirements-dev.txt
@@ -134,10 +128,11 @@ python -m src.data.split
 python -m src.models.train_classical
 python -m src.models.calibrate
 python -m src.evaluation.evaluate
-python -m src.evaluation.error_analysis
-python -m src.evaluation.technique_holdout
-python -m src.models.package_inference
 python -m pytest
 ```
 
-To rerun DistilBERT, use `python -m src.models.train_transformer` or open [`notebooks/02_train_transformer_colab.ipynb`](notebooks/02_train_transformer_colab.ipynb) in Colab. The script uses the same persisted partitions, class-weighted loss, early stopping and validation-only threshold selection.
+The additional analysis scripts and DistilBERT training code remain in the repository for anyone who wants to reproduce the deeper experiments.
+
+## Scope
+
+This is a tactic-level triage aid, not an automated threat-analysis system. It predicts broad ATT&CK tactics from short procedure descriptions and is designed to expose uncertainty rather than replace analyst judgment.
